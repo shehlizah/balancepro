@@ -13,7 +13,7 @@ global $wpdb;
 
 	$wp_chat_data = $wpdb->get_results( "SELECT * FROM wp_chat_setting" );
 /*print_r($wp_chat_data);*/
-$chat_value_data = unserialize(data: $wp_chat_data[1]->chat_value);
+$chat_value_data = unserialize($wp_chat_data[1]->chat_value);
 // print_r($chat_value_data);
 $holiday_data = unserialize($wp_chat_data[0]->chat_value);
 // print_r($holiday_data);
@@ -1265,171 +1265,72 @@ input[type=text], textarea {
 					</tr>
 
 <?php
+
+function calculateHolidayDates($year) {
+	$holidays = array(
+		'New Year\'s Day' => date('Y-m-d', strtotime("$year-01-01")),
+		'Martin Luther King Birthday' => date('Y-m-d', strtotime("third Monday of January $year")),
+		'Presidents\' Day' => date('Y-m-d', strtotime("third Monday of February $year")),
+		'Memorial Day' => date('Y-m-d', strtotime("last Monday of May $year")),
+		'Independence Day' => date('Y-m-d', strtotime("$year-07-04")),
+		'Labor Day' => date('Y-m-d', strtotime("first Monday of September $year")),
+		'Columbus Day' => date('Y-m-d', strtotime("second Monday of October $year")),
+		'Veterans\' Day' => date('Y-m-d', strtotime("$year-11-11")),
+		'Thanksgiving Day' => date('Y-m-d', strtotime("fourth Thursday of November $year")),
+		'Christmas Day' => date('Y-m-d', strtotime("$year-12-25"))
+	);
+	return $holidays;
+}    
+
+  // Get current year and today's date
+  $currentYear = date('Y');
+  $today = date('Y-m-d');
+
+  // Get holiday dates for the current year
+  $holidays = calculateHolidayDates($currentYear);
+
+  // Check if today's date is past each holiday, and if so, update it for the next year
+  foreach ($holidays as $holiday => $date) {
+	if ($today > $date) {
+		// Update holiday to next year's date
+		$holidays[$holiday] = calculateHolidayDates($currentYear + 1)[$holiday];
+	}
+  }
+
+
 $currentYear = date("Y");
-
-// Helper function to adjust the year if the holiday date has passed
-function adjustYear($monthDay, $currentYear) {
-    $holidayDate = "{$currentYear}-{$monthDay}";
-    return (date("Y-m-d") > $holidayDate) ? $currentYear + 1 : $currentYear;
-}
-
-$newYear = adjustYear("01-01", $currentYear) . "-01-01";
-$independenceDay = adjustYear("07-04", $currentYear) . "-07-04";
-$veteransDay = adjustYear("11-11", $currentYear) . "-11-11";
-$christmasDay = adjustYear("12-25", $currentYear) . "-12-25";
-
-$KingBirthday = date('Y-m-d', strtotime("third monday of january " . adjustYear("01-01", $currentYear)));
-$WashingtonBirthday = date('Y-m-d', strtotime("third monday of february " . adjustYear("02-01", $currentYear)));
-$MemorialDay = date('Y-m-d', strtotime("last monday of may " . adjustYear("05-31", $currentYear)));
-$labourDay = date('Y-m-d', strtotime("first monday of september " . adjustYear("09-01", $currentYear)));
-$columbusDay = date('Y-m-d', strtotime("second monday of october " . adjustYear("10-01", $currentYear)));
-$thanksgiving = date('Y-m-d', strtotime("fourth thursday of november " . adjustYear("11-01", $currentYear)));
-
-// $newYear = date("Y")."-01-01";
-// $independenceDay = date("Y")."-07-04";
-// $veteransDay = date("Y")."-11-11";
-// $christmasDay = date("Y")."-12-25";
-// $KingBirthday = date('Y-m-d', strtotime('third monday of january '.$currentYear));
-// $WashingtonBirthday = date('Y-m-d', strtotime('third monday of february '.$currentYear));;
-// $MemorialDay = date('Y-m-d', strtotime('last monday of may '.$currentYear));
-// $labourDay = date('Y-m-d', strtotime('first monday of september '.$currentYear));
-// $columbusDay = date('Y-m-d', strtotime('second monday of october '.$currentYear));
-// $thanksgiving = date('Y-m-d', strtotime('fourth thursday of november '.$currentYear));
 ?>
-						<td>
-							<tr>
-							<td><b>New Year's Day:</b></td>
-							<td colspan="3">
-							    <input type="checkbox" class="toggleCheck tc" style="display:none;" name="federal_holiday[]" <?php
-							        if($holiday_data['federal_holiday'][0]=="on" ){?>checked="checked"
-							    <?php } ?> style="padding-top:10px !important">
-							    <b></b> <input type="text" disabled="disabled" value="<?php echo $newYear;?>" name="fromDatef[]"
-							        style="width: 130px;background: rgba(255, 255, 255, .5);border-color: rgba(220, 220, 222, .75);box-shadow: inset 0 1px 2px rgba(0, 0, 0, .04);color: rgba(44, 51, 56, .5);cursor: context-menu;">
-							    <b></b> <input type="hidden" name="toDatef[]" value="<?php echo $newYear;?>"
-							        style="width: 130px;background: rgba(255, 255, 255, .5);border-color: rgba(220, 220, 222, .75);box-shadow: inset 0 1px 2px rgba(0, 0, 0, .04);color: rgba(44, 51, 56, .5);cursor: context-menu;">
-							</td>
-							</tr>
-							<tr>
-							<td><b>Birthday of Martin Luther King:</b></td>
-							<td colspan="3">
-							    <input type="checkbox" class="toggleCheck tc" style="display:none;" name="federal_holiday[]" <?php
-							        if($holiday_data['federal_holiday'][1]=="on" ){?>checked="checked"
-							    <?php } ?> style="padding-top:10px !important">
-							    <b></b> <input type="text" disabled="disabled" value="<?php echo $KingBirthday;?>"
-							        name="fromDatef[]"
-							        style="width: 130px;background: rgba(255, 255, 255, .5);border-color: rgba(220, 220, 222, .75);box-shadow: inset 0 1px 2px rgba(0, 0, 0, .04);color: rgba(44, 51, 56, .5);cursor: context-menu;">
-							    <b></b> <input type="hidden" name="toDatef[]" value="<?php echo $KingBirthday;?>"
-							        style="width: 130px;background: rgba(255, 255, 255, .5);border-color: rgba(220, 220, 222, .75);box-shadow: inset 0 1px 2px rgba(0, 0, 0, .04);color: rgba(44, 51, 56, .5);cursor: context-menu;">
-							</td>
-							</tr>
-							<tr>
-							<td><b>Washington's Birthday:</b></td>
-							<td colspan="3">
-							    <input type="checkbox" class="toggleCheck tc" style="display:none;" name="federal_holiday[]" <?php
-							        if($holiday_data['federal_holiday'][2]=="on" ){?>checked="checked"
-							    <?php } ?> style="padding-top:10px !important">
-							    <b></b> <input type="text" disabled="disabled" value="<?php echo $WashingtonBirthday;?>"
-							        name="fromDatef[]"
-							        style="width: 130px;background: rgba(255, 255, 255, .5);border-color: rgba(220, 220, 222, .75);box-shadow: inset 0 1px 2px rgba(0, 0, 0, .04);color: rgba(44, 51, 56, .5);cursor: context-menu;">
-							    <b></b> <input type="hidden" name="toDatef[]" value="<?php echo $WashingtonBirthday;?>"
-							        style="width: 130px;background: rgba(255, 255, 255, .5);border-color: rgba(220, 220, 222, .75);box-shadow: inset 0 1px 2px rgba(0, 0, 0, .04);color: rgba(44, 51, 56, .5);cursor: context-menu;">
-							</td>
-							</tr>
-							<tr>
-							<td><b>Memorial Day:</b></td>
-							<td colspan="3">
-							    <input type="checkbox" class="toggleCheck tc" style="display:none;" name="federal_holiday[]" <?php
-							        if($holiday_data['federal_holiday'][3]=="on" ){?>checked="checked"
-							    <?php } ?> style="padding-top:10px !important">
-							    <b></b> <input type="text" disabled="disabled" value="<?php echo $MemorialDay;?>"
-							        name="fromDatef[]"
-							        style="width: 130px;background: rgba(255, 255, 255, .5);border-color: rgba(220, 220, 222, .75);box-shadow: inset 0 1px 2px rgba(0, 0, 0, .04);color: rgba(44, 51, 56, .5);cursor: context-menu;">
-							    <b></b> <input type="hidden" name="toDatef[]" value="<?php echo $MemorialDay;?>"
-							        style="width: 130px;background: rgba(255, 255, 255, .5);border-color: rgba(220, 220, 222, .75);box-shadow: inset 0 1px 2px rgba(0, 0, 0, .04);color: rgba(44, 51, 56, .5);cursor: context-menu;">
-							</td>
-							</tr>
-							<tr>
-							<td><b>Independence Day:</b></td>
-							<td colspan="3">
-							    <input type="checkbox" class="toggleCheck tc" style="display:none;" name="federal_holiday[]" <?php
-							        if($holiday_data['federal_holiday'][4]=="on" ){?>checked="checked"
-							    <?php } ?> style="padding-top:10px !important">
-							    <b></b> <input type="text" disabled="disabled" value="<?php echo $independenceDay;?>"
-							        name="fromDatef[]"
-							        style="width: 130px;background: rgba(255, 255, 255, .5);border-color: rgba(220, 220, 222, .75);box-shadow: inset 0 1px 2px rgba(0, 0, 0, .04);color: rgba(44, 51, 56, .5);cursor: context-menu;">
-							    <b></b> <input type="hidden" name="toDatef[]" value="<?php echo $independenceDay;?>"
-							        style="width: 130px;background: rgba(255, 255, 255, .5);border-color: rgba(220, 220, 222, .75);box-shadow: inset 0 1px 2px rgba(0, 0, 0, .04);color: rgba(44, 51, 56, .5);cursor: context-menu;">
-							</td>
-							</tr>
-							<tr>
-							<td><b>Labor Day:</b></td>
-							<td colspan="3">
-							    <input type="checkbox" class="toggleCheck tc" style="display:none;" name="federal_holiday[]" <?php
-							        if($holiday_data['federal_holiday'][5]=="on" ){?>checked="checked"
-							    <?php } ?> style="padding-top:10px !important">
-							    <b></b> <input type="text" disabled="disabled" value="<?php echo $labourDay;?>"
-							        name="fromDatef[]"
-							        style="width: 130px;background: rgba(255, 255, 255, .5);border-color: rgba(220, 220, 222, .75);box-shadow: inset 0 1px 2px rgba(0, 0, 0, .04);color: rgba(44, 51, 56, .5);cursor: context-menu;">
-							    <b></b> <input type="hidden" name="toDatef[]" value="<?php echo $labourDay;?>"
-							        style="width: 130px;background: rgba(255, 255, 255, .5);border-color: rgba(220, 220, 222, .75);box-shadow: inset 0 1px 2px rgba(0, 0, 0, .04);color: rgba(44, 51, 56, .5);cursor: context-menu;">
 
-							    </td>
-							    <tr>
-							<td><b>Columbus Day:</b></td>
-							<td colspan="3">
-							    <input type="checkbox" class="toggleCheck tc" style="display:none;" name="federal_holiday[]" <?php
-							        if($holiday_data['federal_holiday'][6]=="on" ){?>checked="checked"
-							    <?php } ?> style="padding-top:10px !important">
-							    <b></b> <input type="text" disabled="disabled" value="<?php echo $columbusDay;?>"
-							        name="fromDatef[]"
-							        style="width: 130px;background: rgba(255, 255, 255, .5);border-color: rgba(220, 220, 222, .75);box-shadow: inset 0 1px 2px rgba(0, 0, 0, .04);color: rgba(44, 51, 56, .5);cursor: context-menu;">
-							    <b></b> <input type="hidden" name="toDatef[]" value="<?php echo $columbusDay;?>"
-							        style="width: 130px;background: rgba(255, 255, 255, .5);border-color: rgba(220, 220, 222, .75);box-shadow: inset 0 1px 2px rgba(0, 0, 0, .04);color: rgba(44, 51, 56, .5);cursor: context-menu;">
-							</td>
-							</tr>
-							<tr>
-							<td><b>Veterans Day:</b></td>
-							<td colspan="3">
-							    <input type="checkbox" class="toggleCheck tc" style="display:none;" name="federal_holiday[]" <?php
-							        if($holiday_data['federal_holiday'][7]=="on" ){?>checked="checked"
-							    <?php } ?> style="padding-top:10px !important">
-							    <b></b> <input type="text" disabled="disabled" value="<?php echo $veteransDay;?>"
-							        name="fromDatef[]"
-							        style="width: 130px;background: rgba(255, 255, 255, .5);border-color: rgba(220, 220, 222, .75);box-shadow: inset 0 1px 2px rgba(0, 0, 0, .04);color: rgba(44, 51, 56, .5);cursor: context-menu;">
-							    <b></b> <input type="hidden" name="toDatef[]" value="<?php echo $veteransDay;?>"
-							        style="width: 130px;background: rgba(255, 255, 255, .5);border-color: rgba(220, 220, 222, .75);box-shadow: inset 0 1px 2px rgba(0, 0, 0, .04);color: rgba(44, 51, 56, .5);cursor: context-menu;">
-							</td>
-							</tr>
-							<tr>
-							<td><b>Thanksgiving Day:</b></td>
-							<td colspan="3">
-							    <input type="checkbox" class="toggleCheck tc" style="display:none;" name="federal_holiday[]" <?php
-							        if($holiday_data['federal_holiday'][8]=="on" ){?>checked="checked"
-							    <?php } ?> style="padding-top:10px !important">
-							    <b></b> <input type="text" disabled="disabled" value="<?php echo $thanksgiving;?>"
-							        name="fromDatef[]"
-							        style="width: 130px;background: rgba(255, 255, 255, .5);border-color: rgba(220, 220, 222, .75);box-shadow: inset 0 1px 2px rgba(0, 0, 0, .04);color: rgba(44, 51, 56, .5);cursor: context-menu;">
-							    <b></b> <input type="hidden" name="toDatef[]" value="<?php echo $thanksgiving;?>"
-							        style="width: 130px;background: rgba(255, 255, 255, .5);border-color: rgba(220, 220, 222, .75);box-shadow: inset 0 1px 2px rgba(0, 0, 0, .04);color: rgba(44, 51, 56, .5);cursor: context-menu;">
-							</td>
-							</tr>
-							<tr>
-							<td><b>Christmas Day:</b></td>
-							<td colspan="3">
-							    <input type="checkbox" class="toggleCheck tc" style="display:none;" name="federal_holiday[]" <?php
-							        if($holiday_data['federal_holiday'][9]=="on" ){?>checked="checked"
-							    <?php } ?> style="padding-top:10px !important">
-							    <b></b> <input type="text" disabled="disabled" value="<?php echo $christmasDay;?>"
-							        name="fromDatef[]"
-							        style="width: 130px;background: rgba(255, 255, 255, .5);border-color: rgba(220, 220, 222, .75);box-shadow: inset 0 1px 2px rgba(0, 0, 0, .04);color: rgba(44, 51, 56, .5);cursor: context-menu;">
-							    <b></b> <input type="hidden" name="toDatef[]" value="<?php echo $christmasDay;?>"
-							        style="width: 130px;background: rgba(255, 255, 255, .5);border-color: rgba(220, 220, 222, .75);box-shadow: inset 0 1px 2px rgba(0, 0, 0, .04);color: rgba(44, 51, 56, .5);cursor: context-menu;">
-							</td>
-							</tr>
-							</td>
-					</tr>
-					<tr>
-						<td colspan="5"><hr class="custom-divider"></td>
+<?php
+// Output holiday name, date, and short day name (Mon, Tue, etc.)
+foreach ($holidays as $holiday => $date) {
+  // Get the short day name for the holiday
+  $shortDayName = strtolower(date('D', strtotime($date))); // 'D' gives short textual representation of the day (e.g., 'Mon')
+  ?>
+  <!-- <div style="display: grid; grid-template-columns: auto auto; justify-content: space-between; width:35%;">
+    <label><b><?php //echo $holiday; ?></b></label>
+    <input style="width:auto !important; color:#898989;" type="text" value="<?php //echo $date; ?>" readonly><br>
+  </div> -->
+
+  <td>
+	<tr>
+	<td><b><?php echo $holiday; ?></b></td>
+	<td colspan="3">
+		<input type="checkbox" class="toggleCheck tc" style="display:none;" name="federal_holiday[]" <?php
+			if($holiday_data['federal_holiday'][0]=="on" ){?>checked="checked"
+		<?php } ?> style="padding-top:10px !important">
+		<b></b> <input type="text" disabled="disabled" value="<?php echo date("d/m/Y", strtotime($date));?>" name="fromDatef[]"
+			style="width: 130px;background: rgba(255, 255, 255, .5);border-color: rgba(220, 220, 222, .75);box-shadow: inset 0 1px 2px rgba(0, 0, 0, .04);color: rgba(44, 51, 56, .5);cursor: context-menu;">
+		<b></b> <input type="hidden" name="toDatef[]" value="<?php  echo date("d/m/Y", strtotime($date));?>"
+			style="width: 130px;background: rgba(255, 255, 255, .5);border-color: rgba(220, 220, 222, .75);box-shadow: inset 0 1px 2px rgba(0, 0, 0, .04);color: rgba(44, 51, 56, .5);cursor: context-menu;">
+	</td>
+	</tr>
+			</td>
+
+<?php
+}
+?>
+		<td colspan="5"><hr class="custom-divider"></td>
 <style>
 .custom-divider {
     border: none;          /* Remove default border */
