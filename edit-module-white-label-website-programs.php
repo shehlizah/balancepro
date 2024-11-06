@@ -932,7 +932,7 @@ $output .= '<input type="checkbox" class="toggleCheck" name="wlw_general_info_mo
       foreach ($holidays as $holiday => $date) {
         // Get the short day name for the holiday
         $shortDayName = strtolower(date('D', strtotime($date))); // 'D' gives short textual representation of the day (e.g., 'Mon')
-        $date= date("d/m/Y", strtotime($date));
+        $date= date("m/d/Y", strtotime($date));
         // Create output with holiday name, date, and short day name
         $output .= '<div style="display: grid; grid-template-columns: auto auto; justify-content: space-between; width:35%;">';
         $output .= '<label><b>' . $holiday . ':</b></label>';

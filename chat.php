@@ -1319,9 +1319,9 @@ foreach ($holidays as $holiday => $date) {
 		<input type="checkbox" class="toggleCheck tc" style="display:none;" name="federal_holiday[]" <?php
 			if($holiday_data['federal_holiday'][0]=="on" ){?>checked="checked"
 		<?php } ?> style="padding-top:10px !important">
-		<b></b> <input type="text" disabled="disabled" value="<?php echo date("d/m/Y", strtotime($date));?>" name="fromDatef[]"
+		<b></b> <input type="text" disabled="disabled" value="<?php echo date("m/d/Y", strtotime($date));?>" name="fromDatef[]"
 			style="width: 130px;background: rgba(255, 255, 255, .5);border-color: rgba(220, 220, 222, .75);box-shadow: inset 0 1px 2px rgba(0, 0, 0, .04);color: rgba(44, 51, 56, .5);cursor: context-menu;">
-		<b></b> <input type="hidden" name="toDatef[]" value="<?php  echo date("d/m/Y", strtotime($date));?>"
+		<b></b> <input type="hidden" name="toDatef[]" value="<?php  echo date("m/d/Y", strtotime($date));?>"
 			style="width: 130px;background: rgba(255, 255, 255, .5);border-color: rgba(220, 220, 222, .75);box-shadow: inset 0 1px 2px rgba(0, 0, 0, .04);color: rgba(44, 51, 56, .5);cursor: context-menu;">
 	</td>
 	</tr>
