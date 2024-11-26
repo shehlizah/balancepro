@@ -1299,97 +1299,97 @@ $lastTag = current(array_slice($tagResult, -1));
 				         			<!-- main content ends -->
 				         		</a></div>
 													
-									<?php				
-				         		$output .= '<!-- pagination box starts -->';
-$output .= '<div style="padding:10px 5px; clear: both;" id="pagination-box-n" class="hidden">';
-$output .= '</div>';
-$output .= '<div style="padding:10px 5px; clear: both;" id="pagination-box" type="' . $type . '" dvalue="' . $dvaluen . '" pagination-box="render-search-main-design" type="' . $ttvalue . '" pager="' . $pagernew . '" numpages="' . $num_of_pages . '">';
-$output .= '<nav aria-label="balance pager m14-m15" balance-pager="" class="paging-holder clear">';
-$output .= '<ul class="pagination" style="list-style: none; display: flex; gap: 10px; align-items: center; padding: 0;">';
+													
+				         		<!-- pagination box starts -->
+<div style="padding:10px 5px; clear: both;" id="pagination-box-n" class="hidden">
+</div>
+<div style="padding:10px 5px; clear: both;" id="pagination-box" type="<?php echo $type; ?>" dvalue="<?php echo $dvaluen; ?>" pagination-box="render-search-main-design" type="<?php echo $ttvalue; ?>" pager="<?php echo $pagernew; ?>" numpages="<?php echo $num_of_pages; ?>">
+    <nav aria-label="balance pager m14-m15" balance-pager="" class="paging-holder clear">
+        <ul class="pagination">
+            <?php 
+            if ($type == '') { 
+                $ttvalue = '0';
+            } else if ($type == '0') { 
+                $ttvalue = '0';
+            } else {
+                $ttvalue = $dvaluen;
+            }
+            
+            // "Previous" button
+            if ($pagernew > 1) { ?>
+                <li>
+                    <div class="prv-btn" lifestage="0" type="<?php echo $ttvalue; ?>" pager="<?php echo ($pagernew-1); ?>" search="0">
+                        <div style="float:left;margin-right: 5px;margin-left: 10px;margin-top: 11px; cursor: pointer;">
+                            <span class="btn-prev"></span>
+                        </div>
+                        <div style="float:left;margin-top: 7px; cursor: pointer; margin-right: 22px;">
+                            <span class="hidden-xs">Prev</span>
+                        </div>
+                    </div>
+                </li>
+            <?php } ?>
 
-// Determine the type value for pagination
-if ($type == '') {
-    $ttvalue = '0';
-} elseif ($type == '0') {
-    $ttvalue = '0';
-} else {
-    $ttvalue = $dvaluen;
-}
+            <?php 
+            if ($pagernew == '') $pagernew = 1;
+            $maxVisible = 5; // Maximum number of pages visible around the current page
+            $startPage = max(1, $pagernew - 2);
+            $endPage = min($num_of_pages, $pagernew + 2);
 
-// "Previous" button logic
-if ($pagernew < $num_of_pages) { // Use > to show 'Previous' for page numbers greater than 1
-    $output .= '<li>
-                    <a href="?page=' . ($pagernew - 1) . '&type=' . $ttvalue . '" class="pg-btn prev-btn" style="cursor: pointer; text-decoration: none;">
-                        <span class="btn-prev"></span> <!-- Icon for Previous -->
-                    </a>
-                </li>';
-}
+            // Display the first page and ellipsis if needed
+            if ($startPage > 1) { ?>
+                <li class="pg-btn" style="padding:5px 6px; cursor: pointer" lifestage="0" typevalue="<?php echo $dvaluen; ?>" pagerv="1" search="0">1</li>
+                <?php if ($startPage > 2) { ?>
+                    <li class="pg-btn disabled" style="cursor: default;">...</li>
+                <?php }
+            }
 
-// Ensure the current page is valid
-if ($pagernew == '') {
-    $pagernew = 1;
-}
+            // Display the page numbers in range
+            for ($i = $startPage; $i <= $endPage; $i++) { ?>
+                <li class="pg-btn <?php echo ($pagernew == $i ? 'active' : ''); ?>" style="padding:5px 6px; cursor: pointer" lifestage="0" typevalue="<?php echo $dvaluen; ?>" pagerv="<?php echo $i; ?>" search="0"><?php echo $i; ?></li>
+            <?php }
 
-// Logic for dynamic range of pages
-$pagernews = $pagernew - 2; // Adjust to show two pages before
-if ($pagernews < 1) {
-    $pagernews = 1;
-}
+            // Display ellipsis and the last page if needed
+            if ($endPage < $num_of_pages) {
+                if ($endPage < $num_of_pages - 1) { ?>
+                    <li class="pg-btn disabled" style="cursor: default;">...</li>
+                <?php } ?>
+                <li class="pg-btn" style="padding:5px 6px; cursor: pointer" lifestage="0" typevalue="<?php echo $dvaluen; ?>" pagerv="<?php echo $num_of_pages; ?>" search="0"><?php echo $num_of_pages; ?></li>
+            <?php } ?>
 
-// Display the first few pages
-if ($pagernew > 5) {
-    $output .= '<li>
-                    <a href="?page=1&type=' . $ttvalue . '" class="pg-btn" style="cursor: pointer;">1</a>
-                </li>';
-    $output .= '<li class="pg-btn disabled" style="cursor: default;">...</li>';
-}
+            <?php 
+            // "Next" button
+            if ($pagernew < $num_of_pages) { ?>
+                <li>
+                    <div class="next-btn" lifestage="0" type="<?php echo $ttvalue; ?>" pager="<?php echo ($pagernew+1); ?>" search="0">
+                        <div style="float:left;margin-right: 5px;margin-left: 10px;margin-top: 4px; cursor: pointer;">
+                            <span class="hidden-xs">Next</span>
+                        </div>
+                        <div style="float:left;margin-top: 10px; cursor: pointer;">
+                            <span class="btn-next"></span>
+                        </div>
+                    </div>
+                </li>
+            <?php } ?>
+        </ul>
+        <?php if ($num_of_pages > 1) { ?>
+            <p>
+                <span>of&nbsp;</span>
+                <span class="ng-binding" dvalue="sdfsd"><?php echo $num_of_pages; ?></span>
+                <span>&nbsp;pages</span>
+            </p>
+        </nav>
+        <?php } else { ?>
+            </ul>
+            <p>
+                <span>of&nbsp;</span>
+                <span class="ng-binding" dvalue="sdfsd"><?php echo $num_of_pages; ?></span>
+                <span>&nbsp;page</span>
+            </p>
+        </nav>
+        <?php } ?>
+</div>
+<!-- pagination box ends -->
 
-// Loop through page numbers dynamically
-for ($i = $pagernews; $i <= min($pagernews + 4, $num_of_pages); $i++) {
-    $output .= '<li class="pg-btn ' . ($pagernew == $i ? 'active' : '') . '" style="cursor: pointer; padding: 5px 10px; background-color: ' . ($pagernew == $i ? '#6BD9DE' : 'transparent') . '; border-radius: 4px;">
-                    <a href="?page=' . $i . '&type=' . $ttvalue . '" style="text-decoration: none; color: ' . ($pagernew == $i ? '#fff' : '#000') . ';">' . $i . '</a>
-                </li>';
-}
-
-// Show ellipsis and the last few pages if necessary
-if ($pagernews + 5 < $num_of_pages) {
-    $output .= '<li class="pg-btn disabled" style="cursor: default;">...</li>';
-    $output .= '<li class="pg-btn">
-                    <a href="?page=' . ($num_of_pages - 1) . '&type=' . $ttvalue . '" style="cursor: pointer; text-decoration: none;">' . ($num_of_pages - 1) . '</a>
-                </li>';
-    $output .= '<li class="pg-btn">
-                    <a href="?page=' . $num_of_pages . '&type=' . $ttvalue . '" style="cursor: pointer; text-decoration: none;">' . $num_of_pages . '</a>
-                </li>';
-}
-
-// "Next" button logic
-if ($pagernew < $num_of_pages) {
-    $output .= '<li>
-                    <a href="?page=' . ($pagernew + 1) . '&type=' . $ttvalue . '" class="pg-btn next-btn" style="cursor: pointer; text-decoration: none;">
-                        <span class="btn-next"></span> <!-- Icon for Next -->
-                    </a>
-                </li>';
-}
-
-// End the pagination
-$output .= '</ul>';
-// if ($num_of_pages > 1) {
-//     $output .= '<p>
-//                     <span>of&nbsp;</span>
-//                     <span class="ng-binding" dvalue="sdfsd">' . $num_of_pages . '</span>
-//                     <span>&nbsp;pages</span>
-//                 </p>';
-// } else {
-//     $output .= '<p>
-//                     <span>of&nbsp;</span>
-//                     <span class="ng-binding" dvalue="sdfsd">' . $num_of_pages . '</span>
-//                     <span>&nbsp;page</span>
-//                 </p>';
-// }
-$output .= '</nav>';
-$output .= '</div>';
-$output .= '<!-- pagination box ends -->';
-?>
 			         	</div>
 					</div>
 				</div>
