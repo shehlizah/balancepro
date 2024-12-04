@@ -78,11 +78,12 @@ while($row = $result->fetch(PDO::FETCH_ASSOC)){
     }else if($dvaluen == 'checklist'){
      $seo_dvalue = $resources.'checklists/';
     } 
-            
+    $viewUrl = $seo_dvalue.$slug;
+
         $output = '';
         $output .= '<div class="resource-column same-height-holder content-inner-page">';
         $output .= '<!-- resource resource in resources starts -->
-		    <div class="col-sm-6 col-md-4">
+		    <div class="col-sm-6 col-md-4"><a href="'.$viewUrl.'" target="_self">
 		     <!-- resource block starts -->
 		     <div class="resource-block">';
         $output .= '<div class="img-holder same-height"><span class="icon-'.$dvaluen.'"></span></div>
@@ -103,7 +104,7 @@ while($row = $result->fetch(PDO::FETCH_ASSOC)){
         }
    	//$output .= 'test';
         $output .= '<span class="icon-lock" style="display: none;"></span>';
-        $output .= '</div>
+        $output .= '</div></a>
                     <!-- resource block ends -->
                     </div>
                     <!-- resource resource in resources starts -->';

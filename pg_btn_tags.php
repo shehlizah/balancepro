@@ -287,11 +287,12 @@ $resources = 'https://'.$_SERVER['HTTP_HOST'].'/resources/';
     }else if($posttype == 'checklist'){
      $seo_dvalue = $resources.'checklists/';
     }
-            
+    
+    $viewUrl = $seo_dvalue.$slug;
     $output = '';
         //$output .= '<div class="resource-column same-height-holder content-inner-page">';
         $output .= '<!-- resource resource in resources starts -->
-            <div class="col-sm-6 col-md-4">
+            <div class="col-sm-6 col-md-4"><a href="'.$viewUrl.'" target="_self">
              <!-- resource block starts -->
              <div class="resource-block">';
         $output .= '<div class="img-holder same-height"><span class="icon-'.$posttype.'"></span></div>
@@ -305,13 +306,13 @@ $resources = 'https://'.$_SERVER['HTTP_HOST'].'/resources/';
            $gettagname = $db->prepare("SELECT * FROM $table_name2 WHERE term_id='$tagid'");
            $gettagname->execute();
            while($resultnn = $gettagname->fetch(PDO::FETCH_ASSOC)){
-               $output .='<a class="tag ng-binding ng-scope tag-click" url="'.$escaped_url.'" tagname="'.$resultnn['name'].'" pager="'.$pager.'" type="'.$type.'" dvalue="'.$tagid.'" tagid="'.$tagid.'" tags="'.$tagid.'">';
+               $output .='<span class="tag ng-binding ng-scope tag-click" url="'.$escaped_url.'" tagname="'.$resultnn['name'].'" pager="'.$pager.'" type="'.$type.'" dvalue="'.$tagid.'" tagid="'.$tagid.'" tags="'.$tagid.'">';
                $output .= $resultnn['name'];
-               $output .='</a>';
+               $output .='</span>';
            }
         }
     $output .='</div>';
-        $output .='<a role="button" href="'.$seo_dvalue. $slug.'" target="_self" class="but btn btn-primary">VIEW</a>';
+        // $output .='<a role="button" href="'.$seo_dvalue. $slug.'" target="_self" class="but btn btn-primary">VIEW</a>';
         $output .='</div>';
         $output .= '<span class="icon-lock" style="display: none;"></span>';
         $output .= '</div>

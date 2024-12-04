@@ -78,11 +78,12 @@ while($row = $result->fetch(PDO::FETCH_ASSOC)){
     }else if($dvaluen == 'checklist'){
      $seo_dvalue = $resources.'checklists/';
     } 
-            
+    $viewUrl = $seo_dvalue.$slug;
+
         $output = '';
         //$output .= '<div class="resource-column same-height-holder content-inner-page">';
         $output .= '<!-- resource resource in resources starts -->
-		    <div class="col-sm-6 col-md-4">
+		    <div class="col-sm-6 col-md-4"><a href="'.$viewUrl.'" target="_self">
 		     <!-- resource block starts -->
 		     <div class="resource-block">';
         $output .= '<div class="img-holder same-height"><span class="icon-'.$dvaluen.'"></span></div>
@@ -96,14 +97,14 @@ while($row = $result->fetch(PDO::FETCH_ASSOC)){
            $gettagname = $db->prepare("SELECT DISTINCT  * FROM $table_name2 WHERE term_id='$tagid'");
            $gettagname->execute();
            while($resultnn = $gettagname->fetch(PDO::FETCH_ASSOC)){
-               $output .='<a class="tag ng-binding ng-scope tag-click" url="'.$escaped_url.'" tagname="'.$resultnn['name'].'" pager="'.$pager.'" type="'.$type.'" dvalue="'.$tagid.'" tags="'.$tagid.'" tagid="'.$tagid.'">';
+               $output .='<span class="tag ng-binding ng-scope tag-click" url="'.$escaped_url.'" tagname="'.$resultnn['name'].'" pager="'.$pager.'" type="'.$type.'" dvalue="'.$tagid.'" tags="'.$tagid.'" tagid="'.$tagid.'">';
                $output .= $resultnn['name'];
-               $output .='</a>';
+               $output .='</span>';
            }
         }
    	//$output .= 'test';
         $output .= '<span class="icon-lock" style="display: none;"></span>';
-        $output .= '</div></div></div>
+        $output .= '</div></div></div></a>
                     <!-- resource block ends -->
                     </div>
                     <!-- resource resource in resources starts -->';

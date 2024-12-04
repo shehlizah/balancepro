@@ -402,10 +402,11 @@ else if($rtypes == '0' AND $search != '0'){
     }else if($dvaluen == 'checklist'){
      $seo_dvalue = $resources.'checklists/';
     } 
-
+	$viewUrl =$seo_dvalue.$slug;
 	    $output = '';
 	        $output .= '<!-- resource resource in resources starts -->
-	            <div class="col-sm-6 col-md-4">
+	            <div class="col-sm-6 col-md-4">  
+				<a href="'.$viewUrl.'" target="_self">
 	             <!-- resource block starts -->
 	             <div class="resource-block">';
 	        $output .= '<div class="img-holder same-height"><span class="icon-'.$dvaluen.'"></span></div>
@@ -419,17 +420,17 @@ else if($rtypes == '0' AND $search != '0'){
 	           $gettagname = $db->prepare("SELECT Distinct  * FROM $table_name2 WHERE term_id='$tagidn'");
 	           $gettagname->execute();
 	           while($resultnn = $gettagname->fetch(PDO::FETCH_ASSOC)){
-	               $output .='<a class="tag ng-binding ng-scope tag-click" url="'.$escaped_url.'" tagname="'.$resultnn['name'].'" pager="'.$pager.'" type="'.$dvaluen.'" dvalue="'.$tagidn.'" sort="'.$sort.'" tagid="'.$tagid.'" tags="'.$tagid.'">';
+	               $output .='<span class="tag ng-binding ng-scope tag-click" url="'.$escaped_url.'" tagname="'.$resultnn['name'].'" pager="'.$pager.'" type="'.$dvaluen.'" dvalue="'.$tagidn.'" sort="'.$sort.'" tagid="'.$tagid.'" tags="'.$tagid.'">';
 	               $output .= $resultnn['name'];
-	               $output .='</a>';
+	               $output .='</span>';
 	           }
 	        }
 	    //$output .= 'test';
 	        $output .='</div>';
-	        $output .='<a role="button" href="'.$seo_dvalue. $slug.'" target="_self" class="but btn btn-primary">VIEW</a>';
+	        // $output .='<a role="button" href="'.$seo_dvalue. $slug.'" target="_self" class="but btn btn-primary">VIEW</a>';
 	        $output .='</div>';
 	        $output .= '<span class="icon-lock" style="display: none;"></span>';
-	        $output .= '</div>
+	        $output .= '</div></a>
 	                    <!-- resource block ends -->
 	                    </div>
 	                    <!-- resource resource in resources starts -->';

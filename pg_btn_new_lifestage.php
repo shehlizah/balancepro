@@ -121,11 +121,12 @@ $postid = $pid['postid'];
     }else if($posttype == 'checklist'){
      $seo_dvalue = $resources.'checklists/';
     }
-            
+    
+    $viewUrl = $seo_dvalue.$postslug;
     $output = '';
         //$output .= '<div class="resource-column same-height-holder content-inner-page">';
         $output .= '<!-- resource resource in resources starts -->
-            <div class="col-sm-6 col-md-4">
+            <div class="col-sm-6 col-md-4">	<a href="'.$viewUrl.'" target="_self">
              <!-- resource block starts -->
              <div class="resource-block">';
         $output .= '<div class="img-holder same-height"><span class="icon-'.$posttype.'"></span></div>
@@ -139,16 +140,16 @@ $postid = $pid['postid'];
            $gettagname = $db->prepare("SELECT * FROM $table_name2 WHERE term_id='$tagidn'");
            $gettagname->execute();
            while($resultnn = $gettagname->fetch(PDO::FETCH_ASSOC)){
-               $output .='<a class="tag ng-binding ng-scope tag-click" url="'.$escaped_url.'" tagname="'.$resultnn['name'].'" pager="'.$dpager.'" type="'.$posttype.'" dvalue="'.$postid.'"tagid="'.$lifestage.'"tags="'.$lifestage.'">';
+               $output .='<span class="tag ng-binding ng-scope tag-click" url="'.$escaped_url.'" tagname="'.$resultnn['name'].'" pager="'.$dpager.'" type="'.$posttype.'" dvalue="'.$postid.'"tagid="'.$lifestage.'"tags="'.$lifestage.'">';
                $output .= $resultnn['name'];
-               $output .='</a>';
+               $output .='</span>';
            }
         }
     $output .='</div>';
-        $output .='<a role="button" href="'.$seo_dvalue. $postslug.'" target="_self" class="but btn btn-primary">VIEW</a>';
+        // $output .='<a role="button" href="'.$seo_dvalue. $postslug.'" target="_self" class="but btn btn-primary">VIEW</a>';
         $output .='</div>';
         $output .= '<span class="icon-lock" style="display: none;"></span>';
-        $output .= '</div>
+        $output .= '</div></a>
                     <!-- resource block ends -->
                     </div>
                     <!-- resource resource in resources starts -->';
