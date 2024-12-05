@@ -1154,8 +1154,11 @@ if($extractedlifestage){
                                         $table_name = "wp_term_relationships";
 									     $table_name2 = "wp_terms";
 							                    $resources = '/resources/';
+												$viewUrl= site_url().$resources.$seo_dvalue. $slug;
+
 							                    $output .= '<!-- resource resource in resources starts -->
-							                              <div class="col-sm-6 col-md-4" >
+							                              <div class="col-sm-6 col-md-4" >														  														     <a href="'.$viewUrl.'" target="_self">
+														
 							                              <!-- resource block starts -->
 							                                <div class="resource-block">
 							                                  <div class="img-holder same-height"><span class="icon-'.$dvaluen.'"></span></div>
@@ -1169,18 +1172,16 @@ if($extractedlifestage){
                                                         $gettagname = $wpdb->get_results("SELECT DISTINCT * FROM $table_name2 WHERE term_id='$tagid'");
  						
                                                         foreach ($gettagname as $printsq) {
-															$output .='<a class="tag ng-binding ng-scope tag-click" url="'.$escaped_url.'" tagname="'.$printsq->name.'" pager="'.$pagernew.'" type="'.$type.'" dvalue="'.$tagid.'" tagid="'.$tagid.'" resourcetypes="'.$resourcetypes.'" lifestage="'.$lifestage.'"  tags="'.$tags.'" search="'.$search.'" sort="'.$sort.'">';
+															$output .='<span class="tag ng-binding ng-scope tag-click" url="'.$escaped_url.'" tagname="'.$printsq->name.'" pager="'.$pagernew.'" type="'.$type.'" dvalue="'.$tagid.'" tagid="'.$tagid.'" resourcetypes="'.$resourcetypes.'" lifestage="'.$lifestage.'"  tags="'.$tags.'" search="'.$search.'" sort="'.$sort.'">';
                                                         	$output .= $printsq->name;
-															$output .='</a>';
+															$output .='</span>';
                                                         }
  													
                                                         //$output .= $tagid;
     												}
-                                                         $output .='</div>
-							                                    <a href="'. site_url().$resources.$seo_dvalue. $slug.'" target="_self" class="but btn btn-primary">' . __('VIEW', 'balance').'</a>
-							                                  </div>
+                                                         $output .='</div>							                                  </div>
 							                                  <span class="icon-lock" style="display: none;"></span>
-							                                </div>
+							                                </div></a>
 							                                <!-- resource block ends -->
 							                              </div>
 							                              <!-- resource resource in resources ends -->';
