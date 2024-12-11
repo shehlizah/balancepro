@@ -293,12 +293,12 @@ $resources = 'https://'.$_SERVER['HTTP_HOST'].'/resources/';
     }else if($posttype == 'checklist'){
      $seo_dvalue = $resources.'checklists/';
     } 
-    $viewUrl = $seo_dvalue.$slug;
-
+    $viewUrl = $seo_dvalue.$slug;$variable = resourcesUrl($viewUrl);
+         
     $output = '';
         //$output .= '<div class="resource-column same-height-holder content-inner-page">';
         $output .= '<!-- resource resource in resources starts -->
-            <div class="col-sm-6 col-md-4"><a href="'.$viewUrl.'" target="_self">
+            <div class="col-sm-6 col-md-4"> <a href="'.$variable.'" target="_self">
              <!-- resource block starts -->
              <div class="resource-block">';
         $output .= '<div class="img-holder same-height"><span class="icon-'.$posttype.'"></span></div>
@@ -319,7 +319,7 @@ $resources = 'https://'.$_SERVER['HTTP_HOST'].'/resources/';
            }
         }
     $output .='</div>';
-        //$output .='<a role="button" href="'.$seo_dvalue. $slug.'" target="_self" class="but btn btn-primary">VIEW</a>';
+        // $output .='<a role="button" href="'.$seo_dvalue. $slug.'" target="_self" class="but btn btn-primary">VIEW</a>';
         $output .='</div>';
         $output .= '<span class="icon-lock" style="display: none;"></span>';
         $output .= '</div></a>
