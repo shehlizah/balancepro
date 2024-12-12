@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -10,72 +10,56 @@ header("Content-Type: application/json; charset=UTF-8");
 include('database.php');include('functions.php');
 // MAKE SQL QUERY
 $personData = json_decode($_REQUEST['data']);
-$dvalue = $personData->type;
-$page = $personData->page;
-$limit = 9;
-if($page){
-    $start = ($page - 1) * $limit; 
-}else{
-    $start = 0; 
-}  
+$dtype = $personData->type;
+$dpager = $personData->page;
 $return_arr = array();
 $list = 'true';
 $level = '100';
 $pgorder = '1';
+$limit = '9';
 
-$tags = $personData->tags;
-$keywords= explode(',', $tags);
-$advancedkeywords = implode("', '", $keywords);
+if($dpager){
+    $start = ($dpager - 1) * $limit; 
+}else{
+    $start = 0; 
+} 
 
-if(empty($tags) or $tags == '' ){
-    $tags = '0' ; 
-}
-
-if(empty($dvalue)){
-    $dvalue = '0' ;  
-}
-
-if($dvalue == '0'){
+if($dtype == '0'){
 // if resourcetype is 0 starts
-  if($tags == '0') {
-  $query = "SELECT DISTINCT * FROM wp_resources as w WHERE w.status = 'publish' AND w.level_of_access = '$level' AND w.list_in_search = '$list' AND w.page_order = '$pgorder' limit $start, $limit";
-  $queryt = "SELECT DISTINCT * FROM wp_resourcesas w WHERE w.status = 'publish' AND w.level_of_access = '$level' AND w.list_in_search = '$list' AND w.page_order = '$pgorder'";
-  } else {
-  $query = "SELECT DISTINCT * FROM wp_resources as w, wp_term_relationships as wtr WHERE w.status = 'publish' AND w.level_of_access = '$level' AND w.list_in_search = '$list' AND w.page_order = '$pgorder' AND  w.wp_post_id = wtr.object_id AND `wtr.term_taxonomy_id` IN ('$advancedkeywords') limit $start, $limit";
-  $queryt = "SELECT DISTINCT * FROM wp_resourcesas w, wp_term_relationships as wtr WHERE w.status = 'publish' AND w.level_of_access = '$level' AND w.list_in_search = '$list' AND w.page_order = '$pgorder' AND  w.wp_post_id = wtr.object_id AND `wtr.term_taxonomy_id` IN ('$advancedkeywords')";
-  }
+	$query = "SELECT DISTINCT * FROM wp_resources WHERE status = 'publish' AND level_of_access = '$level' AND list_in_search = '$list' AND page_order = '$pgorder' limit $start, $limit";
+	$result = $db->prepare($query);
+	$result->execute();$countthem = $result->rowCount();
+
+    $queryt = "SELECT DISTINCT * FROM wp_resources WHERE status = 'publish' AND level_of_access = '$level' AND list_in_search = '$list' AND page_order = '$pgorder'";
+	$result1 = $db->prepare($queryt);
+	$result1->execute();$countthem = $result1>rowCount();
 // if resourcetype is 0 ends
 }else{
 // if resourcetype has value starts
-  if($tags == '0') {
-  $query = "SELECT DISTINCT * FROM wp_resources as w WHERE w.status = 'publish' AND w.type = '$dvalue' AND w.level_of_access = '$level' AND w.list_in_search = '$list' AND w.page_order = '$pgorder' limit $start, $limit";
-  $queryt = "SELECT DISTINCT * FROM wp_resources as w WHERE w.status = 'publish' AND w.type = '$dvalue' AND w.level_of_access = '$level' AND w.list_in_search = '$list' AND w.page_order = '$pgorder'";
-  } else {
-  $query = "SELECT DISTINCT * FROM wp_resources as w, wp_term_relationships, wp_term_relationships as wtr as wtr WHERE w.status = 'publish' AND w.type = '$dvalue' AND w.level_of_access = '$level' AND w.list_in_search = '$list' AND w.page_order = '$pgorder' AND  w.wp_post_id = wtr.object_id AND `wtr.term_taxonomy_id` IN ('$advancedkeywords') limit $start, $limit";
-  $queryt = "SELECT DISTINCT * FROM wp_resources as w, wp_term_relationships as wtr WHERE w.status = 'publish' AND w.type = '$dvalue' AND w.level_of_access = '$level' AND w.list_in_search = '$list' AND w.page_order = '$pgorder' AND  w.wp_post_id = wtr.object_id AND `wtr.term_taxonomy_id` IN ('$advancedkeywords')";
-  }
+	$query = "SELECT DISTINCT * FROM wp_resources WHERE status = 'publish' AND type = '$dtype' AND level_of_access = '$level' AND list_in_search = '$list' AND page_order = '$pgorder' limit $start, $limit";
+	$result = $db->prepare($query);
+	$result->execute();$countthem = $result->rowCount();
+
+    $queryt = "SELECT DISTINCT * FROM wp_resources WHERE status = 'publish' AND type = '$dtype' AND level_of_access = '$level' AND list_in_search = '$list' AND page_order = '$pgorder'";
+	$result1 = $db->prepare($queryt);
+	$result1->execute();$countthem = $result1>rowCount();
 // if resourcetype has value ends
 }
-
-$result = $db->prepare($query);
-$result->execute();$countthem = $result->rowCount();
-
-$result1 = $db->prepare($queryt);
-$result1->execute();$countthem = $result1>rowCount();
 //row count
 $rcount = $result1->rowCount();
-$limit = '9';
 $totalpages = ceil( $rcount / $limit );
 
 $url =  (isset($_SERVER['HTTPS']) ? "https" : "http") . "://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 $escaped_url = htmlspecialchars( $url, ENT_QUOTES, 'UTF-8' );
 $table_name = "wp_term_relationships";
 $table_name2 = "wp_terms";
+$resources = '/resources/';
 
 while($row = $result->fetch(PDO::FETCH_ASSOC)){
-    $title = $row['post_title'];
-    $dvaluen = $row['type'];
-    $postid = $row['wp_post_id'];
+	$titlen = $row['post_title'];
+	$dvaluen = $row['type'];
+	$slug = $row['slug'];
+        $postid = $row['wp_post_id'];
 	if($dvaluen == 'article'){
 	$seo_dvalue = 'articles/';
 	}else if($dvaluen == 'calculator'){
@@ -95,12 +79,11 @@ while($row = $result->fetch(PDO::FETCH_ASSOC)){
             }else if($dvaluen == 'checklist'){
              $seo_dvalue = 'checklists/';
             }
-
+            $viewUrl = $seo_dvalue.$slug;$variable = resourcesUrl($viewUrl);
         $output = '';
-	    $viewUrl = $seo_dvalue.$slug;$variable = resourcesUrl($viewUrl);
         //$output .= '<div class="resource-column same-height-holder content-inner-page">';
         $output .= '<!-- resource resource in resources starts -->
-		    <div class="col-sm-6 col-md-4"><a href="'.$variable.'" target="_self">
+		    <div class="col-sm-6 col-md-4">             <a href="'.$variable.'" target="_self">
 		     <!-- resource block starts -->
 		     <div class="resource-block">';
         $output .= '<div class="img-holder same-height"><span class="icon-'.$dvaluen.'"></span></div>
@@ -121,12 +104,15 @@ while($row = $result->fetch(PDO::FETCH_ASSOC)){
         }
    	$viewUrl = $seo_dvalue.$slug;$variable = resourcesUrl($viewUrl);
         $output .= '<span class="icon-lock" style="display: none;"></span>';
-        $output .= '</div></div></div>
+        $output .= '</div></div></div></a>
                     <!-- resource block ends -->
-                    </a></div>
+                    </div>
                     <!-- resource resource in resources starts -->';
         //$output .= '</div>';
         $return_arr[] = array("message" => $output);
+        
+        //echo $output;
+        //return $output;
 }
 // Encoding array in JSON format
 echo json_encode($return_arr);
