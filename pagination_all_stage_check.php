@@ -125,7 +125,7 @@ if ($totalpages > $maxPagesToShow) {
     $output .= '<li class="pg-btn '.($page == 1 ? 'active' : '').'" style="padding:5px 6px; font-size: 16px ; cursor: pointer;" lifestage="'.$lifestage.'" typevalue="'.$rtypes.'" pagerv="1" search="'.$searchvalue.'" sort="'.$sort.'">1</li>';
 
     if ($page > 4) {
-        $output .= '<li class="pg-btn disabled" style="cursor: default; color: #6BD9DE">...</li>';
+        $output .= '<li class="pg-btn disabled" style="cursor: default; color: #6BD9DE">..</li>';
     }
 
     // Display the range of pages around the current page
@@ -136,7 +136,7 @@ if ($totalpages > $maxPagesToShow) {
     }
 
     if ($page < $totalpages - 3) {
-        $output .= '<li class="pg-btn disabled" style="cursor: default; color: #6BD9DE">...</li>';
+        $output .= '<li class="pg-btn disabled" style="cursor: default; color: #6BD9DE">..</li>';
     }
 
     // Display the last page
