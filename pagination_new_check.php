@@ -722,7 +722,7 @@ if ($totalpages > $maxPagesToShow) {
         $output .= '<li class="pg-btn disabled" style="cursor: default; color: #6BD9DE; font-size:22px; position:relative; bottom :5px;">..</li>';
     }
 
-    // Display the range of pages around the current page
+    // Display the range of pages around  current page
     $start = max(2, $page - 1);
     $end = min($totalpages - 1, $page + 1);
     for ($i = $start; $i <= $end; $i++) {
