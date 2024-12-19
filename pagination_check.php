@@ -422,7 +422,7 @@ $checkcountn = $checkn->rowCount();
 $totalpages = ceil( $checkcountn / $limit );
 $output = '';
 $output .='<nav aria-label="balance pager m14-m15" balance-pager="" class="paging-holder clear">
-   <ul class="pagination">'
+   <ul class="pagination">';
     
     if (empty($page) || $page == '' || $page == 0 || $page == '0') {
         $page = 1;
@@ -497,7 +497,7 @@ $output .='<nav aria-label="balance pager m14-m15" balance-pager="" class="pagin
    
 
 
-}
+
 								
 	$return_arr['message'] = $output;
 	echo json_encode($return_arr);
