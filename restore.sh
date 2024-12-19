@@ -99,7 +99,7 @@ MAIN_SQ_PG="${MAIN_SRC_DIR}search_query_pagination.php"
 
 cp "$WL_BACKUP_FOLDER/render-search-main-design.php" "$RENDER_DIR"
 cp "$WL_BACKUP_FOLDER/main.min.css" "$CSS_DIR"
-cp "$WL_BACKUP_FOLDER/pagination_all_stage_check" "$PG_STG1"
+cp "$WL_BACKUP_FOLDER/pagination_all_stage_check.php" "$PG_STG1"
 #cp"$WL_BACKUP_FOLDER/"  "$PG_CHECK_TAGS" "$BACKUP_FOLDER"
 cp "$WL_BACKUP_FOLDER/pagination_check.php" "$PG_CHECK"
 cp "$WL_BACKUP_FOLDER/pagination_life_stage_check.php" "$PG_LS"
@@ -122,7 +122,6 @@ cp "$WL_BACKUP_FOLDER/search_query.php" "$SEARCH_QUERY"
 cp "$WL_BACKUP_FOLDER/search_query_pagination.php" "$WL_SQP"
 cp "$WL_BACKUP_FOLDER/resource_pagination_content.php" "$RS_PG_CONTENT"
 cp "$WL_BACKUP_FOLDER/resource_search.php" "$RS_SEARCH"
-/
 
 echo "Done copying inc files"
 
@@ -137,7 +136,7 @@ fi
 echo "NOW MAIN copying inc files"
 
 
-cp "$MAIN_BACKUP_FOLDER/main.min_new.css.php" "$MAIN_CSS"
+cp "$MAIN_BACKUP_FOLDER/main.min_new.css" "$MAIN_CSS"
 cp "$MAIN_BACKUP_FOLDER/render-search-main-design.php" "$RENDER_DIR_MAIN"
 # c"$MAIN_BACKUP_FOLDER/.php" p "$TEMP_HOME"
 cp "$MAIN_BACKUP_FOLDER/pagination_sort_check.php" "$MAIN_PG_STG1"
