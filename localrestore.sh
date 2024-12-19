@@ -5,7 +5,7 @@ HOME_MAIN="C:/xampp/htdocs/balancepro"
 # Variables
 SOURCE_DIR_MAIN="https://github.com/shehlizah/balancepro.git"
 SOURCE_DIR="$HOME_WL/templates/main.php"    #Slider
-INC_SOURCE_DIR="$HOME_WL/public_html/includes/core/"    #other all 
+INC_SOURCE_DIR="$HOME_WL/includes/core/"    #other all 
 
 MAIN_SRC_DIR="$HOME_MAIN/includes/core/"
 #BACKUP_DIR="/home/shahlizeh/finalChanges3Dec"   
@@ -38,8 +38,8 @@ if [ ! -e "$WL_BACKUP_FOLDER" ]; then
 fi
 
 #WL
-RENDER_DIR="$HOME_MAIN/templates/render-search-main-design.php"
-CSS_DIR="$HOME_MAIN/assets/css/main.min.css"
+RENDER_DIR="$HOME_WL/templates/render-search-main-design.php"
+CSS_DIR="$HOME_WL/assets/css/main.min.css"
 PG_STG1="${INC_SOURCE_DIR}pagination_all_stage_check.php"
 # PG_CHECK_TAGS="${INC_SOURCE_DIR}pagination_check_tags.php"
 PG_CHECK="${INC_SOURCE_DIR}pagination_check.php"
@@ -67,8 +67,8 @@ WL_SQP="${INC_SOURCE_DIR}search_query_pagination.php"
 
 
 #balanceproMain
-MAIN_CSS="${HOME_MAIN}wp-content/themes/balance-theme/css/main.min_new.css"
-RENDER_DIR_MAIN="{$HOME_MAIN}wp-content/themes/balance-theme/inc/renderers/modules/render-search-main-design.php"
+MAIN_CSS="${HOME_MAIN}/wp-content/themes/balance-theme/css/main.min_new.css"
+RENDER_DIR_MAIN="${HOME_MAIN}/wp-content/themes/balance-theme/inc/renderers/modules/render-search-main-design.php"
 # TEMP_HOME="$HOME/domains/balancepro.org/public_html/wp-content/themes/balance-theme/template-T01-homepage.php"
 MAIN_PG_SORT="${MAIN_SRC_DIR}pagination_sort_check.php"
 MAIN_PG_STG1="${MAIN_SRC_DIR}pagination_all_stage_check.php"
@@ -99,7 +99,7 @@ MAIN_SQ_PG="${MAIN_SRC_DIR}search_query_pagination.php"
 
 cp "$WL_BACKUP_FOLDER/render-search-main-design.php" "$RENDER_DIR"
 cp "$WL_BACKUP_FOLDER/main.min.css" "$CSS_DIR"
-cp "$WL_BACKUP_FOLDER/pagination_all_stage_check" "$PG_STG1"
+cp "$WL_BACKUP_FOLDER/pagination_all_stage_check.php" "$PG_STG1"
 #cp"$WL_BACKUP_FOLDER/"  "$PG_CHECK_TAGS" "$BACKUP_FOLDER"
 cp "$WL_BACKUP_FOLDER/pagination_check.php" "$PG_CHECK"
 cp "$WL_BACKUP_FOLDER/pagination_life_stage_check.php" "$PG_LS"
@@ -122,7 +122,6 @@ cp "$WL_BACKUP_FOLDER/search_query.php" "$SEARCH_QUERY"
 cp "$WL_BACKUP_FOLDER/search_query_pagination.php" "$WL_SQP"
 cp "$WL_BACKUP_FOLDER/resource_pagination_content.php" "$RS_PG_CONTENT"
 cp "$WL_BACKUP_FOLDER/resource_search.php" "$RS_SEARCH"
-/
 
 echo "Done copying inc files"
 
@@ -137,7 +136,7 @@ fi
 echo "NOW MAIN copying inc files"
 
 
-cp "$MAIN_BACKUP_FOLDER/main.min_new.css.php" "$MAIN_CSS"
+cp "$MAIN_BACKUP_FOLDER/main.min_new.css" "$MAIN_CSS"
 cp "$MAIN_BACKUP_FOLDER/render-search-main-design.php" "$RENDER_DIR_MAIN"
 # c"$MAIN_BACKUP_FOLDER/.php" p "$TEMP_HOME"
 cp "$MAIN_BACKUP_FOLDER/pagination_sort_check.php" "$MAIN_PG_STG1"
