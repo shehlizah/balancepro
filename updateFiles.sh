@@ -77,6 +77,8 @@ MAIN_RS_SEARCH_NEW="${MAIN_SRC_DIR}resource_search_new.php"
 MAIN_RS_SORT_SEARCH="${MAIN_SRC_DIR}resource_sort_search.php"
 MAIN_RS_TAG_SEARCH="${MAIN_SRC_DIR}resource_tag_search.php"
 MAIN_RS_TAGS="${MAIN_SRC_DIR}resource_tags.php"
+#MAIN_PG_TAGS_CHECK="${MAIN_SRC_DIR}pagination_tags_check.php"
+#MAIN_PG_TAGS_NCHECK="${MAIN_SRC_DIR}pagination_tags_n_check.php"
 
 
 echo "Copying MAIN updated files"
@@ -108,6 +110,8 @@ cp "$MAIN_CLONE_FOLDER/search_query.php" "$MAIN_SEARCH_QUERY"
 cp "$MAIN_CLONE_FOLDER/search_query_pagination.php" "$MAIN_SQ_PG" 
 cp "$MAIN_CLONE_FOLDER/resource_search.php" "$MAIN_RS_SEARCH" 
 cp "$MAIN_CLONE_FOLDER/resource_pagination_content.php" "$MAIN_RS_PG_CONTENT"
+#cp "$MAIN_CLONE_FOLDER/pagination_tags_check.php" "$MAIN_PG_TAGS_CHECK"
+#cp "$MAIN_CLONE_FOLDER/pagination_tags_n_check.php" "$MAIN_PG_TAGS_NCHECK"
 
 
 echo "Copying WL files"
