@@ -1,22 +1,13 @@
-#!/bin/bash
-# set -x
-
-#sudo su balancepro 
-# SRC_DIR="C:\Users\dell\tests"
-# # Check if source directory exists
-# if [ ! -e "$SRC_DIR" ]; then
-#   mkdir -p $SRC_DIR;
-#   echo "Error: Source directory ($SRC_DIR) does not exist."
-#    exit 1
-# fi
+set -x
+HOME_WL="C:/xampp/htdocs/whitelabel"
+HOME_MAIN="C:/xampp/htdocs/balancepro"
 
 # Variables
 SOURCE_DIR_MAIN="https://github.com/shehlizah/balancepro.git"
-WHITELABEL_SOURCE_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/"
-SOURCE_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/templates/main.php"    #Slider
-INC_SOURCE_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/includes/core/"    #other all 
+SOURCE_DIR="$HOME_WL/public_html/templates/main.php"    #Slider
+INC_SOURCE_DIR="$HOME_WL/includes/core/"    #other all 
 
-MAIN_SRC_DIR="$HOME/domains/balancepro.org/public_html/includes/core/"
+MAIN_SRC_DIR="$HOME_MAIN/includes/core/"
 #BACKUP_DIR="/home/shahlizeh/finalChanges3Dec"   
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")  # Current timestamp for unique backups
 MAIN_BACKUP_FOLDER="$HOME/main_backup_$TIMESTAMP"
@@ -27,8 +18,8 @@ WL_BACKUP_FOLDER="$HOME/wl_backup_$TIMESTAMP"
 
 
 #WL
-RENDER_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/templates/render-search-main-design.php"
-CSS_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/assets/css/main.min.css"
+RENDER_DIR="$HOME_WL/public_html/templates/render-search-main-design.php"
+CSS_DIR="$HOME_WL/public_html/assets/css/main.min.css"
 PG_STG1="${INC_SOURCE_DIR}pagination_all_stage_check.php"
 # PG_CHECK_TAGS="${INC_SOURCE_DIR}pagination_check_tags.php"
 PG_CHECK="${INC_SOURCE_DIR}pagination_check.php"
@@ -54,10 +45,9 @@ RS_TAG_SEARCH="${INC_SOURCE_DIR}resource_tag_search.php"
 SEARCH_QUERY="${INC_SOURCE_DIR}search_query.php"
 WL_SQP="${INC_SOURCE_DIR}search_query_pagination.php"
 
-
 #balanceproMain
-MAIN_CSS="$HOME/domains/balancepro.org/public_html/wp-content/themes/balance-theme/css/main.min_new.css"
-RENDER_DIR_MAIN="$HOME/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/render-search-main-design.php"
+MAIN_CSS="$HOME_MAIN/wp-content/themes/balance-theme/css/main.min_new.css"
+RENDER_DIR_MAIN="$HOME_MAIN/wp-content/themes/balance-theme/inc/renderers/modules/render-search-main-design.php"
 # TEMP_HOME="$HOME/domains/balancepro.org/public_html/wp-content/themes/balance-theme/template-T01-homepage.php"
 MAIN_PG_SORT="${MAIN_SRC_DIR}pagination_sort_check.php"
 MAIN_PG_STG1="${MAIN_SRC_DIR}pagination_all_stage_check.php"
@@ -65,7 +55,7 @@ MAIN_PG_CHECK="${MAIN_SRC_DIR}pagination_check.php"
 # MAIN_PG_CHECK_TAGS="${MAIN_SRC_DIR}pagination_check_tags.php"
 MAIN_PG_LS="${MAIN_SRC_DIR}pagination_life_stage_check.php"
 MAIN_PG_NEW_CHECK="${MAIN_SRC_DIR}pagination_new_check.php"
-#MAIN_PG_SORT_CHECK="${MAIN_SRC_DIR}pagination_sort_check.php"
+MAIN_PG_SORT_CHECK="${MAIN_SRC_DIR}pagination_sort_check.php"
 MAIN_PG_TAGS_CHECK="${MAIN_SRC_DIR}pagination_tags_check.php"
 MAIN_PG_TAGS_NCHECK="${MAIN_SRC_DIR}pagination_tags_n_check.php"
 MAIN_PG_BTN_LS="${MAIN_SRC_DIR}pg_btn_lifestage.php"
@@ -154,6 +144,7 @@ cp "$MAIN_PG_CHECK" "$MAIN_BACKUP_FOLDER"
 cp "$MAIN_PG_LS" "$MAIN_BACKUP_FOLDER"
 cp "$MAIN_PG_NEW_CHECK" "$MAIN_BACKUP_FOLDER"
 cp "$MAIN_PG_SORT" "$MAIN_BACKUP_FOLDER"
+cp "$MAIN_PG_SORT_CHECK" "$MAIN_BACKUP_FOLDER"
 cp "$MAIN_PG_TAGS_CHECK" "$MAIN_BACKUP_FOLDER"
 cp "$MAIN_PG_TAGS_NCHECK" "$MAIN_BACKUP_FOLDER"
 cp "$MAIN_PG_BTN_LS" "$MAIN_BACKUP_FOLDER"
