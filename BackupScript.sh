@@ -99,16 +99,16 @@ echo "MAIN Backup folder created at: $MAIN_BACKUP_FOLDER"
 mkdir -p "$WL_BACKUP_FOLDER"
 echo "WL Backup folder created at: $WL_BACKUP_FOLDER"
 # Create the necessary directories for Whitelabel files
-mkdir -p "$HOME/domains/whitelabel.balancepro.org/public_html/templates"
-mkdir -p "$HOME/domains/whitelabel.balancepro.org/public_html/assets/css"
-mkdir -p "$HOME/domains/whitelabel.balancepro.org/public_html/includes/core"
+mkdir -p "$WL_BACKUP_FOLDER/domains/whitelabel.balancepro.org/public_html/templates"
+mkdir -p "$WL_BACKUP_FOLDER/domains/whitelabel.balancepro.org/public_html/assets/css"
+mkdir -p "$WL_BACKUP_FOLDER/domains/whitelabel.balancepro.org/public_html/includes/core"
 
 # You can add more directories as necessary based on your structure
 
 # Create the necessary directories for BalancePro files
-mkdir -p "$HOME/domains/balancepro.org/public_html/wp-content/themes/balance-theme/css"
-mkdir -p "$HOME/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules"
-mkdir -p "$HOME/domains/balancepro.org/public_html/includes/core"
+mkdir -p "$MAIN_BACKUP_FOLDER/domains/balancepro.org/public_html/wp-content/themes/balance-theme/css"
+mkdir -p "$MAIN_BACKUP_FOLDER/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules"
+mkdir -p "$MAIN_BACKUP_FOLDER/domains/balancepro.org/public_html/includes/core"
 
 # Example: If you need to create directories for other paths
 #mkdir -p "$HOME/domains/balancepro.org/public_html/wp-content/themes/balance-theme/template-T01-homepage.php"
