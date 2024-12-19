@@ -10,31 +10,30 @@ MAIN_SRC_DIR="$HOME/domains/balancepro.org/public_html/includes/core/"
 #BACKUP_DIR="/home/shahlizeh/finalChanges3Dec"   
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")  # Current timestamp for unique backups
 
-MAIN_BACKUP_FOLDER="$HOME/main_backup_$TIMESTAMP"
-WL_BACKUP_FOLDER="$HOME/wl_backup_$TIMESTAMP"
-
 # Prompt the user to enter the folder name
-read -p "Enter the Main folder name you want to use: " MAIN_BACKUP_FOLDER
+read -p "Enter the Main folder name you want to use: " USER_MAIN_BACKUP
 
-if [ -z "$MAIN_BACKUP_FOLDER" ]; then
+if [ -z "$USER_MAIN_BACKUP" ]; then
   echo "Error: No Main folder name provided. Exiting..."
 fi
 
-read -p "Enter the WhiteLabel folder name you want to use: " WL_BACKUP_FOLDER
+read -p "Enter the WhiteLabel folder name you want to use: " USER_WL_BACKUP
 
-if [ -z "$WL_BACKUP_FOLDER" ]; then
+if [ -z "$USER_WL_BACKUP" ]; then
   echo "Error: No WhiteLabel folder name provided. Exiting..."
-  exit 1
 fi
+
+# Append the folders to the $HOME directory
+MAIN_BACKUP_FOLDER="$HOME/${USER_MAIN_BACKUP}"
+WL_BACKUP_FOLDER="$HOME/${USER_WL_BACKUP}"
+
 
 if [ ! -e "$MAIN_BACKUP_FOLDER" ]; then
   echo "Error: MAIN BACKUP directory ($MAIN_BACKUP_FOLDER) does not exist."
-  exit 1
 fi
 
 if [ ! -e "$WL_BACKUP_FOLDER" ]; then
   echo "Error: WhiteLabel BACKUP directory ($WL_BACKUP_FOLDER) does not exist."
-  exit 1
 fi
 
 #WL
@@ -97,8 +96,8 @@ MAIN_RS_PG_CONTENT="${MAIN_SRC_DIR}resource_pagination_content.php"
 MAIN_SEARCH_QUERY="${MAIN_SRC_DIR}search_query.php"
 MAIN_SQ_PG="${MAIN_SRC_DIR}search_query_pagination.php"
 
-cp "$WL_BACKUP_FOLDER/render-search-main-design.php" "$RENDER_DIR"
-cp "$WL_BACKUP_FOLDER/main.min.css" "$CSS_DIR"
+cp "$WL_BACKUP_FOLDER/templates/render-search-main-design.php" "$RENDER_DIR"
+cp "$WL_BACKUP_FOLDER/assets/css/main.min.css" "$CSS_DIR"
 cp "$WL_BACKUP_FOLDER/pagination_all_stage_check.php" "$PG_STG1"
 #cp"$WL_BACKUP_FOLDER/"  "$PG_CHECK_TAGS" "$BACKUP_FOLDER"
 cp "$WL_BACKUP_FOLDER/pagination_check.php" "$PG_CHECK"
@@ -136,8 +135,8 @@ fi
 echo "NOW MAIN copying inc files"
 
 
-cp "$MAIN_BACKUP_FOLDER/main.min_new.css" "$MAIN_CSS"
-cp "$MAIN_BACKUP_FOLDER/render-search-main-design.php" "$RENDER_DIR_MAIN"
+cp "$MAIN_BACKUP_FOLDER/wp-content/themes/balance-theme/css/main.min_new.css" "$MAIN_CSS"
+cp "$MAIN_BACKUP_FOLDER/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/" "$RENDER_DIR_MAIN"
 # c"$MAIN_BACKUP_FOLDER/.php" p "$TEMP_HOME"
 cp "$MAIN_BACKUP_FOLDER/pagination_sort_check.php" "$MAIN_PG_STG1"
 #cp"$MAIN_BACKUP_FOLDER/.php"  "$MAIN_PG_CHECK_TAGS"
