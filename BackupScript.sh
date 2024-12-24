@@ -69,7 +69,7 @@ MAIN_PG_NEW_CHECK="${MAIN_SRC_DIR}pagination_new_check.php"
 MAIN_PG_TAGS_CHECK="${MAIN_SRC_DIR}pagination_tags_check.php"
 MAIN_PG_TAGS_NCHECK="${MAIN_SRC_DIR}pagination_tags_n_check.php"
 MAIN_PG_BTN_LS="${MAIN_SRC_DIR}pg_btn_lifestage.php"
-MAIN_PG_BTN_NEW_LS="${MAIN_SRC_DIR}pg_btn_new_lifestage.php"
+
 MAIN_PG_BTN_TAGS="${MAIN_SRC_DIR}pg_btn_tags.php"
 MAIN_PGN_BTN_RS="${MAIN_SRC_DIR}pgn_btn_resource.php"
 MAIN_RS_ALL="${MAIN_SRC_DIR}resource_all_page.php"
@@ -175,7 +175,7 @@ cp "$MAIN_PG_SORT" "$MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public
 cp "$MAIN_PG_TAGS_CHECK" "$MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/includes/core/"
 cp "$MAIN_PG_TAGS_NCHECK" "$MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/includes/core/"
 cp "$MAIN_PG_BTN_LS" "$MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/includes/core/"
-cp "$MAIN_PG_BTN_NEW_LS" "$MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/includes/core/"
+
 cp "$MAIN_PG_BTN_TAGS" "$MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/includes/core/"
 cp "$MAIN_PGN_BTN_RS" "$MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/includes/core/"
 cp "$MAIN_RS_ALL" "$MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/includes/core/"
