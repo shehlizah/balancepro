@@ -1,7 +1,7 @@
 # Variables
 
 HOME_WL="C:/xampp/htdocs/whitelabel"
-HOME_MAIN="C:/xampp/htdocs/balancetest"
+HOME_MAIN="C:/xampp/htdocs/balancepro"
 
 SOURCE_DIR_MAIN="https://github.com/shehlizah/balancepro.git"
 WHITELABEL_SOURCE_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/"
@@ -46,9 +46,9 @@ RS_SEARCH_NEW="${INC_SOURCE_DIR}resource_search_new.php"
 RS_SORT_SEARCH="${INC_SOURCE_DIR}resource_sort_search.php"
 RS_TAG_SEARCH="${INC_SOURCE_DIR}resource_tag_search.php"
 SEARCH_QUERY="${INC_SOURCE_DIR}search_query.php"
-WL_SQP= "${INC_SOURCE_DIR}search_query_pagination.php"
-RS_PG_CONTENT= "${INC_SOURCE_DIR}resource_pagination_content.php"
-RS_SEARCH= "${INC_SOURCE_DIR}resource_search.php"
+WL_SQP="${INC_SOURCE_DIR}search_query_pagination.php"
+RS_PG_CONTENT="${INC_SOURCE_DIR}resource_pagination_content.php"
+RS_SEARCH="${INC_SOURCE_DIR}resource_search.php"
 
 
 
@@ -67,8 +67,8 @@ MAIN_RS_ALL="${MAIN_SRC_DIR}resource_all_page.php"
 MAIN_RS_LS="${MAIN_SRC_DIR}resource_life_stages.php" 
 MAIN_RS_PG_ALL_NEW="${MAIN_SRC_DIR}resource_pagination_all_new.php"
 MAIN_RS_PG_BACK_CONTENT="${MAIN_SRC_DIR}resource_pagination_back_content.php"
-MAIN_RS_PG_CONTENT= "${MAIN_SRC_DIR}resource_pagination_content.php"
-MAIN_RS_SEARCH= "${MAIN_SRC_DIR}resource_search.php"
+MAIN_RS_PG_CONTENT="${MAIN_SRC_DIR}resource_pagination_content.php"
+MAIN_RS_SEARCH="${MAIN_SRC_DIR}resource_search.php"
 MAIN_RS_SEARCH_PG_CONNTENT="${MAIN_SRC_DIR}resource_search_pagination_content.php"
 MAIN_RS_SEARCH_NEW="${MAIN_SRC_DIR}resource_search_new.php"
 MAIN_RS_SORT_SEARCH="${MAIN_SRC_DIR}resource_sort_search.php"
