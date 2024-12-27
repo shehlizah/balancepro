@@ -12,8 +12,8 @@ INC_SOURCE_DIR="$HOME_WL/includes/core/"    #other all
 MAIN_RNDR_SOURCE_DIR="$HOME_MAIN/wp-content/themes/balance-theme/inc/renderers/modules/"
 LS_MAIN_SRC_DIR="$HOME_MAIN/includes/core/"
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")  # Current timestamp for unique backups
-LS_MAIN_BACKUP_FOLDER="$HOME/main_backup_$TIMESTAMP"
-LS_BACKUP_FOLDER="$HOME/wl_backup_$TIMESTAMP"
+LS_MAIN_BACKUP_FOLDER="$PWD/main_backup_$TIMESTAMP"
+LS_BACKUP_FOLDER="$PWD/wl_backup_$TIMESTAMP"
 
 # WL Variables
 CONF_DIR="$HOME_WL/includes/config.php"
@@ -57,9 +57,9 @@ cp "$LS_CORE" "$LS_BACKUP_FOLDER/whitelabel/public_html/includes/core/"
 
 # Main website files copying
 
-cp "$LS_MAIN_SQ_PG" "$MAIN_BACKUP_FOLDER/balancepro/includes/core/"
-cp "$LS_MAIN_BACKUP_FOLDER" "$LS_MAIN_RMRS/balancepro/wp-content/themes/balance-theme/inc/renderers/modules/" 
-cp "$LS_MAIN_BACKUP_FOLDER" "$LS_MAIN_RSMDL/balancepro/wp-content/themes/balance-theme/inc/renderers/modules/" 
+cp "$LS_MAIN_SQ_PG" "$LS_MAIN_BACKUP_FOLDER/balancepro/includes/core/"
+cp "$LS_MAIN_RMRS" "$LS_MAIN_BACKUP_FOLDER/balancepro/wp-content/themes/balance-theme/inc/renderers/modules/" 
+cp "$LS_MAIN_RSMDL" "$LS_MAIN_BACKUP_FOLDER/balancepro/wp-content/themes/balance-theme/inc/renderers/modules/" 
 
 
 echo "Files copied successfully!"
