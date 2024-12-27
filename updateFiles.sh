@@ -1,16 +1,16 @@
 # Variables
 
 SOURCE_DIR_MAIN="https://github.com/shehlizah/balancepro.git"
-SOURCE_DIR="$PWD/domains/whitelabel.balancepro.org/public_html/"
+SOURCE_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/"
 
-INC_SOURCE_DIR="$PWD/domains/whitelabel.balancepro.org/public_html/includes/core/"    #other all 
-TMP_SOURCE_DIR="$PWD/domains/whitelabel.balancepro.org/public_html/templates/"
-MAIN_RNDR_SOURCE_DIR="$PWD/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/"
+INC_SOURCE_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/includes/core/"    #other all 
+TMP_SOURCE_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/templates/"
+MAIN_RNDR_SOURCE_DIR="$HOME/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/"
 
-LS_MAIN_SRC_DIR="$PWD/domains/balancepro.org/public_html/includes/core/"
+LS_MAIN_SRC_DIR="$HOME/domains/balancepro.org/public_html/includes/core/"
 #BACKUP_DIR="/home/shahlizeh/finalChanges3Dec"   
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")  # Current timestamp for unique backups
-BACKUP_FOLDER="$PWD/backup_$TIMESTAMP"
+BACKUP_FOLDER="$HOME/backup_$TIMESTAMP"
 LS_MAIN_BRANCH_NAME="lifestage-balancepro"
 LS_BRANCH_NAME="lifestage-whitelabel"
 LS_MAIN_CLONE_FOLDER="$PWD/main_repo_${LS_MAIN_BRANCH_NAME}"
