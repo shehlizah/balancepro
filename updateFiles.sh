@@ -12,7 +12,7 @@ LS_MAIN_SRC_DIR="$PWD/domains/balancepro.org/public_html/includes/core/"
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")  # Current timestamp for unique backups
 BACKUP_FOLDER="$PWD/backup_$TIMESTAMP"
 LS_MAIN_BRANCH_NAME="lifestage-balancepro"
-LS_BRANCH_NAME="lifestage"
+LS_BRANCH_NAME="lifestage-whitelabel"
 LS_MAIN_CLONE_FOLDER="$PWD/main_repo_${LS_MAIN_BRANCH_NAME}"
 LS_CLONE_FOLDER="$PWD/WL_repo_${LS_BRANCH_NAME}"
 # #echo "Source Directory: $SOURCE_DIR"
