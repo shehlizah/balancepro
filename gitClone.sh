@@ -3,7 +3,7 @@ SOURCE_DIR_MAIN="https://github.com/shehlizah/balancepro.git"
 
 
 LS_MAIN_BRANCH_NAME="lifestage-balancepro"
-LS_BRANCH_NAME="lifestage"
+LS_BRANCH_NAME="lifestage-whitelabel"
 deployment="lifestage-deployment"
 
 LS_MAIN_CLONE_FOLDER="$HOME/main_repo_${LS_MAIN_BRANCH_NAME}"
