@@ -13,10 +13,10 @@
 # Variables
 SOURCE_DIR_MAIN="https://github.com/shehlizah/balancepro.git"
 #WHITELABEL_SOURCE_DIR="$PWD/domains/whitelabel.balancepro.org/public_html/"
-TMP_SOURCE_DIR="$PWD/domains/whitelabel.balancepro.org/public_html/templates/"
-INC_SOURCE_DIR="$PWD/domains/whitelabel.balancepro.org/public_html/includes/core/"    #other all 
-MAIN_RNDR_SOURCE_DIR="$PWD/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/"
-LS_MAIN_SRC_DIR="$PWD/domains/balancepro.org/public_html/includes/core/"
+TMP_SOURCE_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/templates/"
+INC_SOURCE_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/includes/core/"    #other all 
+MAIN_RNDR_SOURCE_DIR="$HOME/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/"
+LS_MAIN_SRC_DIR="$HOME/domains/balancepro.org/public_html/includes/core/"
 #BACKUP_DIR="/home/shahlizeh/finalChanges3Dec"   
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")  # Current timestamp for unique backups
 LS_MAIN_BACKUP_FOLDER="$PWD/ls_main_backup_$TIMESTAMP"
@@ -102,8 +102,8 @@ echo "NOW MAIN copying inc files"
 
 
 cp "$LS_MAIN_SQ_PG" "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/includes/core/"
-cp "$LS_MAIN_BACKUP_FOLDER" "$LS_MAIN_RMRS/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/" 
-cp "$LS_MAIN_BACKUP_FOLDER" "$LS_MAIN_RSMDL/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/" 
+cp "$LS_MAIN_RMRS" "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/" 
+cp "$LS_MAIN_RSMDL" "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/" 
 
 
 echo "Main website files copied"
