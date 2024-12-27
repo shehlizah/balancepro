@@ -6,9 +6,9 @@ LS_MAIN_BRANCH_NAME="lifestage-balancepro"
 LS_BRANCH_NAME="lifestage-whitelabel"
 deployment="lifestage-deployment"
 
-LS_MAIN_CLONE_FOLDER="$HOME/main_repo_${LS_MAIN_BRANCH_NAME}"
-LS_CLONE_FOLDER="$HOME/WL_repo_${LS_BRANCH_NAME}"
-deploymentScripts="$HOME/gitScripts_${LS_BRANCH_NAME}"
+LS_MAIN_CLONE_FOLDER="$PWD/main_repo_${LS_MAIN_BRANCH_NAME}"
+LS_CLONE_FOLDER="$PWD/WL_repo_${LS_BRANCH_NAME}"
+deploymentScripts="$PWD/gitScripts_${LS_BRANCH_NAME}"
 
 mkdir -p "$LS_MAIN_CLONE_FOLDER"
 mkdir -p "$LS_CLONE_FOLDER"
