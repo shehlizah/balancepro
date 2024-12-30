@@ -50,7 +50,7 @@ cp "$LS_MAIN_CLONE_FOLDER/render-search-main-design-lifestage.php" "$LS_MAIN_SQ_
 
 echo "Copying WL files"
 
-cp "$LS_CLONE_FOLDER/index.php" "$HOME/domains/whitelabel.balancepro.org/public_html/"
+cp "$LS_CLONE_FOLDER/index.php" "$HOME/domains/whitelabel.balancepro.org/public_html/index.php"
 
 cp "$LS_CLONE_FOLDER/main.min.css" "$HOME/domains/whitelabel.balancepro.org/public_html/assets/css/main.min.css" 
 
