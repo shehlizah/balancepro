@@ -40,6 +40,9 @@ cp "$LS_MAIN_CLONE_FOLDER/render-search-main-design-lifestage.php" "$LS_MAIN_RSM
 echo "Copying WL files"
 
 # Copy Whitelabel Files
+cp "$LS_CLONE_FOLDER/index.php" "$HOME_WL/public_html/index.php"
+
+cp "$LS_CLONE_FOLDER/main.min.css" "$HOME_WL/public_html/assets/css/main.min.css" 
 cp "$LS_CLONE_FOLDER/config.php" "$CONF_DIR" || echo "Failed to copy config.php"
 cp "$LS_CLONE_FOLDER/lifestage.php" "$LIFESTAGE" || echo "Failed to copy lifestage.php"
 cp "$LS_CLONE_FOLDER/ls.php" "$LS" || echo "Failed to copy ls.php"
