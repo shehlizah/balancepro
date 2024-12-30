@@ -24,7 +24,7 @@ LS_CLONE_FOLDER="$PWD/WL_repo_${LS_BRANCH_NAME}"
 #WL
 IND_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/index.php"
 CSS_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/assets/css/main.min.css"
-CONF_DIR="$PWD/domains/whitelabel.balancepro.org/public_html/includes/config.php"
+CONF_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/includes/config.php"
 LIFESTAGE="${TMP_SOURCE_DIR}lifestage.php"
 LS="${TMP_SOURCE_DIR}ls.php"
 LS_SQP="${INC_SOURCE_DIR}search_query_pagination.php"
@@ -50,7 +50,7 @@ cp "$LS_MAIN_CLONE_FOLDER/render-search-main-design-lifestage.php" "$LS_MAIN_SQ_
 
 echo "Copying WL files"
 
-cp "$LS_CLONE_FOLDER/index.php" "$HOME/domains/whitelabel.balancepro.org/public_html/
+cp "$LS_CLONE_FOLDER/index.php" "$HOME/domains/whitelabel.balancepro.org/public_html/"
 
 cp "$LS_CLONE_FOLDER/main.min.css" "$HOME/domains/whitelabel.balancepro.org/public_html/assets/css/main.min.css" 
 
