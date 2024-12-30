@@ -27,8 +27,9 @@ LS_BACKUP_FOLDER="$PWD/ls_backup_$TIMESTAMP"
 
 
 #WL
-CSS_DIR="$PWD/domains/whitelabel.balancepro.org/public_html/assets/css/main.min.css"
-CONF_DIR="$PWD/domains/whitelabel.balancepro.org/public_html/includes/config.php"
+CSS_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/assets/css/main.min.css"
+IND_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/index.php"
+CONF_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/includes/config.php"
 LIFESTAGE="${TMP_SOURCE_DIR}lifestage.php"
 LS="${TMP_SOURCE_DIR}ls.php"
 LS_SQP="${INC_SOURCE_DIR}search_query_pagination.php"
@@ -57,6 +58,7 @@ mkdir -p "$LS_BACKUP_FOLDER"
 echo "WL Backup folder created at: $LS_BACKUP_FOLDER"
 # Create the necessary directories for Whitelabel files
 mkdir -p "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/assets/css"
+mkdir -p "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html"
 mkdir -p "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/templates"
 mkdir -p "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes"
 mkdir -p "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/core"
@@ -91,7 +93,8 @@ echo "Directories created successfully."
 # # fi
 
 cp "$CSS_DIR" "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/assets/css/"
-cp "$CONF_DIR" "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/"
+cp "$CSS_DIR" "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/"
+cp "$IND_DIR" "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/"
 cp "$LIFESTAGE" "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/templates/"
 cp "$LS" "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/templates/"
 cp "$LS_SQP" "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/core/"
