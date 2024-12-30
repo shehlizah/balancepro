@@ -61,7 +61,7 @@ $quiz_sites_24 = array('vacu.staging.balancepro.org');
 //$superadminmail = 'marsal@xekera.com';
 $parent_url='https://staging.balancepro.org';
 
-$conn = new mysqli($host, $user, $pass, $database);
+$conn = new mysqli($host, $dbuser, $pass, $database);
 $conn->set_charset("utf8");
 return $conn;
 //mssql_connect($MS_DB_HOST, $MS_DB_USERNAME, $MS_DB_PASSWORD, $MS_DB_DATABASE);
