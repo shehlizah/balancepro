@@ -37,6 +37,7 @@ echo "Detected WL BACKUP folder: $LS_BACKUP_FOLDER"
 # File paths for restoration (WhiteLabel)
 CSS_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/assets/css/main.min.css"
 CONF_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/includes/config.php"
+IND_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/index.php"
 LIFESTAGE="${TMP_SOURCE_DIR}lifestage.php"
 LS="${TMP_SOURCE_DIR}ls.php"
 LS_SQP="${INC_SOURCE_DIR}search_query_pagination.php"
@@ -63,6 +64,7 @@ cp() {
 # Restore WhiteLabel files
 echo "Restoring WhiteLabel files..."
 cp "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/assets/css/main.min.css" "$CSS_DIR"
+cp "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/index.php" "$IND_DIR"
 cp "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/config.php" "$CONF_DIR"
 cp "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/templates/lifestage.php" "$LIFESTAGE"
 cp "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/templates/ls.php" "$LS"
