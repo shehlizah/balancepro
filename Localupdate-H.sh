@@ -16,6 +16,8 @@ LS_MAIN_CLONE_FOLDER="$PWD/main_repo_${LS_MAIN_BRANCH_NAME}"
 LS_CLONE_FOLDER="$PWD/WL_repo_${LS_BRANCH_NAME}"
 
 # Whitelabel Variables
+IND_DIR="$HOME_WL/public_html/index.php"
+CSS_DIR="$HOME_WL/public_html/assets/css/main.min.css"
 CONF_DIR="$HOME_WL/includes/config.php"
 LIFESTAGE="${TMP_SOURCE_DIR}lifestage.php"
 LS="${TMP_SOURCE_DIR}ls.php"
