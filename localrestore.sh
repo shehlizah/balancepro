@@ -32,7 +32,7 @@ HOME_MAIN="C:/xampp/htdocs/balancetest"
 
 # WL files to restore
 CSS_DIR="$HOME_WL/public_html/assets/css/main.min.css"
-CONF_DIR="$HOME_WL/public_html/includes/config.php"
+IND_DIR="$HOME_WL/public_html/includes/index.php"
 CONF_DIR="$HOME_WL/includes/config.php"
 LIFESTAGE="$HOME_WL/templates/lifestage.php"
 LS="$HOME_WL/templates/ls.php"
