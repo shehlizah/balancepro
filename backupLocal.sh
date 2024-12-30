@@ -16,6 +16,8 @@ LS_MAIN_BACKUP_FOLDER="$PWD/main_backup_$TIMESTAMP"
 LS_BACKUP_FOLDER="$PWD/wl_backup_$TIMESTAMP"
 
 # WL Variables
+CSS_DIR="$HOME_WL/public_html/assets/css/main.min.css"
+IND_DIR="$HOME_WL/public_html/includes/index.php"
 CONF_DIR="$HOME_WL/includes/config.php"
 LIFESTAGE="${TMP_SOURCE_DIR}lifestage.php"
 LS="${TMP_SOURCE_DIR}ls.php"
@@ -39,6 +41,7 @@ echo "WL Backup folder created at: $LS_BACKUP_FOLDER"
 mkdir -p "$LS_MAIN_BACKUP_FOLDER/balancepro/includes/core"
 mkdir -p "$LS_MAIN_BACKUP_FOLDER/balancepro/wp-content/themes/balance-theme/inc/renderers/modules"
 mkdir -p "$LS_BACKUP_FOLDER/whitelabel/public_html/includes/core"
+mkdir -p "$LS_BACKUP_FOLDER/whitelabel/public_html"
 mkdir -p "$LS_BACKUP_FOLDER/whitelabel/public_html/templates"
 mkdir -p "$LS_BACKUP_FOLDER/whitelabel/public_html/includes"
 echo "Created necessary directories under backup folders."
@@ -47,6 +50,8 @@ echo "Created necessary directories under backup folders."
 
 
 # Copy files to the correct destination directories
+cp "$CSS_DIR" "$LS_BACKUP_FOLDER/public_html/assets/css/"
+cp "$IND_DIR" "$LS_BACKUP_FOLDER/public_html/"
 cp "$CONF_DIR" "$LS_BACKUP_FOLDER/whitelabel/public_html/includes/"
 cp "$LIFESTAGE" "$LS_BACKUP_FOLDER/whitelabel/public_html/templates/"
 cp "$LS" "$LS_BACKUP_FOLDER/whitelabel/public_html/templates/"
