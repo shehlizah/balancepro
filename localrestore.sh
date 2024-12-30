@@ -31,6 +31,8 @@ HOME_WL="C:/xampp/htdocs/whitelabel"
 HOME_MAIN="C:/xampp/htdocs/balancetest"
 
 # WL files to restore
+CSS_DIR="$HOME_WL/public_html/assets/css/main.min.css"
+CONF_DIR="$HOME_WL/public_html/includes/config.php"
 CONF_DIR="$HOME_WL/includes/config.php"
 LIFESTAGE="$HOME_WL/templates/lifestage.php"
 LS="$HOME_WL/templates/ls.php"
@@ -45,6 +47,8 @@ LS_MAIN_RSMDL="$HOME_MAIN/wp-content/themes/balance-theme/inc/renderers/modules/
 
 # Copy files from the WhiteLabel backup
 echo "Restoring WhiteLabel files..."
+cp "$LS_BACKUP_FOLDER/whitelabel/public_html/assets/css/main.min.css" "$CSS_DIR"
+cp "$LS_BACKUP_FOLDER/whitelabel/public_html/index.php" "$IND_DIR"
 cp "$LS_BACKUP_FOLDER/whitelabel/public_html/includes/config.php" "$CONF_DIR" || echo "Failed to restore config.php"
 cp "$LS_BACKUP_FOLDER/whitelabel/public_html/templates/lifestage.php" "$LIFESTAGE" || echo "Failed to restore lifestage.php"
 cp "$LS_BACKUP_FOLDER/whitelabel/public_html/templates/ls.php" "$LS" || echo "Failed to restore ls.php"
