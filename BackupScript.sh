@@ -27,6 +27,7 @@ LS_BACKUP_FOLDER="$PWD/ls_backup_$TIMESTAMP"
 
 
 #WL
+LS_RNDR_SEARCH="${TMP_SOURCE_DIR}render-search-main-design.php"
 CSS_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/assets/css/main.min.css"
 IND_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/index.php"
 CONF_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/includes/config.php"
@@ -39,7 +40,8 @@ LS_CORE="${INC_SOURCE_DIR}core.php"
 
 
 #balanceproMain
-
+MAIN_CSS_DIR="$HOME/domains/balancepro.org/public_html/wp-content/themes/balance-theme/css/main.min_new.css"
+MAIN_RNDR_SEARCH="${MAIN_RNDR_SOURCE_DIR}render-search-main-design.php"
 LS_MAIN_SQ_PG="${LS_MAIN_SRC_DIR}search_query_pagination.php"
 LS_MAIN_RMRS="${MAIN_RNDR_SOURCE_DIR}render-module-M14-15-resources-search.php"
 LS_MAIN_RSMDL="${MAIN_RNDR_SOURCE_DIR}render-search-main-design-lifestage.php"
@@ -67,7 +69,7 @@ mkdir -p "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_
 
 # Create the necessary directories for BalancePro files
 
-
+mkdir -p "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/css"
 mkdir -p "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/includes/core"
 mkdir -p "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules"
 
@@ -96,6 +98,7 @@ cp "$CSS_DIR" "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/pu
 cp "$CSS_DIR" "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/"
 cp "$IND_DIR" "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/"
 cp "$LIFESTAGE" "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/templates/"
+cp "$LS_RNDR_SEARCH" "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/templates/"
 cp "$LS" "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/templates/"
 cp "$LS_SQP" "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/core/"
 cp "$LS_RS_SEARCH_PG_CONTENT" "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/core/"
@@ -106,9 +109,10 @@ echo "Done copying inc files"
 
 echo "NOW MAIN copying inc files"
 
-
+cp "$MAIN_CSS_DIR" "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/css/"
 cp "$LS_MAIN_SQ_PG" "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/includes/core/"
 cp "$LS_MAIN_RMRS" "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/" 
+cp "$MAIN_RNDR_SEARCH" "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/"
 cp "$LS_MAIN_RSMDL" "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/" 
 
 
