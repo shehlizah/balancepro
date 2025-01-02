@@ -18637,8 +18637,13 @@ ol.questions {
 
 .paging-holder .pagination li.active {
     font-weight: 600
+	 background-color: #6BD9DE !important; /* Active page background color */
+    color: #fff !important; /* Active page text color */
 }
-
+.paging-holder .pagination li:hover{
+	 background-color: #6BD9DE !important ; /* Hover background color */
+    color: #fff !important; /* Change text color on hover */
+}
 @media (min-width:768px) {
 
     .btn-holder .btn.btn-single,
