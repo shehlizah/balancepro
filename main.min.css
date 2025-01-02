@@ -8559,6 +8559,12 @@ ul.pagination {
 a.pg-btn.next-btn:hover{
 	background-color: transparent !important;
 }
+.next-btn{
+	padding-top:4px;
+}
+.prev-btn{
+	padding-top:4px;
+}
 .pagination {
     list-style: none !important;
     
