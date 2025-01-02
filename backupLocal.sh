@@ -1,4 +1,4 @@
-#!/bin/bash
+ #!/bin/bash
 #set -x
 
 HOME_WL="C:/xampp/htdocs/whitelabel"
@@ -16,6 +16,7 @@ LS_MAIN_BACKUP_FOLDER="$PWD/main_backup_$TIMESTAMP"
 LS_BACKUP_FOLDER="$PWD/wl_backup_$TIMESTAMP"
 
 # WL Variables
+LS_RNDR_SEARCH="${TMP_SOURCE_DIR}render-search-main-design.php"
 CSS_DIR="$HOME_WL/public_html/assets/css/main.min.css"
 IND_DIR="$HOME_WL/public_html/includes/index.php"
 CONF_DIR="$HOME_WL/includes/config.php"
@@ -26,6 +27,8 @@ LS_RS_SEARCH_PG_CONTENT="${INC_SOURCE_DIR}resource_search_pagination_content.php
 LS_CORE="${INC_SOURCE_DIR}core.php"
 
 # BalancePro Main Variables
+MAIN_CSS_DIR="$HOME_MAIN/public_html/wp-content/themes/balance-theme/css/main.min_new.css"
+MAIN_RNDR_SEARCH="${MAIN_RNDR_SOURCE_DIR}render-search-main-design.php"
 LS_MAIN_SQ_PG="${LS_MAIN_SRC_DIR}search_query_pagination.php"
 LS_MAIN_RMRS="${MAIN_RNDR_SOURCE_DIR}render-module-M14-15-resources-search.php"
 LS_MAIN_RSMDL="${MAIN_RNDR_SOURCE_DIR}render-search-main-design-lifestage.php"
@@ -38,6 +41,7 @@ mkdir -p "$LS_BACKUP_FOLDER"
 echo "WL Backup folder created at: $LS_BACKUP_FOLDER"
 
 # Ensure all necessary directories exist in the backup paths
+mkdir -p "$LS_MAIN_BACKUP_FOLDER/balancepro/wp-content/themes/balance-theme/css"
 mkdir -p "$LS_MAIN_BACKUP_FOLDER/balancepro/includes/core"
 mkdir -p "$LS_MAIN_BACKUP_FOLDER/balancepro/wp-content/themes/balance-theme/inc/renderers/modules"
 mkdir -p "$LS_BACKUP_FOLDER/whitelabel/public_html/includes/core"
@@ -53,6 +57,7 @@ echo "Created necessary directories under backup folders."
 cp "$CSS_DIR" "$LS_BACKUP_FOLDER/public_html/assets/css/"
 cp "$IND_DIR" "$LS_BACKUP_FOLDER/public_html/"
 cp "$CONF_DIR" "$LS_BACKUP_FOLDER/whitelabel/public_html/includes/"
+cp "$LS_RNDR_SEARCH" "$LS_BACKUP_FOLDER/whitelabel/public_html/templates/"
 cp "$LIFESTAGE" "$LS_BACKUP_FOLDER/whitelabel/public_html/templates/"
 cp "$LS" "$LS_BACKUP_FOLDER/whitelabel/public_html/templates/"
 cp "$LS_SQP" "$LS_BACKUP_FOLDER/whitelabel/public_html/includes/core/"
@@ -61,7 +66,8 @@ cp "$LS_CORE" "$LS_BACKUP_FOLDER/whitelabel/public_html/includes/core/"
 
 
 # Main website files copying
-
+cp "$MAIN_CSS_DIR" "$LS_MAIN_BACKUP_FOLDER/balancepro/wp-content/themes/balance-theme/css/"
+cp "$MAIN_RNDR_SEARCH" "$LS_MAIN_BACKUP_FOLDER/balancepro/wp-content/themes/balance-theme/inc/renderers/modules/"
 cp "$LS_MAIN_SQ_PG" "$LS_MAIN_BACKUP_FOLDER/balancepro/includes/core/"
 cp "$LS_MAIN_RMRS" "$LS_MAIN_BACKUP_FOLDER/balancepro/wp-content/themes/balance-theme/inc/renderers/modules/" 
 cp "$LS_MAIN_RSMDL" "$LS_MAIN_BACKUP_FOLDER/balancepro/wp-content/themes/balance-theme/inc/renderers/modules/" 
