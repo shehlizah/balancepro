@@ -8572,7 +8572,10 @@ a.pg-btn.next-btn:hover{
 
 li.pg-btn {
     text-decoration: none !important;
-    padding: 0px !important; /* Add padding for a better click area */
+    padding-left: 3px !important;/* Add padding for a better click area */
+padding-right: 3px !important;
+	margin-right: 1.5px;
+	margin-left:1.5px;
     border-radius: 5px !important; /* Rounded corners */
     color: #000  ; /* Default text color */
     
@@ -8580,18 +8583,22 @@ li.pg-btn {
 }
 li.pg-btn.disabled:hover {
     background-color: transparent;
-	color:#000;
+	color:#6BD9DE !important;
 }
 
 li.pg-btn:hover {
     background-color: #6BD9DE ; /* Hover background color */
     color: #fff !important; /* Change text color on hover */
+	padding-left: 3px !important;
+    padding-right: 3px !important;
 	
 }
 
 li.pg-btn.active {
     background-color: #6BD9DE !important; /* Active page background color */
     color: #fff !important; /* Active page text color */
+	padding-left: 3px !important;
+    padding-right: 3px !important;
 }
 
 @media (max-device-width:480px) and (orientation:landscape) {
