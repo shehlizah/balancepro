@@ -35,16 +35,20 @@ echo "Detected MAIN BACKUP folder: $LS_MAIN_BACKUP_FOLDER"
 echo "Detected WL BACKUP folder: $LS_BACKUP_FOLDER"
 
 # File paths for restoration (WhiteLabel)
+
 CSS_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/assets/css/main.min.css"
 CONF_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/includes/config.php"
 IND_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/index.php"
 LIFESTAGE="${TMP_SOURCE_DIR}lifestage.php"
+LS_RNDR_SEARCH="${TMP_SOURCE_DIR}render-search-main-design.php"
 LS="${TMP_SOURCE_DIR}ls.php"
 LS_SQP="${INC_SOURCE_DIR}search_query_pagination.php"
 LS_RS_SEARCH_PG_CONTENT="${INC_SOURCE_DIR}resource_search_pagination_content.php"
 LS_CORE="${INC_SOURCE_DIR}core.php"
 
 # File paths for restoration (Main website)
+MAIN_CSS_DIR="$HOME/domains/balancepro.org/public_html/wp-content/themes/balance-theme/css/main.min_new.css"
+MAIN_RNDR_SEARCH="${MAIN_RNDR_SOURCE_DIR}render-search-main-design.php"
 LS_MAIN_SQ_PG="${LS_MAIN_SRC_DIR}search_query_pagination.php"
 LS_MAIN_RMRS="${MAIN_RNDR_SOURCE_DIR}render-module-M14-15-resources-search.php"
 LS_MAIN_RSMDL="${MAIN_RNDR_SOURCE_DIR}render-search-main-design-lifestage.php"
@@ -63,6 +67,7 @@ cp() {
 
 # Restore WhiteLabel files
 echo "Restoring WhiteLabel files..."
+cp  "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/templates/" "$LS_RNDR_SEARCH"
 cp "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/assets/css/main.min.css" "$CSS_DIR"
 cp "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/index.php" "$IND_DIR"
 cp "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/config.php" "$CONF_DIR"
@@ -76,6 +81,8 @@ echo "Done restoring WhiteLabel files."
 
 # Restore Main website files
 echo "Restoring Main website files..."
+cp "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/css/" "$MAIN_CSS_DIR"
+cp "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/" "$MAIN_RNDR_SEARCH" 
 cp "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/includes/core/search_query_pagination.php" "$LS_MAIN_SQ_PG"
 cp "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/render-module-M14-15-resources-search.php" "$LS_MAIN_RMRS"
 cp "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/render-search-main-design-lifestage.php" "$LS_MAIN_RSMDL"
