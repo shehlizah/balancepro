@@ -4,10 +4,7 @@
  */
 function white_label_websites_admins_module_form( $key, $visible_on = 'all', $module_title = '', $custom_settings = array() ) {
 	global $data, $wpdb, $post;
-// error_log('white_label_websites_admins_module_form called');
-  //  error_log('Key: ' . print($key));
-    //error_log('Module Title: ' . print($module_title));
-    //error_log('Custom Settings: ' . print($custom_settings));
+
 	// read the existing data from the whitelabel_admins table.
 	$prefix = $wpdb->prefix;
 	$post_table_id = $prefix . 'post_id';
@@ -39,7 +36,6 @@ function white_label_websites_admins_module_form( $key, $visible_on = 'all', $mo
 			)
 		), $data, $module_title, $visible_on );
 		
-	//error_log(print_r($output,true));		
 
 		if (!session_id()) {
 			session_start();
@@ -55,7 +51,7 @@ function white_label_websites_admins_module_form( $key, $visible_on = 'all', $mo
 		$domain = $wpdb->get_var( "SELECT domain FROM $white_label_websites_table_name WHERE $post_table_id = '$post->ID';" );
 		$pdf_file_path = 'http://'.$domain.'/uploads/';
 
-	$queryVariable = "".str_replace(" ","+",$_SESSION["searchValue"])."%";
+	$queryVariable = "%".str_replace(" ","+",$_SESSION["searchValue"])."%";
 
 	if ($queryVariable == "" || $queryVariable == null || $queryVariable == "%%"){		
 		$sqlPastQuizesTotal = "SELECT COUNT(r.ID) AS cnt FROM wp_quiz_results r left join wp_quiz_certificates c on r.ID=c.quiz_result_id where r.wlwid='$white_label_website_id' AND r.timestamp BETWEEN NOW() - INTERVAL 90 DAY AND NOW()";
