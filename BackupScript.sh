@@ -98,7 +98,7 @@ echo "Directories created successfully."
 cp "$IND_DIR" "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/"
 cp "$CONF_DIR" "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/"
 cp "$LIFESTAGE" "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/templates/"
-cp "$LS_RNDR_SEARCH" "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/templates/"
+#cp "$LS_RNDR_SEARCH" "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/templates/"
 cp "$LS" "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/templates/"
 cp "$LS_SQP" "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/core/"
 cp "$LS_RS_SEARCH_PG_CONTENT" "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/core/"
@@ -109,10 +109,10 @@ echo "Done copying inc files"
 
 echo "NOW MAIN copying inc files"
 
-cp "$MAIN_CSS_DIR" "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/css/"
+#cp "$MAIN_CSS_DIR" "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/css/"
 cp "$LS_MAIN_SQ_PG" "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/includes/core/"
 cp "$LS_MAIN_RMRS" "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/" 
-cp "$MAIN_RNDR_SEARCH" "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/"
+#cp "$MAIN_RNDR_SEARCH" "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/"
 cp "$LS_MAIN_RSMDL" "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/" 
 
 
