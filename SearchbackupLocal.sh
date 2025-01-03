@@ -18,9 +18,9 @@ CSS_DIR="$HOME_WL/public_html/assets/css/main.min.css"
 
 
 # BalancePro Main Variables
-MAIN_CSS_DIR="$HOME_MAIN/public_html/wp-content/themes/balance-theme/css/main.min_new.css"
+MAIN_CSS_DIR="$HOME_MAIN/wp-content/themes/balance-theme/css/main.min_new.css"
 MAIN_RNDR_SEARCH="${MAIN_RNDR_SOURCE_DIR}render-search-main-design.php"
-MAIN_MDL_ADMIN="$HOME_MAIN/public_html/wp-content/themes/balance-theme/inc/edit/modules/edit-module-white-label-website-admins.php"
+MAIN_MDL_ADMIN="$HOME_MAIN/wp-content/themes/balance-theme/inc/edit/modules/edit-module-white-label-website-admins.php"
 
 # Create the backup folder if it doesn't exist
 mkdir -p "$SEARCH_MAIN_BACKUP_FOLDER"
@@ -43,7 +43,7 @@ echo "Created necessary directories under backup folders."
 
 
 # Copy files to the correct destination directories
-cp "$CSS_DIR" "$SEARCH_WL_BACKUP_FOLDER/public_html/assets/css/"
+cp "$CSS_DIR" "$SEARCH_WL_BACKUP_FOLDER/whitelabel/public_html/assets/css/"
 cp "$LS_RNDR_SEARCH" "$SEARCH_WL_BACKUP_FOLDER/whitelabel/public_html/templates/"
 
 
