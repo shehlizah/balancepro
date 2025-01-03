@@ -111,22 +111,10 @@ if (empty($resultsPastQuizes)) {
 		$wpPostId = $post->ID;
 		$output .='<div class="module-wrapper wlw_admins-module-module-wrapper-0" data-visible-on="tab-8">';
 		$output .='<div style="text-align:center;font-size:15px;margin-bottom: 10px;font-weight: bold;" >[Quiz results are available for 90 days]</div>';
-        $output .= '<input type="text" name="query" id="query" placeholder="Search Emal">';
-	$output .= '<button type="button" id="searchButton" style="margin-left: 10px;">Search</button>';
-        $output2 .='<script type="text/javascript">
-jQuery(document).ready( function () {
-//alert(sessionStorage.getItem("queryValue"));
-var querySessionText = sessionStorage.getItem("queryValue");
-jQuery("#query").val(querySessionText);
-});
-jQuery("#query").focusout(function(){
-var queryText = jQuery(this).val();
+        $output .= '<input type="text" name="query" id="query" placeholder="Search Email">&nbsp&nbsp';
+	$output .= '<span id="result-count" style="font-weight: bold;">' . $total_records . ' matching ' . ($total_records === 1 ? 'record' : 'records') . ' found!</span>';
 
-sessionStorage.setItem("queryValue",queryText);
-//sessionStorage.setItem("queryValue", queryText);
-//var sessionVal = sessionStorage.getItem("queryValue");
-//jQuery(this).text(sessionVal);
-';
+	$output .= '<button type="button" id="searchButton" style="margin-left: 10px;">Search</button>';
 $output .= '<script type="text/javascript">
 jQuery(document).ready(function () {
     // Restore query value from session storage if it exists
