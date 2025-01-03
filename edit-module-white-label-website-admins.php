@@ -64,7 +64,7 @@ $sqlPastQuizesTotal = "SELECT COUNT(r.ID) AS cnt
                          AND r.wp_user_id IN (
                              SELECT ID 
                              FROM wp_users 
-                             WHERE display_name LIKE '$queryVariable'
+                             WHERE user_email LIKE '$queryVariable'
                          )";
 
 //              $user_id = $wpdb->get_var( "SELECT ID FROM `wp_users` WHERE `user_email` LIKE '$queryVariable'" );
@@ -89,7 +89,7 @@ $sqlPastQuizes = "SELECT r.*, c.crtf_name
                     AND r.wp_user_id IN (
                         SELECT ID 
                         FROM wp_users 
-                        WHERE display_name LIKE '$queryVariable'
+                        WHERE user_email LIKE '$queryVariable'
                     )";
 
 
@@ -111,7 +111,7 @@ if (empty($resultsPastQuizes)) {
 		$wpPostId = $post->ID;
 		$output .='<div class="module-wrapper wlw_admins-module-module-wrapper-0" data-visible-on="tab-8">';
 		$output .='<div style="text-align:center;font-size:15px;margin-bottom: 10px;font-weight: bold;" >[Quiz results are available for 90 days]</div>';
-        $output .= '<input type="text" name="query" id="query" placeholder="Search input">';
+        $output .= '<input type="text" name="query" id="query" placeholder="Search Emal">';
 	$output .= '<button type="button" id="searchButton" style="margin-left: 10px;">Search</button>';
         $output2 .='<script type="text/javascript">
 jQuery(document).ready( function () {
