@@ -17,7 +17,7 @@ TMP_SOURCE_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/templates/"
 MAIN_RNDR_SOURCE_DIR="$HOME/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/"   
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")  # Current timestamp for unique backups
 SEARCH_FINAL_REPO="Search-deployment-final"  # The final branch you want to work with
-SEARCH_FINAL_BACKUP_FOLDER="$PWD/search_final_repo_${SEARCH_FINAL_REPO}"
+SEARCH_FINAL_BACKUP_FOLDER="$PWD/search_final_backup_folder_${SEARCH_FINAL_REPO}"
 # #echo "Source Directory: $SOURCE_DIR"
 # # echo "Backup Directory: $BACKUP_DIR"
 # #echo "Backup Folder: $BACKUP_FOLDER"
