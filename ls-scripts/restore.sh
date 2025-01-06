@@ -17,22 +17,18 @@ if [[ "$USER_RESPONSE" != "yes" ]]; then
 fi
 
 # Automatically detect the latest timestamped backup folders in the current working directory
-LS_MAIN_BACKUP_FOLDER=$(ls -d $PWD/main_backup_* 2>/dev/null | sort | tail -n 1)
-LS_BACKUP_FOLDER=$(ls -d $PWD/wl_backup_* 2>/dev/null | sort | tail -n 1)
+LS_FINAL_BACKUP_FOLDER=$(ls -d $PWD/ls_final_backup_* 2>/dev/null | sort | tail -n 1)
+
 
 # Check if the directories exist
-if [ -z "$LS_MAIN_BACKUP_FOLDER" ]; then
+if [ -z "$LS_FINAL_BACKUP_FOLDER" ]; then
   echo "Error: No MAIN BACKUP directory found in the current working directory."
   exit 1
 fi
 
-if [ -z "$LS_BACKUP_FOLDER" ]; then
-  echo "Error: No WhiteLabel BACKUP directory found in the current working directory."
-  exit 1
-fi
 
-echo "Detected MAIN BACKUP folder: $LS_MAIN_BACKUP_FOLDER"
-echo "Detected WL BACKUP folder: $LS_BACKUP_FOLDER"
+echo "Detected LS FINAL BACKUP folder: $LS_FINAL_BACKUP_FOLDER"
+
 
 # File paths for restoration (WhiteLabel)
 
@@ -69,13 +65,13 @@ cp() {
 echo "Restoring WhiteLabel files..."
 #cp  "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/templates/" "$LS_RNDR_SEARCH"
 #cp "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/assets/css/main.min.css" "$CSS_DIR"
-cp "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/index.php" "$IND_DIR"
-cp "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/config.php" "$CONF_DIR"
-cp "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/templates/lifestage.php" "$LIFESTAGE"
-cp "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/templates/ls.php" "$LS"
-cp "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/core/search_query_pagination.php" "$LS_SQP"
-cp "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/core/resource_search_pagination_content.php" "$LS_RS_SEARCH_PG_CONTENT"
-cp "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/core/core.php" "$LS_CORE"
+cp "$LS_FINAL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/index.php" "$IND_DIR"
+cp "$LS_FINAL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/config.php" "$CONF_DIR"
+cp "$LS_FINAL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/templates/lifestage.php" "$LIFESTAGE"
+cp "$LS_FINAL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/templates/ls.php" "$LS"
+cp "$LS_FINAL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/core/search_query_pagination.php" "$LS_SQP"
+cp "$LS_FINAL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/core/resource_search_pagination_content.php" "$LS_RS_SEARCH_PG_CONTENT"
+cp "$LS_FINAL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/core/core.php" "$LS_CORE"
 
 echo "Done restoring WhiteLabel files."
 
@@ -83,9 +79,9 @@ echo "Done restoring WhiteLabel files."
 echo "Restoring Main website files..."
 #cp "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/css/" "$MAIN_CSS_DIR"
 #cp "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/" "$MAIN_RNDR_SEARCH" 
-cp "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/includes/core/search_query_pagination.php" "$LS_MAIN_SQ_PG"
-cp "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/render-module-M14-15-resources-search.php" "$LS_MAIN_RMRS"
-cp "$LS_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/render-search-main-design-lifestage.php" "$LS_MAIN_RSMDL"
+cp "$LS_FINAL_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/includes/core/search_query_pagination.php" "$LS_MAIN_SQ_PG"
+cp "$LS_FINAL_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/render-module-M14-15-resources-search.php" "$LS_MAIN_RMRS"
+cp "$LS_FINAL_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/render-search-main-design-lifestage.php" "$LS_MAIN_RSMDL"
 
 echo "Done restoring Main website files."
 
