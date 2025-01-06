@@ -16,8 +16,8 @@ SOURCE_DIR_MAIN="https://github.com/shehlizah/balancepro.git"
 TMP_SOURCE_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/templates/"
 MAIN_RNDR_SOURCE_DIR="$HOME/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/"   
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")  # Current timestamp for unique backups
-SEARCH_MAIN_BACKUP_FOLDER="$PWD/search_main_backup_$TIMESTAMP"
-SEARCH_WL_BACKUP_FOLDER="$PWD/search_WL_backup_$TIMESTAMP"
+SEARCH_FINAL_REPO="Search-deployment-final"  # The final branch you want to work with
+SEARCH_FINAL_BACKUP_FOLDER="$PWD/search_final_repo_${SEARCH_FINAL_REPO}"
 # #echo "Source Directory: $SOURCE_DIR"
 # # echo "Backup Directory: $BACKUP_DIR"
 # #echo "Backup Folder: $BACKUP_FOLDER"
@@ -41,23 +41,16 @@ MAIN_MDL_ADMIN="$HOME/domains/balancepro.org/public_html/wp-content/themes/balan
 # # fi
 
 # Create the backup folder if it doesn't exist
-mkdir -p "$SEARCH_MAIN_BACKUP_FOLDER"
-echo "MAIN Backup folder created at: $SEARCH_MAIN_BACKUP_FOLDER"
+mkdir -p "$SEARCH_FINAL_BACKUP_FOLDER"
+echo "SEARCH FINAL Backup folder created at: $SEARCH_FINAL_BACKUP_FOLDER"
 
-mkdir -p "$SEARCH_WL_BACKUP_FOLDER"
-echo "WL Backup folder created at: $SEARCH_WL_BACKUP_FOLDER"
-# Create the necessary directories for Whitelabel files
-mkdir -p "$SEARCH_WL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/assets/css"
-mkdir -p "$SEARCH_WL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/templates"
+# Ensure all necessary directories exist in the backup paths
+mkdir -p "$SEARCH_FINAL_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/css"
+mkdir -p "$SEARCH_FINAL_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules"
+mkdir -p "$SEARCH_FINAL_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/edit/modules"
 
-
-# You can add more directories as necessary based on your structure
-
-# Create the necessary directories for BalancePro files
-
-mkdir -p "$SEARCH_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/css"
-mkdir -p "$SEARCH_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules"
-mkdir -p "$SEARCH_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/edit/modules"
+mkdir -p "$SEARCH_FINAL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/assets/css"
+mkdir -p "$SEARCH_FINAL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/templates"
 
 echo "Directories created successfully."
 
@@ -80,8 +73,8 @@ echo "Directories created successfully."
 # #   exit 1
 # # fi
 
-cp "$CSS_DIR" "$SEARCH_WL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/assets/css/"
-cp "$LS_RNDR_SEARCH" "$SEARCH_WL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/templates/"
+cp "$CSS_DIR" "$SEARCH_FINAL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/assets/css/"
+cp "$LS_RNDR_SEARCH" "$SEARCH_FINAL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/templates/"
 
 
 echo "Done copying inc files"
@@ -89,9 +82,9 @@ echo "Done copying inc files"
 
 echo "NOW MAIN copying inc files"
 
-cp "$MAIN_CSS_DIR" "$SEARCH_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/css/"
-cp "$MAIN_RNDR_SEARCH" "$SEARCH_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/"
-cp "$MAIN_MDL_ADMIN" "$SEARCH_MAIN_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/edit/modules/"
+cp "$MAIN_CSS_DIR" "$SEARCH_FINAL_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/css/"
+cp "$MAIN_RNDR_SEARCH" "$SEARCH_FINAL_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/"
+cp "$MAIN_MDL_ADMIN" "$SEARCH_FINAL_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/edit/modules/"
 
 
 echo "Main website files copied"
