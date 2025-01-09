@@ -1014,6 +1014,18 @@ function add_partner_reports_menu() {
 
 
 
+function enqueue_partner_reports_scripts() {
+    // Enqueue jQuery
+    wp_enqueue_script('jquery');
+
+    // Enqueue jQuery datetimepicker
+    wp_enqueue_style('datetimepicker-css', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css');
+    wp_enqueue_script('datetimepicker-js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js', ['jquery'], null, true);
+
+    // Enqueue custom JavaScript
+    wp_enqueue_script('partner-reports-js', get_template_directory_uri() . '/js/partner-reports.js', ['jquery', 'select2-js', 'datetimepicker-js'], null, true);
+}
+add_action('admin_enqueue_scripts', 'enqueue_partner_reports_scripts');
 
 
 
