@@ -9,11 +9,12 @@ function partner_reports_page() {
     // Check if the table exists and fetch white-label websites
     $prefix = $wpdb->prefix;
     $white_label_websites_table_name = $prefix . 'white_label_websites';
-    $websites = [];
-   $wlw = $wpdb->get_results("SELECT white_label_website_id, title FROM {$white_label_websites_table_name}");
+   // $websites = [];
     if ($wpdb->get_var("SHOW TABLES LIKE '{$white_label_websites_table_name}'") === $white_label_websites_table_name) {
         // Fetch websites if table exists
-        $websites = $wpdb->get_results("SELECT white_label_website_id, name FROM {$white_label_websites_table_name}");
+        //$websites = $wpdb->get_results("SELECT white_label_website_id, name title {$white_label_websites_table_name}");
+        $wlw = $wpdb->get_results("SELECT white_label_website_id, title FROM {$white_label_websites_table_name}");
+
 
     }
 
@@ -21,36 +22,25 @@ function partner_reports_page() {
     ?>
 
     
-
-
     <!-- Date Picker, Report Format, and Generate Report Section -->
-    <div class="module-wrapper wlw_admins-module-module-wrapper-0" data-visible-on="tab-11">
-    <div class="dropdown">
-    <button onclick="myFunction()" class="dropbtn">Select White-Label Website</button>
-    <div id="myDropdown" class="dropdown-content">
-        
-        
-
-        <!-- Check if the $wlw array is not empty -->
-        <?php if (!empty($wlw)) : ?>
-            <!-- Loop through each white-label website and create a div with a data attribute for website ID -->
-            <input type="text" placeholder="Search..." id="myInput" onkeyup="filterFunction()">
-            <select id="searchableDropdown">
-                 <!-- Default option -->
-                
-                <!--<input type="text" id="searchInput" placeholder="Search options">-->
-                <?php foreach ($wlw as $website) : ?>
-                    <!-- Add options dynamically with the website ID as value -->
-                    <option value="<?php echo esc_attr($website->white_label_website_id); ?>">
-                        <?php echo esc_html($website->title); ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-            <?php else : ?>
-                <a href="#">No websites available</a>
-            <?php endif; ?>
-        </div>
+     <!-- <div class="module-wrapper wlw_admins-module-module-wrapper-0" data-visible-on="tab-11">-->
+    <div class="dropdown-wrapper">
+    <b style="font-size:12px;">Partner Website:</b>
+    <input type="text" id="searchDropdown" placeholder="Search websites..." onkeyup="filterDropdown()">
+    <div class="dropdown-content" id="websiteDropdown" style="max-height: 200px; overflow-y: auto;">
+        <?php
+        if (!empty($wlw)) {
+            foreach ($wlw as $website) { ?>
+                <div class="dropdown-item" data-id="<?php echo esc_attr($website->white_label_website_id); ?>">
+                    <?php echo esc_html($website->title); ?>
+                </div>
+            <?php }
+        } else { ?>
+            <div class="dropdown-item">No websites available</div>
+        <?php }
+        ?>
     </div>
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 
@@ -64,7 +54,7 @@ function partner_reports_page() {
             <option value="5">This Year</option>
             <option value="6">Custom Date Range</option>
         </select>
-
+        </div>
         <b style="font-size:12px;">&nbsp;&nbsp;&nbsp;From:</b>
         <input type="text" name="fromDate" id="fromDate" style="font-size:12px;" class="datetimepicker" autocomplete="off" disabled>
         <b style="font-size:12px;">&nbsp;&nbsp;&nbsp;To:</b>
@@ -111,24 +101,47 @@ function partner_reports_page() {
     }
 
     
-    function filterFunction() {
-        var input, filter, dropdown, items, i, txtValue;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        dropdown = document.getElementById("myDropdown");
-        items = dropdown.getElementsByClassName("dropdown-item"); // Get all items
+    function filterDropdown() {
+    const input = document.getElementById("searchDropdown");
+    const filter = input.value.toLowerCase();
+    const dropdown = document.getElementById("websiteDropdown");
+    const items = dropdown.getElementsByClassName("dropdown-item");
 
-        // Loop through all dropdown items and hide those who don't match the search query
-        for (i = 0; i < items.length; i++) {
-            txtValue = items[i].textContent || items[i].innerText;
-            // If the search input doesn't match, hide the item
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                items[i].style.display = "";
-            } else {
-                items[i].style.display = "none";
-            }
+    let hasMatchingItems = false; // Flag to check if there are matching items
+
+    for (let i = 0; i < items.length; i++) {
+        const text = items[i].textContent || items[i].innerText;
+        if (text.toLowerCase().includes(filter)) {
+            items[i].style.display = ""; // Show matching items
+            hasMatchingItems = true; // Found matching items
+        } else {
+            items[i].style.display = "none"; // Hide non-matching items
         }
     }
+
+    // If no items match, show "No websites available"
+    if (!hasMatchingItems) {
+        const noMatch = document.createElement("div");
+        noMatch.classList.add("dropdown-item");
+        noMatch.textContent = "No matching websites found";
+        dropdown.appendChild(noMatch);
+    }
+
+    // Hide the dropdown if input is empty
+    dropdown.style.display = filter ? "block" : "none";
+}
+
+// Handle item selection
+    document.addEventListener("DOMContentLoaded", () => {
+        const items = document.querySelectorAll(".dropdown-item");
+        items.forEach(item => {
+            item.addEventListener("click", () => {
+                document.getElementById("searchDropdown").value = item.innerText; // Set the input value to the selected item
+                document.getElementById("websiteDropdown").style.display = "none"; // Hide the dropdown
+            });
+        });
+    });
+       
     // Enabling the "Generate Report" button when a white-label website is selected
     document.getElementById("searchableDropdown").addEventListener("change", function() {
             var selectedWebsite = this.value;
@@ -208,73 +221,39 @@ const dropdown = document.getElementById("searchableDropdown");
 }
 ?>
 <style>
-    /* Style for dropdown */
-    .dropdown {
-        position: relative;
-        display: inline-block;
-        width: 100%;
-        max-width: 161px;
-    }
 
-    .dropdown .dropbtn {
-        background-color: #4CAF50;
-        color: white;
-        padding: 5px;
-        font-size: 12px;
-        font-weight: 600;;
-        border: none;
-        cursor: pointer;
-        width: 100%;
-        margin-top:10px;
-        margin-bottom: 10px;;
-    }
+#websiteDropdown {
+    display: none; /* Hide the dropdown initially */
+}
 
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #f9f9f9;
-        min-width: 200px;
-        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-        max-height: 200px;
-        overflow-y: auto;
-    }
+.dropdown-content {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+}
 
-    .dropdown-content .dropdown-select {
-        width: 100%;
-        padding: 8px;
-        margin: 8px 0;
-        border: 1px solid #ddd;
-        font-size: 14px;
-    }
+.dropdown-item {
+    padding: 8px;
+    cursor: pointer;
+}
 
-    .dropdown-content input {
-        width: 100%;
-        padding: 8px;
-        margin: 8px 0;
-        border: 1px solid #ddd;
-    }
+.dropdown-item:hover {
+    background-color: #f1f1f1;
+}
 
-    .dropdown-content .dropdown-item {
-        padding: 8px;
-        display: block;
-        cursor: pointer;
-        text-decoration: none;
-        color: #333;
-    }
+.dropdown-wrapper {
+    position: relative;
+    width: 50%;
+}
 
-    .dropdown-content .dropdown-item:hover {
-        background-color: #ddd;
-    }
-
-    .dropdown .show {
-        display: block;
-    }
-
-    .datetimepicker {
-        width: 150px;
-        padding: 8px;
-    }
+.dropdown-content {
+    max-height: 200px;
+    overflow-y: auto;
+    position: absolute;
+    top: 100%;
+    width: 50%;
+    z-index: 999;
+}
 
     #generateReport {
         background-color: #e0e0e0;
