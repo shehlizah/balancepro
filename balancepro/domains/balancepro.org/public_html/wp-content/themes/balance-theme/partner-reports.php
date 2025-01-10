@@ -20,7 +20,6 @@ function partner_reports_page() {
 
     ob_start();
     ?>
-
     
     <!-- Date Picker, Report Format, and Generate Report Section -->
      <!-- <div class="module-wrapper wlw_admins-module-module-wrapper-0" data-visible-on="tab-11">-->
@@ -40,9 +39,6 @@ function partner_reports_page() {
         <?php }
         ?>
     </div>
-
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 
         <b style="font-size:12px;">Report Date:</b>
         <select name="reportDate" id="reportDate1" style="font-size:12px;">
@@ -66,7 +62,7 @@ function partner_reports_page() {
         <input type="radio" id="excel" class="fav_language" name="fav_language" value="excel"><label for="excel" style="font-size:12px;">Excel</label>
         <input type="radio" id="csv" class="fav_language" name="fav_language" value="csv"><label for="csv" style="font-size:12px;">CSV</label>
 
-        <span id="generateReport" style="display: inline-block; padding: 5px 10px; font-size: 12px; font-weight: 600; text-align: center; text-decoration: none; color: #333; background-color: #e0e0e0; border: 1px solid #000; border-radius: 4px; transition: background-color 0.2s, color 0.2s, border-color 0.2s; cursor: pointer;">
+        <span id="generateReports" style="display: inline-block; padding: 5px 10px; font-size: 12px; font-weight: 600; text-align: center; text-decoration: none; color: #333; background-color: #e0e0e0; border: 1px solid #000; border-radius: 4px; transition: background-color 0.2s, color 0.2s, border-color 0.2s; cursor: pointer;">
             Generate Report
         </span>
 
@@ -93,185 +89,156 @@ function partner_reports_page() {
     </div>
   </div>
 
-    <!-- JavaScript for Dropdown and Report Functionality -->
-    
-    <script>
-       jQuery(document).ready(function ($) {
-        $(".datetimepicker").datetimepicker({
-        format: "mm/dd/yyyy"  // Ensure the format is compatible with your input
-    });
+  <script>
+    let selectedWebsiteId = null; // Variable to store selected ID
 
-    $("#reportDate1").change(function () {
-        const selectedOption = $(this).val();  // Get selected option
-        const now = new Date();
-        let fromDate, toDate;
-
-        // Reset and disable the date fields by default
-        $("#fromDate1, #toDate1").val("").prop("disabled", true);
-
-        if (selectedOption == "1") {
-            console.log("working");
-            // Last Week
-            var dateLimit = new Date(new Date().setDate(now.getDate() - 7));
-var nextWeekStart = now.getDate() - now.getDay() - 7;
-var nextWeekFrom = new Date(now.setDate(nextWeekStart));
-var nextWeekEnd = now.getDate() - now.getDay() + 6;
-var nextWeekTo = new Date(now.setDate(nextWeekEnd));
-$("#fromDate1").datetimepicker("setDate",nextWeekFrom);
-console.log($("#fromDate1").datetimepicker("setDate",nextWeekFrom));
-
-                $("#toDate1").datetimepicker("setDate",nextWeekTo);
-                $("#fromDate1").attr("disabled", true);
-                $("#toDate1").attr("disabled", true);
-        } else if (selectedOption == "2") {
-            // Last Month
-            fromDate = new Date(now.getFullYear(), now.getMonth() - 1, 1); // First day of last month
-            toDate = new Date(now.getFullYear(), now.getMonth(), 0); // Last day of last month
-
-            // Set the dates in the datepicker fields
-            $("#fromDate1").datetimepicker("setDate", fromDate);
-            $("#toDate1").datetimepicker("setDate", toDate);
-        } else if (selectedOption == "3") {
-            // Last Quarter
-            const currentMonth = now.getMonth();
-            const quarterStartMonth = Math.floor(currentMonth / 3) * 3 - 3; // Start of last quarter
-            fromDate = new Date(now.getFullYear(), quarterStartMonth, 1);
-            toDate = new Date(now.getFullYear(), quarterStartMonth + 3, 0); // End of last quarter
-
-            // Set the dates in the datepicker fields
-            $("#fromDate1").datetimepicker("setDate", fromDate);
-            $("#toDate1").datetimepicker("setDate", toDate);
-        } else if (selectedOption == "4") {
-            // Last Year
-            fromDate = new Date(now.getFullYear() - 1, 0, 1); // January 1st, last year
-            toDate = new Date(now.getFullYear() - 1, 11, 31); // December 31st, last year
-
-            // Set the dates in the datepicker fields
-            $("#fromDate1").datetimepicker("setDate", fromDate);
-            $("#toDate1").datetimepicker("setDate", toDate);
-        } else if (selectedOption == "5") {
-            // This Year
-            fromDate = new Date(now.getFullYear(), 0, 1); // January 1st, this year
-            toDate = now; // Today
-
-            // Set the dates in the datepicker fields
-            $("#fromDate1").datetimepicker("setDate", fromDate);
-            $("#toDate1").datetimepicker("setDate", toDate);
-        } else if (selectedOption == "6") {
-            // Custom Date Range
-            $("#fromDate1, #toDate1").prop("disabled", false);
-            return;
-        }
-    });
-});
-
-
-         // Function to show or hide the dropdown
-    function myFunction() {
-        document.getElementById("myDropdown").classList.toggle("show");
-    }
-
-    
+    // Define the filterDropdown function before using it
     function filterDropdown() {
-    const input = document.getElementById("searchDropdown");
-    const filter = input.value.toLowerCase();
-    const dropdown = document.getElementById("websiteDropdown");
-    const items = dropdown.getElementsByClassName("dropdown-item");
+        const input = document.getElementById("searchDropdown");
+        const filter = input.value.toLowerCase();
+        const dropdown = document.getElementById("websiteDropdown");
+        const items = dropdown.getElementsByClassName("dropdown-item");
 
-    let hasMatchingItems = false; // Flag to check if there are matching items
+        let hasMatchingItems = false; // Flag to check if there are matching items
 
-    for (let i = 0; i < items.length; i++) {
-        const text = items[i].textContent || items[i].innerText;
-        if (text.toLowerCase().includes(filter)) {
-            items[i].style.display = ""; // Show matching items
-            hasMatchingItems = true; // Found matching items
-        } else {
-            items[i].style.display = "none"; // Hide non-matching items
+        for (let i = 0; i < items.length; i++) {
+            const text = items[i].textContent || items[i].innerText;
+            if (text.toLowerCase().includes(filter)) {
+                items[i].style.display = ""; // Show matching items
+                hasMatchingItems = true; // Found matching items
+            } else {
+                items[i].style.display = "none"; // Hide non-matching items
+            }
         }
+
+        // If no items match, show "No websites available"
+        if (!hasMatchingItems) {
+            const noMatch = document.createElement("div");
+            noMatch.classList.add("dropdown-item");
+            noMatch.textContent = "No matching websites found";
+            dropdown.appendChild(noMatch);
+        }
+
+        // Hide the dropdown if input is empty
+        dropdown.style.display = filter ? "block" : "none";
     }
 
-    // If no items match, show "No websites available"
-    if (!hasMatchingItems) {
-        const noMatch = document.createElement("div");
-        noMatch.classList.add("dropdown-item");
-        noMatch.textContent = "No matching websites found";
-        dropdown.appendChild(noMatch);
-    }
+    jQuery(document).ready(function ($) {
 
-    // Hide the dropdown if input is empty
-    dropdown.style.display = filter ? "block" : "none";
-}
+        // Initialize datepickers
+        $("#fromDate1, #toDate1").datepicker({ dateFormat: "mm/dd/yy" });
 
-// Handle item selection
-    document.addEventListener("DOMContentLoaded", () => {
-        const items = document.querySelectorAll(".dropdown-item");
-        items.forEach(item => {
-            item.addEventListener("click", () => {
-                document.getElementById("searchDropdown").value = item.innerText; // Set the input value to the selected item
-                document.getElementById("websiteDropdown").style.display = "none"; // Hide the dropdown
-            });
-        });
-    });
-       
-    // Enabling the "Generate Report" button when a white-label website is selected
-    document.getElementById("searchableDropdown").addEventListener("change", function() {
-            var selectedWebsite = this.value;
-            var generateButton = document.getElementById("generateReport");
+        // Handle report date selection logic
+        $("#reportDate1").change(function () {
+            const selectedOption = $(this).val();
+            const now = new Date();
+            let fromDate, toDate;
 
-            if (selectedWebsite !== "") {
-                generateButton.style.backgroundColor = "#4CAF50"; // Green color
-                generateButton.style.cursor = "pointer";
-                generateButton.removeAttribute("disabled");
-            } else {
-                generateButton.style.backgroundColor = "#e0e0e0"; // Disabled color
-                generateButton.style.cursor = "not-allowed";
-                generateButton.setAttribute("disabled", "disabled");
+            // Reset date fields
+            $("#fromDate1, #toDate1").val("").prop("disabled", true);
+
+            if (selectedOption == "1") {
+                // Last Week
+                const lastWeekStart = new Date(now);
+                lastWeekStart.setDate(now.getDate() - now.getDay() - 7);
+                const lastWeekEnd = new Date(lastWeekStart);
+                lastWeekEnd.setDate(lastWeekStart.getDate() + 6);
+
+                $("#fromDate1").datepicker("setDate", lastWeekStart);
+                $("#toDate1").datepicker("setDate", lastWeekEnd);
+            } else if (selectedOption == "2") {
+                // Last Month
+                fromDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+                toDate = new Date(now.getFullYear(), now.getMonth(), 0);
+
+                $("#fromDate1").datepicker("setDate", fromDate);
+                $("#toDate1").datepicker("setDate", toDate);
+            } else if (selectedOption == "3") {
+                // Last Quarter
+                const currentMonth = now.getMonth();
+                const quarterStartMonth = Math.floor(currentMonth / 3) * 3 - 3;
+                fromDate = new Date(now.getFullYear(), quarterStartMonth, 1);
+                toDate = new Date(now.getFullYear(), quarterStartMonth + 3, 0);
+
+                $("#fromDate1").datepicker("setDate", fromDate);
+                $("#toDate1").datepicker("setDate", toDate);
+            } else if (selectedOption == "4") {
+                // Last Year
+                fromDate = new Date(now.getFullYear() - 1, 0, 1);
+                toDate = new Date(now.getFullYear() - 1, 11, 31);
+
+                $("#fromDate1").datepicker("setDate", fromDate);
+                $("#toDate1").datepicker("setDate", toDate);
+            } else if (selectedOption == "5") {
+                // This Year
+                fromDate = new Date(now.getFullYear(), 0, 1);
+                toDate = now;
+
+                $("#fromDate1").datepicker("setDate", fromDate);
+                $("#toDate1").datepicker("setDate", toDate);
+            } else if (selectedOption == "6") {
+                // Custom Date Range
+                $("#fromDate1, #toDate1").prop("disabled", false);
             }
         });
-    document.getElementById("searchInput").addEventListener("input", function() {
-        const searchValue = this.value.toLowerCase();
-const dropdown = document.getElementById("searchableDropdown");
-        const options = dropdown.querySelectorAll("option");
 
-        options.forEach(option => {
-            if (option.textContent.toLowerCase().includes(searchValue)) {
-                option.style.display = ""; // Show matching option
-            } else {
-                option.style.display = "none"; // Hide non-matching option
+        // Handle dropdown item selection
+        $('#websiteDropdown').on('click', '.dropdown-item', function () {
+            const selectedValue = $(this).text().trim();
+            selectedWebsiteId = $(this).data('id');
+
+            $('#searchDropdown').val(selectedValue);
+            $('#websiteDropdown').hide(); // Hide the dropdown
+
+            console.log('Selected Website ID:', selectedWebsiteId);
+        });
+
+        // Filter dropdown based on user input
+        $('#searchDropdown').keyup(function () {
+            filterDropdown(); // Call the filterDropdown function directly
+        });
+
+        // Handle generate report button click
+        $("#generateReports").click(function () {
+            const selectedWebsite = $("#searchDropdown").val().trim();
+            const reportDate = $("#reportDate1").val();
+            const fromDate = $("#fromDate1").val();
+            const toDate = $("#toDate1").val();
+            const format = $("input[name='fav_language']:checked").val();
+
+            if (!selectedWebsite || !reportDate || !fromDate || !toDate || !format) {
+                alert("Please select all options before generating the report.");
+                return;
             }
-        });
-    });
-    // Handle the click on a dropdown item and use its value
-    document.querySelectorAll('.dropdown-item').forEach(item => {
-        item.addEventListener('click', function() {
-            var selectedValue = this.getAttribute('data-value');
-            console.log("Selected Website ID: " + selectedValue); // Handle this value as needed
-        });
-    });
-  
 
-
-           
-
-            jQuery("#generateReport").click(function () {
-                const reportDate = jQuery("#reportDate1").val();
-                const fromDate = jQuery("#fromDate1").val();
-                const toDate = jQuery("#toDate1").val();
-                const format = jQuery("input[name='fav_language']:checked").val();
-
-                if (!format || !fromDate || !toDate) {
-                    alert("Please select all options before generating the report.");
-                    return;
+            console.log("Generating report for:", selectedWebsite);
+            console.log("Generating report for:", selectedWebsiteId);
+            // AJAX request to call the PHP function and fetch data
+            $.ajax({
+                url: ajaxurl, // WordPress AJAX URL
+                method: 'POST',
+                data: {
+                    action: 'get_partner_report', // Custom action
+                    white_label_website_id: selectedWebsiteId,
+                    queryFrom: fromDate,
+                    queryTo: toDate,
+                    queryFormat: format,
+                    reportDate: reportDate
+                },
+                success: function(response) {
+                    // Assuming response contains HTML for the table rows
+                    $('#reportTable tbody').empty(); // Clear previous rows
+                    $('#reportTable tbody').append(response); // Append new rows
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching report:", error);
+                    alert("An error occurred while fetching the report.");
                 }
-
-                const url = format === "pdf"
-                    ? `/wp-content/themes/balance-theme/inc/edit/modules/exportpdf.php?fromDate=${fromDate}&toDate=${toDate}&format=${format}`
-                    : `/wp-content/themes/balance-theme/inc/edit/modules/export.php?fromDate=${fromDate}&toDate=${toDate}&format=${format}`;
-
-                window.location.href = url;
             });
-        
-    </script>
+        });
+            // Your report generation logic goes here
+    });
+</script>
 
     <?php
     echo ob_get_clean();
@@ -312,7 +279,7 @@ const dropdown = document.getElementById("searchableDropdown");
     z-index: 999;
 }
 
-    #generateReport {
+    #generateReports {
         background-color: #e0e0e0;
         cursor: not-allowed;
         padding: 10px 20px;
@@ -322,7 +289,7 @@ const dropdown = document.getElementById("searchableDropdown");
         color: #333;
     }
 
-    #generateReport:enabled {
+    #generateReports:enabled {
         background-color: #4CAF50;
         cursor: pointer;
         color: white;
