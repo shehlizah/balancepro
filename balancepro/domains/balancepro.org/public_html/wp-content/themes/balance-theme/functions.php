@@ -1012,23 +1012,93 @@ function add_partner_reports_menu() {
 }
 
 
-
-
 function enqueue_partner_reports_scripts() {
     // Enqueue jQuery (WordPress already includes this by default)
     wp_enqueue_script('jquery');
 
     // Enqueue jQuery datetimepicker
-    wp_enqueue_style('datetimepicker-css', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css');
-    wp_enqueue_script('datetimepicker-js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js', ['jquery'], null, true);
+    // wp_enqueue_style('datetimepicker-css', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css');
+    // wp_enqueue_script('datetimepicker-js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js', ['jquery'], null, true);
+
+    wp_enqueue_script('jquery-ui-datepicker');
+    wp_enqueue_style('jquery-ui-css', 'https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css');
 }
 add_action('admin_enqueue_scripts', 'enqueue_partner_reports_scripts');
 
-// Remove the additional jQuery loading in the footer
-// No need to load jQuery separately
-// add_action('admin_footer', 'load_jquery_for_partner_reports_page');
 
 
 
+add_action('wp_ajax_get_partner_report', 'handle_get_partner_report');
+add_action('wp_ajax_nopriv_get_partner_report', 'handle_get_partner_report');
+
+function handle_get_partner_report() {
+    global $wpdb;
+
+    // Get the parameters from the AJAX request
+    $white_label_website_id = isset($_POST['white_label_website_id']) ? sanitize_text_field($_POST['white_label_website_id']) : '';
+    $queryFrom = isset($_POST['queryFrom']) ? sanitize_text_field($_POST['queryFrom']) : '';
+    $queryTo = isset($_POST['queryTo']) ? sanitize_text_field($_POST['queryTo']) : '';
+    $queryFormat = isset($_POST['queryFormat']) ? sanitize_text_field($_POST['queryFormat']) : '';
+    $reportDate = isset($_POST['reportDate']) ? sanitize_text_field($_POST['reportDate']) : '';
+	//var_dump($queryFrom,$queryTo,$queryFormat,$reportDate);
+
+    // Call the function to fetch the partner report
+    $results = getPartnerReport($white_label_website_id, $queryFrom, $queryTo, $queryFormat, $reportDate);
+	//var_dump($results);
+    if ($results) {
+        // Output the results in a table row format (HTML)
+        foreach ($results as $row) {
+            echo '<tr>';
+            echo '<td>' . esc_html($row->title) . '</td>';
+            echo '<td>' . esc_html($row->crtf_name) . '</td>';
+            echo '<td>' . esc_html($row->timestamp) . '</td>';
+            echo '</tr>';
+        }
+    } else {
+        echo '<tr><td colspan="3">No results found.</td></tr>';
+    }
+
+    wp_die(); // Required to terminate AJAX request properly
+}
+
+function getPartnerReport($white_label_website_id)
+{
+	global $wpdb, $post;
+	$page = $_SESSION['pagedvl'] ;
+    // Check if the table exists and fetch white-label websites
+    $prefix = $wpdb->prefix;
+    $white_label_websites_table_name = $prefix . 'white_label_websites';
+   // $websites = [];
+    if ($wpdb->get_var("SHOW TABLES LIKE '{$white_label_websites_table_name}'") === $white_label_websites_table_name) {
+        // Fetch websites if table exists
+        //$websites = $wpdb->get_results("SELECT white_label_website_id, name title {$white_label_websites_table_name}");
+        $wlw = $wpdb->get_results("SELECT white_label_website_id, title FROM {$white_label_websites_table_name}");
+	}
+	$rec_per_page = 30;
+                $page =$page-1;
+                $start = $page*$rec_per_page;
+	$queryVar = $_SESSION["reportFilter"];
+	$explodeSearch = explode("-", $queryVar);
+	$queryReport = $explodeSearch[0];
+	$queryFrom = $explodeSearch[1];
+	$queryTo = $explodeSearch[2];
+	$queryFormat = $explodeSearch[3];
+	$queryDateFrom = date("Y-m-d", strtotime($queryFrom));
+	$queryDateTo = date("Y-m-d", strtotime($queryTo));
+
+			$sqlReportsTotal = "SELECT COUNT(r.ID) AS cnt FROM wp_quiz_results r left join wp_quiz_certificates c on r.ID=c.quiz_result_id where r.wlwid='$white_label_website_id' AND r.timestamp>='$queryDateFrom' AND r.timestamp<='$queryDateTo'";
+
+			$sqlReports = "SELECT r.*,crtf_name FROM wp_quiz_results r left join wp_quiz_certificates c on r.ID=c.quiz_result_id where r.wlwid='$white_label_website_id' AND r.timestamp>='$queryDateFrom' AND r.timestamp<='$queryDateTo' ORDER BY r.timestamp";
+
+			$total_records = $wpdb->get_var($sqlReportsTotal);
+			$total_pages = ceil($total_records / $rec_per_page);
+			$resultsReports = $wpdb->get_results( $sqlReports, OBJECT );
+			//var_dump($resultsReports);
+
+			return $resultsReports;
+
+}
+
+add_action('get_partner_report', 'getPartnerReport');
 
 
