@@ -45,7 +45,7 @@ function partner_reports_page() {
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 
         <b style="font-size:12px;">Report Date:</b>
-        <select name="reportDate" id="reportDate" style="font-size:12px;">
+        <select name="reportDate" id="reportDate1" style="font-size:12px;">
             <option value="0"></option>
             <option value="1">Last Week</option>
             <option value="2">Last Month</option>
@@ -56,9 +56,9 @@ function partner_reports_page() {
         </select>
         </div>
         <b style="font-size:12px;">&nbsp;&nbsp;&nbsp;From:</b>
-        <input type="text" name="fromDate" id="fromDate" style="font-size:12px;" class="datetimepicker" autocomplete="off" disabled>
+        <input type="text" name="fromDate" id="fromDate1" style="font-size:12px;" class="datetimepicker" autocomplete="off" disabled>
         <b style="font-size:12px;">&nbsp;&nbsp;&nbsp;To:</b>
-        <input type="text" name="toDate" id="toDate" style="font-size:12px;" class="datetimepicker" autocomplete="off" disabled>
+        <input type="text" name="toDate" id="toDate1" style="font-size:12px;" class="datetimepicker" autocomplete="off" disabled>
 
         <b style="font-size:12px;">&nbsp;&nbsp;&nbsp;Report Format:</b>
         <input type="radio" id="html" class="fav_language" name="fav_language" value="html"><label for="html" style="font-size:12px;">HTML</label>
@@ -94,7 +94,78 @@ function partner_reports_page() {
   </div>
 
     <!-- JavaScript for Dropdown and Report Functionality -->
+    
     <script>
+       jQuery(document).ready(function ($) {
+        $(".datetimepicker").datetimepicker({
+        format: "mm/dd/yyyy"  // Ensure the format is compatible with your input
+    });
+
+    $("#reportDate1").change(function () {
+        const selectedOption = $(this).val();  // Get selected option
+        const now = new Date();
+        let fromDate, toDate;
+
+        // Reset and disable the date fields by default
+        $("#fromDate1, #toDate1").val("").prop("disabled", true);
+
+        if (selectedOption == "1") {
+            console.log("working");
+            // Last Week
+            var dateLimit = new Date(new Date().setDate(now.getDate() - 7));
+var nextWeekStart = now.getDate() - now.getDay() - 7;
+var nextWeekFrom = new Date(now.setDate(nextWeekStart));
+var nextWeekEnd = now.getDate() - now.getDay() + 6;
+var nextWeekTo = new Date(now.setDate(nextWeekEnd));
+$("#fromDate1").datetimepicker("setDate",nextWeekFrom);
+console.log($("#fromDate1").datetimepicker("setDate",nextWeekFrom));
+
+                $("#toDate1").datetimepicker("setDate",nextWeekTo);
+                $("#fromDate1").attr("disabled", true);
+                $("#toDate1").attr("disabled", true);
+        } else if (selectedOption == "2") {
+            // Last Month
+            fromDate = new Date(now.getFullYear(), now.getMonth() - 1, 1); // First day of last month
+            toDate = new Date(now.getFullYear(), now.getMonth(), 0); // Last day of last month
+
+            // Set the dates in the datepicker fields
+            $("#fromDate1").datetimepicker("setDate", fromDate);
+            $("#toDate1").datetimepicker("setDate", toDate);
+        } else if (selectedOption == "3") {
+            // Last Quarter
+            const currentMonth = now.getMonth();
+            const quarterStartMonth = Math.floor(currentMonth / 3) * 3 - 3; // Start of last quarter
+            fromDate = new Date(now.getFullYear(), quarterStartMonth, 1);
+            toDate = new Date(now.getFullYear(), quarterStartMonth + 3, 0); // End of last quarter
+
+            // Set the dates in the datepicker fields
+            $("#fromDate1").datetimepicker("setDate", fromDate);
+            $("#toDate1").datetimepicker("setDate", toDate);
+        } else if (selectedOption == "4") {
+            // Last Year
+            fromDate = new Date(now.getFullYear() - 1, 0, 1); // January 1st, last year
+            toDate = new Date(now.getFullYear() - 1, 11, 31); // December 31st, last year
+
+            // Set the dates in the datepicker fields
+            $("#fromDate1").datetimepicker("setDate", fromDate);
+            $("#toDate1").datetimepicker("setDate", toDate);
+        } else if (selectedOption == "5") {
+            // This Year
+            fromDate = new Date(now.getFullYear(), 0, 1); // January 1st, this year
+            toDate = now; // Today
+
+            // Set the dates in the datepicker fields
+            $("#fromDate1").datetimepicker("setDate", fromDate);
+            $("#toDate1").datetimepicker("setDate", toDate);
+        } else if (selectedOption == "6") {
+            // Custom Date Range
+            $("#fromDate1, #toDate1").prop("disabled", false);
+            return;
+        }
+    });
+});
+
+
          // Function to show or hide the dropdown
     function myFunction() {
         document.getElementById("myDropdown").classList.toggle("show");
@@ -177,29 +248,15 @@ const dropdown = document.getElementById("searchableDropdown");
             console.log("Selected Website ID: " + selectedValue); // Handle this value as needed
         });
     });
-        jQuery(document).ready(function () {
-            jQuery(".datetimepicker").datepicker();
+  
 
-            jQuery("#reportDate").change(function () {
-                const selectedOption = jQuery(this).val();
-                const now = new Date();
 
-                if (selectedOption === "0") {
-                    jQuery("#fromDate, #toDate").val("").prop("disabled", true);
-                } else if (selectedOption === "1") {
-                    const lastWeekStart = new Date(now.setDate(now.getDate() - 7));
-                    const lastWeekEnd = new Date(now.setDate(now.getDate() + 6));
-                    jQuery("#fromDate").datepicker("setDate", lastWeekStart).prop("disabled", true);
-                    jQuery("#toDate").datepicker("setDate", lastWeekEnd).prop("disabled", true);
-                } else if (selectedOption === "6") {
-                    jQuery("#fromDate, #toDate").prop("disabled", false);
-                }
-            });
+           
 
             jQuery("#generateReport").click(function () {
-                const reportDate = jQuery("#reportDate").val();
-                const fromDate = jQuery("#fromDate").val();
-                const toDate = jQuery("#toDate").val();
+                const reportDate = jQuery("#reportDate1").val();
+                const fromDate = jQuery("#fromDate1").val();
+                const toDate = jQuery("#toDate1").val();
                 const format = jQuery("input[name='fav_language']:checked").val();
 
                 if (!format || !fromDate || !toDate) {
@@ -213,7 +270,7 @@ const dropdown = document.getElementById("searchableDropdown");
 
                 window.location.href = url;
             });
-        });
+        
     </script>
 
     <?php

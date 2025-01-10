@@ -1015,15 +1015,19 @@ function add_partner_reports_menu() {
 
 
 function enqueue_partner_reports_scripts() {
-    // Enqueue jQuery
+    // Enqueue jQuery (WordPress already includes this by default)
     wp_enqueue_script('jquery');
 
     // Enqueue jQuery datetimepicker
     wp_enqueue_style('datetimepicker-css', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css');
     wp_enqueue_script('datetimepicker-js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js', ['jquery'], null, true);
-
 }
 add_action('admin_enqueue_scripts', 'enqueue_partner_reports_scripts');
+
+// Remove the additional jQuery loading in the footer
+// No need to load jQuery separately
+// add_action('admin_footer', 'load_jquery_for_partner_reports_page');
+
 
 
 
