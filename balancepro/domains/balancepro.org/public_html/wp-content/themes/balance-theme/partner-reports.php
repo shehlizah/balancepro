@@ -1,5 +1,6 @@
 <?php
 // Callback function to render the Partner Reports page
+
 function partner_reports_page() {
   ?>
   <div class="module-wrapper wlw_admins-module-module-wrapper-0" data-visible-on="tab-11">
@@ -66,185 +67,12 @@ function partner_reports_page() {
             Generate Report
         </span>
 
-        <table class="wp-list-table widefat striped posts" id="reportTable" style="margin-top: 20px;">
-            <thead>
-                <tr>
-                    <th>Credit Union</th>
-                    <th>Date</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Street Address</th>
-                    <th>City</th>
-                    <th>State</th>
-                    <th>Zip</th>
-                    <th>Email</th>
-                    <th>Name of Quiz</th>
-                    <th>Score</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Rows will be dynamically inserted here -->
-            </tbody>
+        <table class="wp-list-table widefat striped posts" id="reportTable1" style="margin-top: 20px;">
+            
         </table>
     </div>
   </div>
-
-  <script>
-    let selectedWebsiteId = null; // Variable to store selected ID
-
-    // Define the filterDropdown function before using it
-    function filterDropdown() {
-        const input = document.getElementById("searchDropdown");
-        const filter = input.value.toLowerCase();
-        const dropdown = document.getElementById("websiteDropdown");
-        const items = dropdown.getElementsByClassName("dropdown-item");
-
-        let hasMatchingItems = false; // Flag to check if there are matching items
-
-        for (let i = 0; i < items.length; i++) {
-            const text = items[i].textContent || items[i].innerText;
-            if (text.toLowerCase().includes(filter)) {
-                items[i].style.display = ""; // Show matching items
-                hasMatchingItems = true; // Found matching items
-            } else {
-                items[i].style.display = "none"; // Hide non-matching items
-            }
-        }
-
-        // If no items match, show "No websites available"
-        if (!hasMatchingItems) {
-            const noMatch = document.createElement("div");
-            noMatch.classList.add("dropdown-item");
-            noMatch.textContent = "No matching websites found";
-            dropdown.appendChild(noMatch);
-        }
-
-        // Hide the dropdown if input is empty
-        dropdown.style.display = filter ? "block" : "none";
-    }
-
-    jQuery(document).ready(function ($) {
-
-        // Initialize datepickers
-        $("#fromDate1, #toDate1").datepicker({ dateFormat: "mm/dd/yy" });
-
-        // Handle report date selection logic
-        $("#reportDate1").change(function () {
-            const selectedOption = $(this).val();
-            const now = new Date();
-            let fromDate, toDate;
-
-            // Reset date fields
-            $("#fromDate1, #toDate1").val("").prop("disabled", true);
-
-            if (selectedOption == "1") {
-                // Last Week
-                const lastWeekStart = new Date(now);
-                lastWeekStart.setDate(now.getDate() - now.getDay() - 7);
-                const lastWeekEnd = new Date(lastWeekStart);
-                lastWeekEnd.setDate(lastWeekStart.getDate() + 6);
-
-                $("#fromDate1").datepicker("setDate", lastWeekStart);
-                $("#toDate1").datepicker("setDate", lastWeekEnd);
-            } else if (selectedOption == "2") {
-                // Last Month
-                fromDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-                toDate = new Date(now.getFullYear(), now.getMonth(), 0);
-
-                $("#fromDate1").datepicker("setDate", fromDate);
-                $("#toDate1").datepicker("setDate", toDate);
-            } else if (selectedOption == "3") {
-                // Last Quarter
-                const currentMonth = now.getMonth();
-                const quarterStartMonth = Math.floor(currentMonth / 3) * 3 - 3;
-                fromDate = new Date(now.getFullYear(), quarterStartMonth, 1);
-                toDate = new Date(now.getFullYear(), quarterStartMonth + 3, 0);
-
-                $("#fromDate1").datepicker("setDate", fromDate);
-                $("#toDate1").datepicker("setDate", toDate);
-            } else if (selectedOption == "4") {
-                // Last Year
-                fromDate = new Date(now.getFullYear() - 1, 0, 1);
-                toDate = new Date(now.getFullYear() - 1, 11, 31);
-
-                $("#fromDate1").datepicker("setDate", fromDate);
-                $("#toDate1").datepicker("setDate", toDate);
-            } else if (selectedOption == "5") {
-                // This Year
-                fromDate = new Date(now.getFullYear(), 0, 1);
-                toDate = now;
-
-                $("#fromDate1").datepicker("setDate", fromDate);
-                $("#toDate1").datepicker("setDate", toDate);
-            } else if (selectedOption == "6") {
-                // Custom Date Range
-                $("#fromDate1, #toDate1").prop("disabled", false);
-            }
-        });
-
-        // Handle dropdown item selection
-        $('#websiteDropdown').on('click', '.dropdown-item', function () {
-            const selectedValue = $(this).text().trim();
-            selectedWebsiteId = $(this).data('id');
-
-            $('#searchDropdown').val(selectedValue);
-            $('#websiteDropdown').hide(); // Hide the dropdown
-
-            console.log('Selected Website ID:', selectedWebsiteId);
-        });
-
-        // Filter dropdown based on user input
-        $('#searchDropdown').keyup(function () {
-            filterDropdown(); // Call the filterDropdown function directly
-        });
-
-        // Handle generate report button click
-        $("#generateReports").click(function () {
-            const selectedWebsite = $("#searchDropdown").val().trim();
-            const reportDate = $("#reportDate1").val();
-            const fromDate = $("#fromDate1").val();
-            const toDate = $("#toDate1").val();
-            const format = $("input[name='fav_language']:checked").val();
-
-            if (!selectedWebsite || !reportDate || !fromDate || !toDate || !format) {
-                alert("Please select all options before generating the report.");
-                return;
-            }
-
-            console.log("Generating report for:", selectedWebsite);
-            console.log("Generating report for:", selectedWebsiteId);
-            // AJAX request to call the PHP function and fetch data
-            $.ajax({
-                url: ajaxurl, // WordPress AJAX URL
-                method: 'POST',
-                data: {
-                    action: 'get_partner_report', // Custom action
-                    white_label_website_id: selectedWebsiteId,
-                    queryFrom: fromDate,
-                    queryTo: toDate,
-                    queryFormat: format,
-                    reportDate: reportDate
-                },
-                success: function(response) {
-                    // Assuming response contains HTML for the table rows
-                    $('#reportTable tbody').empty(); // Clear previous rows
-                    $('#reportTable tbody').append(response); // Append new rows
-                },
-                error: function(xhr, status, error) {
-                    console.error("Error fetching report:", error);
-                    alert("An error occurred while fetching the report.");
-                }
-            });
-        });
-            // Your report generation logic goes here
-    });
-</script>
-
-    <?php
-    echo ob_get_clean();
-}
-?>
-<style>
+  <style>
 
 #websiteDropdown {
     display: none; /* Hide the dropdown initially */
@@ -299,3 +127,204 @@ function partner_reports_page() {
         margin-left: 5px;
     }
 </style>
+
+  <script>
+    let selectedWebsiteId = null; // Variable to store selected ID
+
+    // Define the filterDropdown function before using it
+    function filterDropdown() {
+        const input = document.getElementById("searchDropdown");
+        const filter = input.value.toLowerCase();
+        const dropdown = document.getElementById("websiteDropdown");
+        const items = dropdown.getElementsByClassName("dropdown-item");
+
+        let hasMatchingItems = false; // Flag to check if there are matching items
+
+        for (let i = 0; i < items.length; i++) {
+            const text = items[i].textContent || items[i].innerText;
+            if (text.toLowerCase().includes(filter)) {
+                items[i].style.display = ""; // Show matching items
+                hasMatchingItems = true; // Found matching items
+            } else {
+                items[i].style.display = "none"; // Hide non-matching items
+            }
+        }
+
+        // If no items match, show "No websites available"
+        if (!hasMatchingItems) {
+            const noMatch = document.createElement("div");
+            noMatch.classList.add("dropdown-item");
+            noMatch.textContent = "No matching websites found";
+            dropdown.appendChild(noMatch);
+        }
+
+        // Hide the dropdown if input is empty
+        dropdown.style.display = filter ? "block" : "none";
+    }
+
+    jQuery(document).ready(function ($) {
+
+        // Initialize datepickers
+        //$("#fromDate1, #toDate1").datepicker({ dateFormat: "Y-m-d" });
+        $("#fromDate1, #toDate1").datepicker({ dateFormat: "yy-mm-dd" });
+
+
+        $("#reportDate1").change(function () {
+        const selectedOption = $(this).val();
+        const now = new Date();
+        let fromDate, toDate;
+
+        // Reset date fields
+        $("#fromDate1, #toDate1").val("").prop("disabled", true);
+
+        if (selectedOption == "1") {
+            // Last Week
+            const lastWeekStart = new Date(now);
+            lastWeekStart.setDate(now.getDate() - now.getDay() - 7);
+            const lastWeekEnd = new Date(lastWeekStart);
+            lastWeekEnd.setDate(lastWeekStart.getDate() + 6);
+
+            // Format the dates as 'YYYY-MM-DD'
+            fromDate = formatDate(lastWeekStart);
+            toDate = formatDate(lastWeekEnd);
+
+            $("#fromDate1").datepicker("setDate", lastWeekStart);
+            $("#toDate1").datepicker("setDate", lastWeekEnd);
+        } else if (selectedOption == "2") {
+            // Last Month
+            fromDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+            toDate = new Date(now.getFullYear(), now.getMonth(), 0);
+
+            // Format the dates as 'YYYY-MM-DD'
+            fromDate = formatDate(fromDate);
+            toDate = formatDate(toDate);
+
+            $("#fromDate1").datepicker("setDate", fromDate);
+            $("#toDate1").datepicker("setDate", toDate);
+        } else if (selectedOption == "3") {
+            // Last Quarter
+            const currentMonth = now.getMonth();
+            const quarterStartMonth = Math.floor(currentMonth / 3) * 3 - 3;
+            fromDate = new Date(now.getFullYear(), quarterStartMonth, 1);
+            toDate = new Date(now.getFullYear(), quarterStartMonth + 3, 0);
+
+            // Format the dates as 'YYYY-MM-DD'
+            fromDate = formatDate(fromDate);
+            toDate = formatDate(toDate);
+
+            $("#fromDate1").datepicker("setDate", fromDate);
+            $("#toDate1").datepicker("setDate", toDate);
+        } else if (selectedOption == "4") {
+            // Last Year
+            fromDate = new Date(now.getFullYear() - 1, 0, 1);
+            toDate = new Date(now.getFullYear() - 1, 11, 31);
+
+            // Format the dates as 'YYYY-MM-DD'
+            fromDate = formatDate(fromDate);
+            toDate = formatDate(toDate);
+
+            $("#fromDate1").datepicker("setDate", fromDate);
+            $("#toDate1").datepicker("setDate", toDate);
+        } else if (selectedOption == "5") {
+            // This Year
+            fromDate = new Date(now.getFullYear(), 0, 1);
+            toDate = now;
+
+            // Format the dates as 'YYYY-MM-DD'
+            fromDate = formatDate(fromDate);
+            toDate = formatDate(toDate);
+
+            $("#fromDate1").datepicker("setDate", fromDate);
+            $("#toDate1").datepicker("setDate", toDate);
+        } else if (selectedOption == "6") {
+            // Custom Date Range
+            $("#fromDate1, #toDate1").prop("disabled", false);
+        }
+
+        // Get the selected website ID and report date
+        const selectedWebsite = $("#searchDropdown").val().trim();
+        const reportDate = $("#reportDate1").val();
+
+        console.log({ fromDate, toDate, selectedWebsiteId, reportDate });
+
+        $.ajax({
+                        url: "balancepro/wp-content/themes/balance-theme/inc/edit/modules/showexportdata.php",
+                        type: "POST",
+                        data: {
+                            fromDateVal: fromDate,
+                            toDateVal: toDate,
+                            wlwVal: selectedWebsiteId,
+                            reportDateVal: reportDate
+                          },
+                        success: function(result) {
+                                if(reportDate=="0"){
+                                $( "span#generateReports" ).css({"pointer-events": "none","cursor":"default"});
+                                        $("#reportTable1").html("Please Select Report Date");
+
+                                }else if(result.trim()=="No data available"){
+                                        $("#reportTable1").html("No data available");
+                                $( "span#generateReports" ).css({"pointer-events": "none","cursor":"default"});
+                                }
+                                if(result.trim()!="No data available") {
+
+                                $( "span#generateReports" ).css({"cursor": "pointer","pointer-events": "auto"});
+                                        $("#reportTable1").html(result);
+                                }
+                            $("#reportTable1").innerHTML=result;
+
+                        }
+
+                });
+
+    });
+
+    // Function to format date as 'YYYY-MM-DD'
+    function formatDate(date) {
+        const year = date.getFullYear();
+        const month = ("0" + (date.getMonth() + 1)).slice(-2); // Add leading zero for single digit months
+        const day = ("0" + date.getDate()).slice(-2); // Add leading zero for single digit days
+        return `${year}-${month}-${day}`;
+    }
+
+        // Handle dropdown item selection
+        $('#websiteDropdown').on('click', '.dropdown-item', function () {
+            const selectedValue = $(this).text().trim();
+            selectedWebsiteId = $(this).data('id');
+
+            $('#searchDropdown').val(selectedValue);
+            $('#websiteDropdown').hide(); // Hide the dropdown
+
+            console.log('Selected Website ID:', selectedWebsiteId);
+        });
+
+        // Filter dropdown based on user input
+        $('#searchDropdown').keyup(function () {
+            filterDropdown(); // Call the filterDropdown function directly
+        });
+
+        // Handle generate report button click
+        $("#generateReports").click(function () {
+            const selectedWebsite = $("#searchDropdown").val().trim();
+            const reportDate = $("#reportDate1").val();
+            const fromDate = $("#fromDate1").val();
+            const toDate = $("#toDate1").val();
+            const format = $("input[name='fav_language']:checked").val();
+
+            if (!selectedWebsite || !reportDate || !fromDate || !toDate || !format) {
+                alert("Please select all options before generating the report.");
+                return;
+            }
+
+            console.log("Generating report for:", selectedWebsite);
+            console.log("Generating report for:", selectedWebsiteId);
+            // AJAX request to call the PHP function and fetch data
+            
+        });
+            // Your report generation logic goes here
+    });
+</script>
+
+    <?php
+    echo ob_get_clean();
+}
+?>
