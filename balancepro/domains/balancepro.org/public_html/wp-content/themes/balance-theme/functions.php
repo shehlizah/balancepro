@@ -1028,11 +1028,20 @@ add_action('admin_enqueue_scripts', 'enqueue_partner_reports_scripts');
 
 
 
+
 add_action('wp_ajax_get_partner_report', 'handle_get_partner_report');
 add_action('wp_ajax_nopriv_get_partner_report', 'handle_get_partner_report');
 
 function handle_get_partner_report() {
-    global $wpdb;
+    global $wpdb,$data;
+	$prefix = $wpdb->prefix;
+	$page = $_SESSION['pagedvl'] ;
+	$passing_percent = $data['passing_percent'];
+	$rec_per_page = 30;
+	$page =$page-1;
+	$start = $page*$rec_per_page;
+
+    $white_label_websites_table_name = $prefix . 'white_label_websites';
 
     // Get the parameters from the AJAX request
     $white_label_website_id = isset($_POST['white_label_website_id']) ? sanitize_text_field($_POST['white_label_website_id']) : '';
@@ -1040,28 +1049,65 @@ function handle_get_partner_report() {
     $queryTo = isset($_POST['queryTo']) ? sanitize_text_field($_POST['queryTo']) : '';
     $queryFormat = isset($_POST['queryFormat']) ? sanitize_text_field($_POST['queryFormat']) : '';
     $reportDate = isset($_POST['reportDate']) ? sanitize_text_field($_POST['reportDate']) : '';
-	//var_dump($queryFrom,$queryTo,$queryFormat,$reportDate);
 
     // Call the function to fetch the partner report
     $results = getPartnerReport($white_label_website_id, $queryFrom, $queryTo, $queryFormat, $reportDate);
-	//var_dump($results);
-    if ($results) {
-        // Output the results in a table row format (HTML)
-        foreach ($results as $row) {
-            echo '<tr>';
-            echo '<td>' . esc_html($row->title) . '</td>';
-            echo '<td>' . esc_html($row->crtf_name) . '</td>';
-            echo '<td>' . esc_html($row->timestamp) . '</td>';
-            echo '</tr>';
-        }
-    } else {
-        echo '<tr><td colspan="3">No results found.</td></tr>';
-    }
+	print_r($results,true);
 
-    wp_die(); // Required to terminate AJAX request properly
+	$PartnerTitle = $wpdb->get_var( "SELECT title FROM $white_label_websites_table_name WHERE white_label_website_id = '$white_label_website_id';" );
+
+	$domain = $wpdb->get_var( "SELECT domain FROM $white_label_websites_table_name WHERE white_label_website_id = '$white_label_website_id';" );
+	$pdf_file_path = 'http://'.$domain.'/uploads/';
+	$i=$start+1;
+	$exportData = "";
+// 	foreach ($results as $result_key => $result_value) {
+// 				$file = $pdf_file_path.$result_value->crtf_name;
+// //                        $file = $result_value->crtf_name;
+// 				$postid = $result_value->wp_post_id;
+// 				$wp_user_id = $result_value->wp_user_id;
+// 				$meta_value = $wpdb->get_var( "SELECT meta_value FROM `wp_postmeta` WHERE `post_id`='$postid' AND `meta_key`='_page_edit_data'" );
+// 				$datam = unserialize($meta_value);
+
+// 				$user_email = $wpdb->get_var( "SELECT user_email FROM `wp_users` WHERE `ID`='$wp_user_id'" );
+
+// 				$first_name = $wpdb->get_var( "SELECT firstname FROM `whitelabel_users` WHERE `email`='$user_email' AND `white_label_website_id`='$white_label_website_id' " );
+
+// 				$last_name = $wpdb->get_var( "SELECT lastname FROM `whitelabel_users` WHERE `email`='$user_email' AND `white_label_website_id`='$white_label_website_id'  " );
+// 				$display_name = $first_name." ".$last_name;
+// 				$score = round($result_value->score,2);
+// 				//if($score >= $passing_percent) {
+// 				if($result_value->crtf_name!='') {
+// //                              $view = $file;
+// 						$view = '<a href="'.$file.'" title="View Certificate" target="_blank">View</a>';
+// 						$result='Pass';
+// 				}
+// 				else {
+// 						$view = '';
+// 						$result = 'Fail';
+// 				}
+// 			}
+// 		$exportData .= $i.",".$display_name.",".$user_email.",".$datam['post_title'].",".date('d M Y, h:i A',strtotime($result_value->timestamp)).",".round($result_value->score,2).",".$result.",".$result_value->num_correct.",".$view;
+// 			print_r($exportData,true);
+
+	// exit;
+    // if ($results) {
+    //     // Output the results in a table row format (HTML)
+
+    //     foreach ($results as $row) {
+    //         echo '<tr>';
+    //         echo '<td>' . esc_html($row->title) . '</td>';
+    //         echo '<td>' . esc_html($row->crtf_name) . '</td>';
+    //         echo '<td>' . esc_html($row->timestamp) . '</td>';
+    //         echo '</tr>';
+    //     }
+    // } else {
+    //     echo '<tr><td colspan="3">No results found.</td></tr>';
+    // }
+
+   // wp_die(); // Required to terminate AJAX request properly
 }
 
-function getPartnerReport($white_label_website_id)
+function getPartnerReport($white_label_website_id, $queryFrom, $queryTo, $queryFormat, $reportDate)
 {
 	global $wpdb, $post;
 	$page = $_SESSION['pagedvl'] ;
@@ -1077,15 +1123,14 @@ function getPartnerReport($white_label_website_id)
 	$rec_per_page = 30;
                 $page =$page-1;
                 $start = $page*$rec_per_page;
-	$queryVar = $_SESSION["reportFilter"];
-	$explodeSearch = explode("-", $queryVar);
-	$queryReport = $explodeSearch[0];
-	$queryFrom = $explodeSearch[1];
-	$queryTo = $explodeSearch[2];
-	$queryFormat = $explodeSearch[3];
+	// $queryVar = $_SESSION["reportFilter"];
+	// $explodeSearch = explode("-", $queryVar);
+	// $queryReport = $explodeSearch[0];
+	// $queryFrom = $explodeSearch[1];
+	// $queryTo = $explodeSearch[2];
+	// $queryFormat = $explodeSearch[3];
 	$queryDateFrom = date("Y-m-d", strtotime($queryFrom));
 	$queryDateTo = date("Y-m-d", strtotime($queryTo));
-
 			$sqlReportsTotal = "SELECT COUNT(r.ID) AS cnt FROM wp_quiz_results r left join wp_quiz_certificates c on r.ID=c.quiz_result_id where r.wlwid='$white_label_website_id' AND r.timestamp>='$queryDateFrom' AND r.timestamp<='$queryDateTo'";
 
 			$sqlReports = "SELECT r.*,crtf_name FROM wp_quiz_results r left join wp_quiz_certificates c on r.ID=c.quiz_result_id where r.wlwid='$white_label_website_id' AND r.timestamp>='$queryDateFrom' AND r.timestamp<='$queryDateTo' ORDER BY r.timestamp";
@@ -1093,12 +1138,7 @@ function getPartnerReport($white_label_website_id)
 			$total_records = $wpdb->get_var($sqlReportsTotal);
 			$total_pages = ceil($total_records / $rec_per_page);
 			$resultsReports = $wpdb->get_results( $sqlReports, OBJECT );
-			//var_dump($resultsReports);
-
 			return $resultsReports;
-
 }
 
 add_action('get_partner_report', 'getPartnerReport');
-
-
