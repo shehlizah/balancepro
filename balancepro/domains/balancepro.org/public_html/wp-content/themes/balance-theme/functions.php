@@ -1011,7 +1011,6 @@ function add_partner_reports_menu() {
     );
 }
 
-
 function enqueue_partner_reports_scripts() {
     // Enqueue jQuery (WordPress already includes this by default)
     wp_enqueue_script('jquery');
@@ -1024,9 +1023,6 @@ function enqueue_partner_reports_scripts() {
     wp_enqueue_style('jquery-ui-css', 'https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css');
 }
 add_action('admin_enqueue_scripts', 'enqueue_partner_reports_scripts');
-
-
-
 
 
 add_action('wp_ajax_get_partner_report', 'handle_get_partner_report');
@@ -1051,60 +1047,73 @@ function handle_get_partner_report() {
     $reportDate = isset($_POST['reportDate']) ? sanitize_text_field($_POST['reportDate']) : '';
 
     // Call the function to fetch the partner report
-    $results = getPartnerReport($white_label_website_id, $queryFrom, $queryTo, $queryFormat, $reportDate);
-	print_r($results,true);
-
+   $results = getPartnerReport($white_label_website_id, $queryFrom, $queryTo, $queryFormat, $reportDate);
+   
 	$PartnerTitle = $wpdb->get_var( "SELECT title FROM $white_label_websites_table_name WHERE white_label_website_id = '$white_label_website_id';" );
 
 	$domain = $wpdb->get_var( "SELECT domain FROM $white_label_websites_table_name WHERE white_label_website_id = '$white_label_website_id';" );
 	$pdf_file_path = 'http://'.$domain.'/uploads/';
 	$i=$start+1;
 	$exportData = "";
-// 	foreach ($results as $result_key => $result_value) {
-// 				$file = $pdf_file_path.$result_value->crtf_name;
-// //                        $file = $result_value->crtf_name;
-// 				$postid = $result_value->wp_post_id;
-// 				$wp_user_id = $result_value->wp_user_id;
-// 				$meta_value = $wpdb->get_var( "SELECT meta_value FROM `wp_postmeta` WHERE `post_id`='$postid' AND `meta_key`='_page_edit_data'" );
-// 				$datam = unserialize($meta_value);
+	$output[] = '';
 
-// 				$user_email = $wpdb->get_var( "SELECT user_email FROM `wp_users` WHERE `ID`='$wp_user_id'" );
+	if ($results) {
+	foreach ($results as $result_key => $result_value) {
+				$file = $pdf_file_path.$result_value->crtf_name;
+//                        $file = $result_value->crtf_name;
+				$postid = $result_value->wp_post_id;
+				$wp_user_id = $result_value->wp_user_id;
+				$meta_value = $wpdb->get_var( "SELECT meta_value FROM `wp_postmeta` WHERE `post_id`='$postid' AND `meta_key`='_page_edit_data'" );
+				$datam = unserialize($meta_value);
 
-// 				$first_name = $wpdb->get_var( "SELECT firstname FROM `whitelabel_users` WHERE `email`='$user_email' AND `white_label_website_id`='$white_label_website_id' " );
+				$user_email = $wpdb->get_var( "SELECT user_email FROM `wp_users` WHERE `ID`='$wp_user_id'" );
 
-// 				$last_name = $wpdb->get_var( "SELECT lastname FROM `whitelabel_users` WHERE `email`='$user_email' AND `white_label_website_id`='$white_label_website_id'  " );
-// 				$display_name = $first_name." ".$last_name;
-// 				$score = round($result_value->score,2);
-// 				//if($score >= $passing_percent) {
-// 				if($result_value->crtf_name!='') {
-// //                              $view = $file;
-// 						$view = '<a href="'.$file.'" title="View Certificate" target="_blank">View</a>';
-// 						$result='Pass';
-// 				}
-// 				else {
-// 						$view = '';
-// 						$result = 'Fail';
-// 				}
-// 			}
-// 		$exportData .= $i.",".$display_name.",".$user_email.",".$datam['post_title'].",".date('d M Y, h:i A',strtotime($result_value->timestamp)).",".round($result_value->score,2).",".$result.",".$result_value->num_correct.",".$view;
-// 			print_r($exportData,true);
+				$first_name = $wpdb->get_var( "SELECT firstname FROM `whitelabel_users` WHERE `email`='$user_email' AND `white_label_website_id`='$white_label_website_id' " );
 
-	// exit;
-    // if ($results) {
-    //     // Output the results in a table row format (HTML)
+				$last_name = $wpdb->get_var( "SELECT lastname FROM `whitelabel_users` WHERE `email`='$user_email' AND `white_label_website_id`='$white_label_website_id'  " );
+				$display_name = $first_name." ".$last_name;
+				$score = round($result_value->score,2);
+				//if($score >= $passing_percent) {
+				if($result_value->crtf_name!='') {
+//                              $view = $file;
+						$view = '<a href="'.$file.'" title="View Certificate" target="_blank">View</a>';
+						$result='Pass';
+				}
+				else {
+						$view = '';
+						$result = 'Fail';
+				}
 
-    //     foreach ($results as $row) {
-    //         echo '<tr>';
-    //         echo '<td>' . esc_html($row->title) . '</td>';
-    //         echo '<td>' . esc_html($row->crtf_name) . '</td>';
-    //         echo '<td>' . esc_html($row->timestamp) . '</td>';
-    //         echo '</tr>';
-    //     }
-    // } else {
-    //     echo '<tr><td colspan="3">No results found.</td></tr>';
-    // }
+				$output .= '<tr>';
+				$output .= '<td>' . esc_html($PartnerTitle) . '</td>';
+				$output .= '<td>' . esc_html($result_value->timestamp) . '</td>';
+				$output .= '<td>' . esc_html($first_name) . '</td>';
+				$output .= '<td>' . esc_html($last_name) . '</td>';
+				$output .= '<td>' . esc_html($user_email) . '</td>';
+				$output .= '<td>' . esc_html($datam['post_title']) . '</td>';
+				$output .= '<td>' . (!empty($result_value->crtf_name) ? '<a href="' . esc_url($file) . '" target="_blank">View</a>' : 'N/A') . '</td>';
+				$output .= '</tr>';	
 
-   // wp_die(); // Required to terminate AJAX request properly
+		// 	$output= '<tr>
+		// 	<td data-column="sr.no" >'.$PartnerTitle.'</td> ';
+		// 	$output.= '<td data-column="Date" style="text-align: left;">'.$result_value->timestamp.'</td>';
+		// 	$output.= '<td data-column="User" style="text-align: left;">'.$first_name.'</td>';
+		// 	$output.= '<td data-column="User" style="text-align: left;">'.$last_name.'</td>';
+		// 	$output.= '<td data-column="User" style="text-align: left;">'.$user_email.'</td>';
+		// 	$output.= '<td data-column="Quiz" style="text-align: left;">'.$datam['post_title'].'</td>';
+		// 	$output.= '<td data-column="Certificate" style="text-align: left;">'.$view.'</td>';
+		//   $output.= '</tr>';
+		}
+		} else {
+			$output = '<tr><td colspan="7">No results found.</td></tr>';
+		}
+
+
+		return $output;
+		error_log(print_r($output,true));
+
+		//wp_die();
+		
 }
 
 function getPartnerReport($white_label_website_id, $queryFrom, $queryTo, $queryFormat, $reportDate)
@@ -1129,16 +1138,86 @@ function getPartnerReport($white_label_website_id, $queryFrom, $queryTo, $queryF
 	// $queryFrom = $explodeSearch[1];
 	// $queryTo = $explodeSearch[2];
 	// $queryFormat = $explodeSearch[3];
-	$queryDateFrom = date("Y-m-d", strtotime($queryFrom));
-	$queryDateTo = date("Y-m-d", strtotime($queryTo));
+	$queryDateFrom = $queryFrom;
+	$queryDateTo = $queryTo;
+
+	
+
 			$sqlReportsTotal = "SELECT COUNT(r.ID) AS cnt FROM wp_quiz_results r left join wp_quiz_certificates c on r.ID=c.quiz_result_id where r.wlwid='$white_label_website_id' AND r.timestamp>='$queryDateFrom' AND r.timestamp<='$queryDateTo'";
-
+			
 			$sqlReports = "SELECT r.*,crtf_name FROM wp_quiz_results r left join wp_quiz_certificates c on r.ID=c.quiz_result_id where r.wlwid='$white_label_website_id' AND r.timestamp>='$queryDateFrom' AND r.timestamp<='$queryDateTo' ORDER BY r.timestamp";
-
 			$total_records = $wpdb->get_var($sqlReportsTotal);
+			error_log( "Total Records",$total_records);
 			$total_pages = ceil($total_records / $rec_per_page);
 			$resultsReports = $wpdb->get_results( $sqlReports, OBJECT );
-			return $resultsReports;
+			// $results = getPartnerReport($white_label_website_id, $queryFrom, $queryTo, $queryFormat, $reportDate);
+			$PartnerTitle = $wpdb->get_var( "SELECT title FROM $white_label_websites_table_name WHERE white_label_website_id = '$white_label_website_id';" );
+		
+			$domain = $wpdb->get_var( "SELECT domain FROM $white_label_websites_table_name WHERE white_label_website_id = '$white_label_website_id';" );
+			$pdf_file_path = 'http://'.$domain.'/uploads/';
+			$i=$start+1;
+			$exportData = "";
+			$output = '';
+		
+			if ($resultsReports) {
+			foreach ($resultsReports as $result_key => $result_value) {
+						$file = $pdf_file_path.$result_value->crtf_name;
+		//                        $file = $result_value->crtf_name;
+						$postid = $result_value->wp_post_id;
+						$wp_user_id = $result_value->wp_user_id;
+						$meta_value = $wpdb->get_var( "SELECT meta_value FROM `wp_postmeta` WHERE `post_id`='$postid' AND `meta_key`='_page_edit_data'" );
+						$datam = unserialize($meta_value);
+		
+						$user_email = $wpdb->get_var( "SELECT user_email FROM `wp_users` WHERE `ID`='$wp_user_id'" );
+		
+						$first_name = $wpdb->get_var( "SELECT firstname FROM `whitelabel_users` WHERE `email`='$user_email' AND `white_label_website_id`='$white_label_website_id' " );
+		
+						$last_name = $wpdb->get_var( "SELECT lastname FROM `whitelabel_users` WHERE `email`='$user_email' AND `white_label_website_id`='$white_label_website_id'  " );
+						$display_name = $first_name." ".$last_name;
+						$score = round($result_value->score,2);
+						//if($score >= $passing_percent) {
+						if($result_value->crtf_name!='') {
+		//                              $view = $file;
+								$view = '<a href="'.$file.'" title="View Certificate" target="_blank">View</a>';
+								$result='Pass';
+						}
+						else {
+								$view = '';
+								$result = 'Fail';
+						}
+		
+						$output .= '<tr>';
+						$output .= '<td>' . esc_html($PartnerTitle) . '</td>';
+						$output .= '<td>' . esc_html($result_value->timestamp) . '</td>';
+						$output .= '<td>' . esc_html($first_name) . '</td>';
+						$output .= '<td>' . esc_html($last_name) . '</td>';
+						$output .= '<td>' . esc_html($user_email) . '</td>';
+						$output .= '<td>' . esc_html($datam['post_title']) . '</td>';
+						$output .= '<td>' . (!empty($result_value->crtf_name) ? '<a href="' . esc_url($file) . '" target="_blank">View</a>' : 'N/A') . '</td>';
+						$output .= '</tr>';	
+		
+				// 	$output= '<tr>
+				// 	<td data-column="sr.no" >'.$PartnerTitle.'</td> ';
+				// 	$output.= '<td data-column="Date" style="text-align: left;">'.$result_value->timestamp.'</td>';
+				// 	$output.= '<td data-column="User" style="text-align: left;">'.$first_name.'</td>';
+				// 	$output.= '<td data-column="User" style="text-align: left;">'.$last_name.'</td>';
+				// 	$output.= '<td data-column="User" style="text-align: left;">'.$user_email.'</td>';
+				// 	$output.= '<td data-column="Quiz" style="text-align: left;">'.$datam['post_title'].'</td>';
+				// 	$output.= '<td data-column="Certificate" style="text-align: left;">'.$view.'</td>';
+				//   $output.= '</tr>';
+				//error_log(print_r($output,true));
+				return $output;
+
+				}
+				
+				} else {
+					$output = '<tr><td colspan="7">No results found.</td></tr>';
+				}
+		
+				//error_log($output);
+
+				return $output;
+				//error_log(print_r($output,true));
 }
 
 add_action('get_partner_report', 'getPartnerReport');
