@@ -1,5 +1,6 @@
 <?php
 // Callback function to render the Partner Reports page
+
 function partner_reports_page() {
   ?>
   <div class="module-wrapper wlw_admins-module-module-wrapper-0" data-visible-on="tab-11">
@@ -20,7 +21,6 @@ function partner_reports_page() {
 
     ob_start();
     ?>
-
     
     <!-- Date Picker, Report Format, and Generate Report Section -->
      <!-- <div class="module-wrapper wlw_admins-module-module-wrapper-0" data-visible-on="tab-11">-->
@@ -40,9 +40,6 @@ function partner_reports_page() {
         <?php }
         ?>
     </div>
-
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 
         <b style="font-size:12px;">Report Date:</b>
         <select name="reportDate" id="reportDate1" style="font-size:12px;">
@@ -66,218 +63,16 @@ function partner_reports_page() {
         <input type="radio" id="excel" class="fav_language" name="fav_language" value="excel"><label for="excel" style="font-size:12px;">Excel</label>
         <input type="radio" id="csv" class="fav_language" name="fav_language" value="csv"><label for="csv" style="font-size:12px;">CSV</label>
 
-        <span id="generateReport" style="display: inline-block; padding: 5px 10px; font-size: 12px; font-weight: 600; text-align: center; text-decoration: none; color: #333; background-color: #e0e0e0; border: 1px solid #000; border-radius: 4px; transition: background-color 0.2s, color 0.2s, border-color 0.2s; cursor: pointer;">
+        <span id="generateReports" style="display: inline-block; padding: 5px 10px; font-size: 12px; font-weight: 600; text-align: center; text-decoration: none; color: #333; background-color: #e0e0e0; border: 1px solid #000; border-radius: 4px; transition: background-color 0.2s, color 0.2s, border-color 0.2s; cursor: pointer;">
             Generate Report
         </span>
 
-        <table class="wp-list-table widefat striped posts" id="reportTable" style="margin-top: 20px;">
-            <thead>
-                <tr>
-                    <th>Credit Union</th>
-                    <th>Date</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Street Address</th>
-                    <th>City</th>
-                    <th>State</th>
-                    <th>Zip</th>
-                    <th>Email</th>
-                    <th>Name of Quiz</th>
-                    <th>Score</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Rows will be dynamically inserted here -->
-            </tbody>
+        <table class="wp-list-table widefat striped posts" id="reportTable1" style="margin-top: 20px;">
+            
         </table>
     </div>
   </div>
-
-    <!-- JavaScript for Dropdown and Report Functionality -->
-    
-    <script>
-       jQuery(document).ready(function ($) {
-        $(".datetimepicker").datetimepicker({
-        format: "mm/dd/yyyy"  // Ensure the format is compatible with your input
-    });
-
-    $("#reportDate1").change(function () {
-        const selectedOption = $(this).val();  // Get selected option
-        const now = new Date();
-        let fromDate, toDate;
-
-        // Reset and disable the date fields by default
-        $("#fromDate1, #toDate1").val("").prop("disabled", true);
-
-        if (selectedOption == "1") {
-            console.log("working");
-            // Last Week
-            var dateLimit = new Date(new Date().setDate(now.getDate() - 7));
-var nextWeekStart = now.getDate() - now.getDay() - 7;
-var nextWeekFrom = new Date(now.setDate(nextWeekStart));
-var nextWeekEnd = now.getDate() - now.getDay() + 6;
-var nextWeekTo = new Date(now.setDate(nextWeekEnd));
-$("#fromDate1").datetimepicker("setDate",nextWeekFrom);
-console.log($("#fromDate1").datetimepicker("setDate",nextWeekFrom));
-
-                $("#toDate1").datetimepicker("setDate",nextWeekTo);
-                $("#fromDate1").attr("disabled", true);
-                $("#toDate1").attr("disabled", true);
-        } else if (selectedOption == "2") {
-            // Last Month
-            fromDate = new Date(now.getFullYear(), now.getMonth() - 1, 1); // First day of last month
-            toDate = new Date(now.getFullYear(), now.getMonth(), 0); // Last day of last month
-
-            // Set the dates in the datepicker fields
-            $("#fromDate1").datetimepicker("setDate", fromDate);
-            $("#toDate1").datetimepicker("setDate", toDate);
-        } else if (selectedOption == "3") {
-            // Last Quarter
-            const currentMonth = now.getMonth();
-            const quarterStartMonth = Math.floor(currentMonth / 3) * 3 - 3; // Start of last quarter
-            fromDate = new Date(now.getFullYear(), quarterStartMonth, 1);
-            toDate = new Date(now.getFullYear(), quarterStartMonth + 3, 0); // End of last quarter
-
-            // Set the dates in the datepicker fields
-            $("#fromDate1").datetimepicker("setDate", fromDate);
-            $("#toDate1").datetimepicker("setDate", toDate);
-        } else if (selectedOption == "4") {
-            // Last Year
-            fromDate = new Date(now.getFullYear() - 1, 0, 1); // January 1st, last year
-            toDate = new Date(now.getFullYear() - 1, 11, 31); // December 31st, last year
-
-            // Set the dates in the datepicker fields
-            $("#fromDate1").datetimepicker("setDate", fromDate);
-            $("#toDate1").datetimepicker("setDate", toDate);
-        } else if (selectedOption == "5") {
-            // This Year
-            fromDate = new Date(now.getFullYear(), 0, 1); // January 1st, this year
-            toDate = now; // Today
-
-            // Set the dates in the datepicker fields
-            $("#fromDate1").datetimepicker("setDate", fromDate);
-            $("#toDate1").datetimepicker("setDate", toDate);
-        } else if (selectedOption == "6") {
-            // Custom Date Range
-            $("#fromDate1, #toDate1").prop("disabled", false);
-            return;
-        }
-    });
-});
-
-
-         // Function to show or hide the dropdown
-    function myFunction() {
-        document.getElementById("myDropdown").classList.toggle("show");
-    }
-
-    
-    function filterDropdown() {
-    const input = document.getElementById("searchDropdown");
-    const filter = input.value.toLowerCase();
-    const dropdown = document.getElementById("websiteDropdown");
-    const items = dropdown.getElementsByClassName("dropdown-item");
-
-    let hasMatchingItems = false; // Flag to check if there are matching items
-
-    for (let i = 0; i < items.length; i++) {
-        const text = items[i].textContent || items[i].innerText;
-        if (text.toLowerCase().includes(filter)) {
-            items[i].style.display = ""; // Show matching items
-            hasMatchingItems = true; // Found matching items
-        } else {
-            items[i].style.display = "none"; // Hide non-matching items
-        }
-    }
-
-    // If no items match, show "No websites available"
-    if (!hasMatchingItems) {
-        const noMatch = document.createElement("div");
-        noMatch.classList.add("dropdown-item");
-        noMatch.textContent = "No matching websites found";
-        dropdown.appendChild(noMatch);
-    }
-
-    // Hide the dropdown if input is empty
-    dropdown.style.display = filter ? "block" : "none";
-}
-
-// Handle item selection
-    document.addEventListener("DOMContentLoaded", () => {
-        const items = document.querySelectorAll(".dropdown-item");
-        items.forEach(item => {
-            item.addEventListener("click", () => {
-                document.getElementById("searchDropdown").value = item.innerText; // Set the input value to the selected item
-                document.getElementById("websiteDropdown").style.display = "none"; // Hide the dropdown
-            });
-        });
-    });
-       
-    // Enabling the "Generate Report" button when a white-label website is selected
-    document.getElementById("searchableDropdown").addEventListener("change", function() {
-            var selectedWebsite = this.value;
-            var generateButton = document.getElementById("generateReport");
-
-            if (selectedWebsite !== "") {
-                generateButton.style.backgroundColor = "#4CAF50"; // Green color
-                generateButton.style.cursor = "pointer";
-                generateButton.removeAttribute("disabled");
-            } else {
-                generateButton.style.backgroundColor = "#e0e0e0"; // Disabled color
-                generateButton.style.cursor = "not-allowed";
-                generateButton.setAttribute("disabled", "disabled");
-            }
-        });
-    document.getElementById("searchInput").addEventListener("input", function() {
-        const searchValue = this.value.toLowerCase();
-const dropdown = document.getElementById("searchableDropdown");
-        const options = dropdown.querySelectorAll("option");
-
-        options.forEach(option => {
-            if (option.textContent.toLowerCase().includes(searchValue)) {
-                option.style.display = ""; // Show matching option
-            } else {
-                option.style.display = "none"; // Hide non-matching option
-            }
-        });
-    });
-    // Handle the click on a dropdown item and use its value
-    document.querySelectorAll('.dropdown-item').forEach(item => {
-        item.addEventListener('click', function() {
-            var selectedValue = this.getAttribute('data-value');
-            console.log("Selected Website ID: " + selectedValue); // Handle this value as needed
-        });
-    });
-  
-
-
-           
-
-            jQuery("#generateReport").click(function () {
-                const reportDate = jQuery("#reportDate1").val();
-                const fromDate = jQuery("#fromDate1").val();
-                const toDate = jQuery("#toDate1").val();
-                const format = jQuery("input[name='fav_language']:checked").val();
-
-                if (!format || !fromDate || !toDate) {
-                    alert("Please select all options before generating the report.");
-                    return;
-                }
-
-                const url = format === "pdf"
-                    ? `/wp-content/themes/balance-theme/inc/edit/modules/exportpdf.php?fromDate=${fromDate}&toDate=${toDate}&format=${format}`
-                    : `/wp-content/themes/balance-theme/inc/edit/modules/export.php?fromDate=${fromDate}&toDate=${toDate}&format=${format}`;
-
-                window.location.href = url;
-            });
-        
-    </script>
-
-    <?php
-    echo ob_get_clean();
-}
-?>
-<style>
+  <style>
 
 #websiteDropdown {
     display: none; /* Hide the dropdown initially */
@@ -312,7 +107,7 @@ const dropdown = document.getElementById("searchableDropdown");
     z-index: 999;
 }
 
-    #generateReport {
+    #generateReports {
         background-color: #e0e0e0;
         cursor: not-allowed;
         padding: 10px 20px;
@@ -322,7 +117,7 @@ const dropdown = document.getElementById("searchableDropdown");
         color: #333;
     }
 
-    #generateReport:enabled {
+    #generateReports:enabled {
         background-color: #4CAF50;
         cursor: pointer;
         color: white;
@@ -332,3 +127,249 @@ const dropdown = document.getElementById("searchableDropdown");
         margin-left: 5px;
     }
 </style>
+
+  <script>
+    let selectedWebsiteId = null; // Variable to store selected ID
+
+    // Define the filterDropdown function before using it
+    function filterDropdown() {
+        const input = document.getElementById("searchDropdown");
+        const filter = input.value.toLowerCase();
+        const dropdown = document.getElementById("websiteDropdown");
+        const items = dropdown.getElementsByClassName("dropdown-item");
+
+        let hasMatchingItems = false; // Flag to check if there are matching items
+
+        for (let i = 0; i < items.length; i++) {
+            const text = items[i].textContent || items[i].innerText;
+            if (text.toLowerCase().includes(filter)) {
+                items[i].style.display = ""; // Show matching items
+                hasMatchingItems = true; // Found matching items
+            } else {
+                items[i].style.display = "none"; // Hide non-matching items
+            }
+        }
+
+        // If no items match, show "No websites available"
+        if (!hasMatchingItems) {
+            const noMatch = document.createElement("div");
+            noMatch.classList.add("dropdown-item");
+            noMatch.textContent = "No matching websites found";
+            dropdown.appendChild(noMatch);
+        }
+
+        // Hide the dropdown if input is empty
+        dropdown.style.display = filter ? "block" : "none";
+    }
+
+    function getPageNum(e) {
+    var fromDateVal = jQuery("#fromDate1").val(); // retrieve the value
+    console.log("fromDate1: " + fromDateVal); // Debugging log
+    var toDateVal = jQuery("#toDate1").val(); // retrieve the value
+    console.log("toDate1: " + toDateVal); // Debugging log
+    var reportDateVal = jQuery("#reportDate1").val(); // retrieve the value
+    console.log("reportDate1: " + reportDateVal); // Debugging log
+    //var selectedWebsiteId = jQuery("#searchDropdown").val();
+    console.log("selectedWebsiteId: " + selectedWebsiteId); // Debugging log
+    var pageNum = e;
+
+    jQuery.ajax({
+        url: "/balancetest/wp-content/themes/balance-theme/inc/edit/modules/showexportdata.php", // Adjust path
+        type: "POST",
+        data: {
+            fromDateVal: fromDateVal,
+            toDateVal: toDateVal,
+            wlwVal: selectedWebsiteId,
+            reportDateVal: reportDateVal,
+            pageNum: pageNum
+        },
+
+        success: function(result) {
+                        
+                        jQuery("#reportTable1").innerHTML=result;
+                        jQuery("#reportTable1").html(result);
+
+                        }
+    });
+}
+
+
+
+    jQuery(document).ready(function ($) {
+
+        // Initialize datepickers
+        //$("#fromDate1, #toDate1").datepicker({ dateFormat: "Y-m-d" });
+        $("#fromDate1, #toDate1").datepicker({ dateFormat: "yy-mm-dd" });
+
+
+        $("#reportDate1").change(function () {
+        const selectedOption = $(this).val();
+        const now = new Date();
+        let fromDate, toDate;
+
+        // Reset date fields
+        $("#fromDate1, #toDate1").val("").prop("disabled", true);
+
+        if (selectedOption == "1") {
+            // Last Week
+            const lastWeekStart = new Date(now);
+            lastWeekStart.setDate(now.getDate() - now.getDay() - 7);
+            const lastWeekEnd = new Date(lastWeekStart);
+            lastWeekEnd.setDate(lastWeekStart.getDate() + 6);
+
+            // Format the dates as 'YYYY-MM-DD'
+            fromDate = formatDate(lastWeekStart);
+            toDate = formatDate(lastWeekEnd);
+
+            $("#fromDate1").datepicker("setDate", lastWeekStart);
+            $("#toDate1").datepicker("setDate", lastWeekEnd);
+        } else if (selectedOption == "2") {
+            // Last Month
+            fromDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+            toDate = new Date(now.getFullYear(), now.getMonth(), 0);
+
+            // Format the dates as 'YYYY-MM-DD'
+            fromDate = formatDate(fromDate);
+            toDate = formatDate(toDate);
+
+            $("#fromDate1").datepicker("setDate", fromDate);
+            $("#toDate1").datepicker("setDate", toDate);
+        } else if (selectedOption == "3") {
+            // Last Quarter
+            const currentMonth = now.getMonth();
+            const quarterStartMonth = Math.floor(currentMonth / 3) * 3 - 3;
+            fromDate = new Date(now.getFullYear(), quarterStartMonth, 1);
+            toDate = new Date(now.getFullYear(), quarterStartMonth + 3, 0);
+
+            // Format the dates as 'YYYY-MM-DD'
+            fromDate = formatDate(fromDate);
+            toDate = formatDate(toDate);
+
+            $("#fromDate1").datepicker("setDate", fromDate);
+            $("#toDate1").datepicker("setDate", toDate);
+        } else if (selectedOption == "4") {
+            // Last Year
+            fromDate = new Date(now.getFullYear() - 1, 0, 1);
+            toDate = new Date(now.getFullYear() - 1, 11, 31);
+
+            // Format the dates as 'YYYY-MM-DD'
+            fromDate = formatDate(fromDate);
+            toDate = formatDate(toDate);
+
+            $("#fromDate1").datepicker("setDate", fromDate);
+            $("#toDate1").datepicker("setDate", toDate);
+        } else if (selectedOption == "5") {
+            // This Year
+            fromDate = new Date(now.getFullYear(), 0, 1);
+            toDate = now;
+
+            // Format the dates as 'YYYY-MM-DD'
+            fromDate = formatDate(fromDate);
+            toDate = formatDate(toDate);
+
+            $("#fromDate1").datepicker("setDate", fromDate);
+            $("#toDate1").datepicker("setDate", toDate);
+        } else if (selectedOption == "6") {
+            // Custom Date Range
+            $("#fromDate1, #toDate1").prop("disabled", false);
+        }
+
+        // Get the selected website ID and report date
+        const selectedWebsite = $("#searchDropdown").val().trim();
+        const reportDate = $("#reportDate1").val();
+
+        console.log({ fromDate, toDate, selectedWebsiteId, reportDate });
+
+        $.ajax({
+                        url: "balancetest/wp-content/themes/balance-theme/inc/edit/modules/showexportdata.php",
+                        type: "POST",
+                        data: {
+                            fromDateVal: fromDate,
+                            toDateVal: toDate,
+                            wlwVal: selectedWebsiteId,
+                            reportDateVal: reportDate
+                          },
+                        success: function(result) {
+                                if(reportDate=="0"){
+                                $( "span#generateReports" ).css({"pointer-events": "none","cursor":"default"});
+                                        $("#reportTable1").html("Please Select Report Date");
+
+                                }else if(result.trim()=="No data available"){
+                                        $("#reportTable1").html("No data available");
+                                $( "span#generateReports" ).css({"pointer-events": "none","cursor":"default"});
+                                }
+                                if(result.trim()!="No data available") {
+
+                                $( "span#generateReports" ).css({"cursor": "pointer","pointer-events": "auto"});
+                                        $("#reportTable1").html(result);
+                                }
+                            $("#reportTable1").innerHTML=result;
+
+                        }
+
+                });
+               
+
+    });
+    
+   
+
+    // Function to format date as 'YYYY-MM-DD'
+    function formatDate(date) {
+        const year = date.getFullYear();
+        const month = ("0" + (date.getMonth() + 1)).slice(-2); // Add leading zero for single digit months
+        const day = ("0" + date.getDate()).slice(-2); // Add leading zero for single digit days
+        return `${year}-${month}-${day}`;
+    }
+
+        // Handle dropdown item selection
+        $('#websiteDropdown').on('click', '.dropdown-item', function () {
+            const selectedValue = $(this).text().trim();
+            selectedWebsiteId = $(this).data('id');
+
+            $('#searchDropdown').val(selectedValue);
+            $('#websiteDropdown').hide(); // Hide the dropdown
+
+            console.log('Selected Website ID:', selectedWebsiteId);
+        });
+
+        // Filter dropdown based on user input
+        $('#searchDropdown').keyup(function () {
+            filterDropdown(); // Call the filterDropdown function directly
+        });
+
+        // Handle generate report button click
+        $("#generateReports").click(function () {
+            if( $("input[type=radio]").is(":checked") && $("#fromDate1").val()!="" && $("#toDate1").val()!="" ){ // check if the radio is checked
+//            var radioVal = $(this).val(); // retrieve the value
+            var radioVal = $(".fav_language:checked").val();
+            var fromDateVal = $("#fromDate1").val(); // retrieve the value
+            var toDateVal = $("#toDate1").val(); // retrieve the value
+            var reportDateVal = $("#reportDate1").val(); // retrieve the value
+            //var wlwVal = $("#wlwid").val();
+var reportFilterValue = reportDateVal+"-"+fromDateVal+"-"+toDateVal+"-"+radioVal;
+sessionStorage.setItem("reportFilter",reportFilterValue);
+
+
+                if(radioVal=="pdf"){
+	var rootFolder = "http://localhost/balancetest/wp-content/themes/balance-theme/inc/edit/modules/exportpdf.php?fromDateVal="+fromDateVal+"&toDateVal="+toDateVal+"&radioVal="+radioVal+"&wlwVal="+selectedWebsiteId+"&reportDateVal="+reportDateVal;
+                } if(radioVal!="pdf") {
+ var rootFolder = "http://localhost/balancetest/wp-content/themes/balance-theme/inc/edit/modules/export.php?fromDateVal="+fromDateVal+"&toDateVal="+toDateVal+"&radioVal="+radioVal+"&wlwVal="+selectedWebsiteId+"&reportDateVal="+reportDateVal;
+                }
+$(".fav_language:checked").removeAttr("checked");
+
+//  ob_start();
+//   print_r(debug_backtrace()); 
+//   $trace = ob_get_contents();
+//   ob_end_clean();
+  
+window.location.replace(rootFolder);
+            }
+            });
+    });
+</script>
+
+    <?php
+    echo ob_get_clean();
+}
+?>
