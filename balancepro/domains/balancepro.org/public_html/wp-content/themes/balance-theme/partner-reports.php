@@ -336,6 +336,11 @@ function partner_reports_page() {
             $('#websiteDropdown').hide(); // Hide the dropdown
 
             console.log('Selected Website ID:', selectedWebsiteId);
+		 $('#reportDate1').val('0'); // Reset to default value
+    $('#fromDate1, #toDate1').val('').prop('disabled', true);
+
+    // Clear the report table
+    $('#reportTable1').html('');
         });
 
         // Filter dropdown based on user input
