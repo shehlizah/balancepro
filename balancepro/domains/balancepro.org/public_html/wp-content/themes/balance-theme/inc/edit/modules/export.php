@@ -1,5 +1,9 @@
 
 <?php
+
+error_reporting(0); // Disable all error reporting
+ini_set('display_errors', 0); // Do not display errors on the screen
+
 /*require_once( "/home/balancepro/domains/balancepro.org/public_html/wp-config.php" );
 $username=DB_USER;
 $password=DB_PASSWORD;
