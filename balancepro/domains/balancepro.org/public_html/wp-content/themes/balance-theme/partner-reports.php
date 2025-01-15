@@ -3,7 +3,10 @@
 
 function partner_reports_page() {
   ?>
-  <div class="module-wrapper wlw_admins-module-module-wrapper-0" data-visible-on="tab-11">
+  <!-- <div class="module-wrapper wlw_admins-module-module-wrapper-0" data-visible-on="tab-11"> -->
+  <div class="wrap">
+
+  <h1 class="wp-heading-inline">Partner Reports </h1><br><br>
     <?php
     global $wpdb, $post;
 
@@ -42,6 +45,7 @@ function partner_reports_page() {
     </div>
 
         <b style="font-size:12px;">Report Date:</b>
+        
         <select name="reportDate" id="reportDate1" style="font-size:12px;">
             <option value="0"></option>
             <option value="1">Last Week</option>
@@ -52,6 +56,7 @@ function partner_reports_page() {
             <option value="6">Custom Date Range</option>
         </select>
         </div>
+        <br>
         <b style="font-size:12px;">&nbsp;&nbsp;&nbsp;From:</b>
         <input type="text" name="fromDate" id="fromDate1" style="font-size:12px;" class="datetimepicker" autocomplete="off" disabled>
         <b style="font-size:12px;">&nbsp;&nbsp;&nbsp;To:</b>
@@ -174,7 +179,7 @@ function partner_reports_page() {
     var pageNum = e;
 
     jQuery.ajax({
-        url: "/balancetest/wp-content/themes/balance-theme/inc/edit/modules/showexportdata.php", // Adjust path
+        url: "/balancepro/wp-content/themes/balance-theme/inc/edit/modules/showexportdata.php", // Adjust path
         type: "POST",
         data: {
             fromDateVal: fromDateVal,
@@ -281,7 +286,7 @@ function partner_reports_page() {
         console.log({ fromDate, toDate, selectedWebsiteId, reportDate });
 
         $.ajax({
-                        url: "balancetest/wp-content/themes/balance-theme/inc/edit/modules/showexportdata.php",
+                        url: "balancepro/wp-content/themes/balance-theme/inc/edit/modules/showexportdata.php",
                         type: "POST",
                         data: {
                             fromDateVal: fromDate,
@@ -340,6 +345,16 @@ function partner_reports_page() {
 
         // Handle generate report button click
         $("#generateReports").click(function () {
+            const reportDate = jQuery("#reportDate1").val();
+                const fromDate = jQuery("#fromDate1").val();
+                const toDate = jQuery("#toDate1").val();
+                const format = jQuery("input[name='fav_language']:checked").val();
+
+                if (!format || !fromDate || !toDate) {
+                    alert("Please select all options before generating the report.");
+                    return;
+                }
+
             if( $("input[type=radio]").is(":checked") && $("#fromDate1").val()!="" && $("#toDate1").val()!="" ){ // check if the radio is checked
 //            var radioVal = $(this).val(); // retrieve the value
             var radioVal = $(".fav_language:checked").val();
@@ -352,9 +367,9 @@ sessionStorage.setItem("reportFilter",reportFilterValue);
 
 
                 if(radioVal=="pdf"){
-	var rootFolder = "http://localhost/balancetest/wp-content/themes/balance-theme/inc/edit/modules/exportpdf.php?fromDateVal="+fromDateVal+"&toDateVal="+toDateVal+"&radioVal="+radioVal+"&wlwVal="+selectedWebsiteId+"&reportDateVal="+reportDateVal;
+	var rootFolder = "http://localhost/balancepro/wp-content/themes/balance-theme/inc/edit/modules/exportpdf.php?fromDateVal="+fromDateVal+"&toDateVal="+toDateVal+"&radioVal="+radioVal+"&wlwVal="+selectedWebsiteId+"&reportDateVal="+reportDateVal;
                 } if(radioVal!="pdf") {
- var rootFolder = "http://localhost/balancetest/wp-content/themes/balance-theme/inc/edit/modules/export.php?fromDateVal="+fromDateVal+"&toDateVal="+toDateVal+"&radioVal="+radioVal+"&wlwVal="+selectedWebsiteId+"&reportDateVal="+reportDateVal;
+ var rootFolder = "http://localhost/balancepro/wp-content/themes/balance-theme/inc/edit/modules/export.php?fromDateVal="+fromDateVal+"&toDateVal="+toDateVal+"&radioVal="+radioVal+"&wlwVal="+selectedWebsiteId+"&reportDateVal="+reportDateVal;
                 }
 $(".fav_language:checked").removeAttr("checked");
 
