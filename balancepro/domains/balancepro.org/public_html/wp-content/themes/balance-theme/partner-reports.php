@@ -179,7 +179,7 @@ function partner_reports_page() {
     var pageNum = e;
 
     jQuery.ajax({
-        url: "/balancepro/wp-content/themes/balance-theme/inc/edit/modules/showexportdata.php", // Adjust path
+        url: "/wp-content/themes/balance-theme/inc/edit/modules/showexportdata.php", // Adjust path
         type: "POST",
         data: {
             fromDateVal: fromDateVal,
@@ -286,7 +286,7 @@ function partner_reports_page() {
         console.log({ fromDate, toDate, selectedWebsiteId, reportDate });
 
         $.ajax({
-                        url: "balancepro/wp-content/themes/balance-theme/inc/edit/modules/showexportdata.php",
+                        url: "/wp-content/themes/balance-theme/inc/edit/modules/showexportdata.php",
                         type: "POST",
                         data: {
                             fromDateVal: fromDate,
