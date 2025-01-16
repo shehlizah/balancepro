@@ -17,8 +17,8 @@ require_once("/home/balancepro/domains/balancepro.org/public_html/includes/Simpl
 use Shuchkin\SimpleXLSXGen;*/
 // Table Name that you want
 // to export in csv
-//require_once("/home/balancepro/domains/balancepro.org/public_html/includes/SimpleXLSXGen.php");
-require_once("C://xampp/htdocs/balancetest/includes/SimpleXLSXGen.php");
+require_once("/home/balancepro/domains/balancepro.org/public_html/includes/SimpleXLSXGen.php");
+//require_once("C://xampp/htdocs/balancetest/includes/SimpleXLSXGen.php");
 use Shuchkin\SimpleXLSXGen;
 if(isset($_GET['fromDateVal']) && isset($_GET['toDateVal']) && isset($_GET['radioVal']) && isset($_GET['wlwVal']) && isset($_GET['reportDateVal'])){
 if($_GET['radioVal']=="html" || $_GET['radioVal']=="excel" || $_GET['radioVal']=="csv"){
@@ -161,7 +161,7 @@ ob_start();
 // Save headings alon
 	$rows = [];
 	$title = [];
-	$title[] = "Report Date: ".$whitelabelName['title'];
+	$title[] = "Partner: ".$whitelabelName['title'];
 	$title[] = "Report Date: ".$selection;
 	$title[] = "From: ".$queryFrom;
 	$title[] = "To: ".$queryTo;
