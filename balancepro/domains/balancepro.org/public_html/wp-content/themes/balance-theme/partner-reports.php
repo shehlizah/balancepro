@@ -372,9 +372,9 @@ sessionStorage.setItem("reportFilter",reportFilterValue);
 
 
                 if(radioVal=="pdf"){
-	var rootFolder = "http://localhost/balancepro/wp-content/themes/balance-theme/inc/edit/modules/exportpdf.php?fromDateVal="+fromDateVal+"&toDateVal="+toDateVal+"&radioVal="+radioVal+"&wlwVal="+selectedWebsiteId+"&reportDateVal="+reportDateVal;
+	var rootFolder = "/wp-content/themes/balance-theme/inc/edit/modules/exportpdf.php?fromDateVal="+fromDateVal+"&toDateVal="+toDateVal+"&radioVal="+radioVal+"&wlwVal="+selectedWebsiteId+"&reportDateVal="+reportDateVal;
                 } if(radioVal!="pdf") {
- var rootFolder = "http://localhost/balancepro/wp-content/themes/balance-theme/inc/edit/modules/export.php?fromDateVal="+fromDateVal+"&toDateVal="+toDateVal+"&radioVal="+radioVal+"&wlwVal="+selectedWebsiteId+"&reportDateVal="+reportDateVal;
+ var rootFolder = "/wp-content/themes/balance-theme/inc/edit/modules/export.php?fromDateVal="+fromDateVal+"&toDateVal="+toDateVal+"&radioVal="+radioVal+"&wlwVal="+selectedWebsiteId+"&reportDateVal="+reportDateVal;
                 }
 $(".fav_language:checked").removeAttr("checked");
 
