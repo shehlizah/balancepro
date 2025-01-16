@@ -316,7 +316,41 @@ function partner_reports_page() {
                
 
     });
-    
+    $("#toDate1").change(function () {
+            var fromDateVal = $("#fromDate1").val(); // retrieve the value
+            var toDateVal = $("#toDate1").val(); // retrieve the value
+            var reportDateVal = $("#reportDate1").val(); // retrieve the value
+            //var wlwVal = $("#wlwid").val();
+
+$.ajax({
+                        url: "http://localhost/balancetest/wp-content/themes/balance-theme/inc/edit/modules/showexportdata.php",
+                        type: "POST",
+                        data: {
+                            fromDateVal: fromDateVal,
+                            toDateVal: toDateVal,
+                            wlwVal: selectedWebsiteId,
+                            reportDateVal: reportDateVal
+                          },
+                        success: function(result) {
+if(reportDateVal=="0"){
+$( "span#generateReport1" ).css({"pointer-events": "none","cursor":"default"});
+        $("#reportTable1").html("Please Select Report Date");
+
+}else if(result.trim()=="No data available"){
+        $("#reportTable1").html("No data available");
+$( "span#generateReport1" ).css({"pointer-events": "none","cursor":"default"});
+}
+if(result.trim()!="No data available") {
+
+$( "span#generateReport1" ).css({"cursor": "pointer","pointer-events": "auto"});
+        $("#reportTable1").html(result);
+}
+                                $("#reportTable1").innerHTML=result;
+
+                        }
+
+                });
+});
    
 
     // Function to format date as 'YYYY-MM-DD'
