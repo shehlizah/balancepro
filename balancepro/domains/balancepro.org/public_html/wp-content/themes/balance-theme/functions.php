@@ -1049,6 +1049,7 @@ add_action('admin_menu', function () {
             add_action('admin_bar_menu', function ($wp_admin_bar) {
                 $wp_admin_bar->remove_node('updates');
             }, 999);
+			remove_all_actions('admin_notices');
 
             // Remove dashboard widgets if the page is the dashboard
             remove_meta_box('dashboard_right_now', 'dashboard', 'normal');
