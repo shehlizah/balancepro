@@ -323,7 +323,7 @@ function partner_reports_page() {
             //var wlwVal = $("#wlwid").val();
 
 $.ajax({
-                        url: "http://localhost/balancetest/wp-content/themes/balance-theme/inc/edit/modules/showexportdata.php",
+                        url: "/wp-content/themes/balance-theme/inc/edit/modules/showexportdata.php",
                         type: "POST",
                         data: {
                             fromDateVal: fromDateVal,
