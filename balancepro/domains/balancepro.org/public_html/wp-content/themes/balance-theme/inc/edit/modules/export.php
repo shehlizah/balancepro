@@ -31,7 +31,7 @@ if($getViews==1){
 
 //require_once( "/home/balancepro/domains/balancepro.org/public_html/wp-config.php" );
 //require_once( "/home/balancepro/domains/balancepro.org/public_html/wp-config.php" );
-require_once( "C://xampp/htdocs/balancetest/wp-config.php" );
+require_once( "/home/balancepro/domains/balancepro.org/public_html/wp-config.php" );
 $username=DB_USER;
 $password=DB_PASSWORD;
 $database=DB_NAME;
