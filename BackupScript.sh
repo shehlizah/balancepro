@@ -26,7 +26,7 @@ REPORTS_ADMIN_FINAL_BACKUP_FOLDER="$PWD/reports_admin_final_backup_$TIMESTAMP"
 
 # BalancePro Main Variables
 REPORTS_ADMIN_FUNC="${REPORTS_MAIN_SRC_DIR}functions.php"
-REPORTS_ADMIN_PART="${REPORTS_MAIN_SRC_DIR}partner-reports.php"
+# REPORTS_ADMIN_PART="${REPORTS_MAIN_SRC_DIR}partner-reports.php"
 REPORTS_ADMIN_EXP="${MAIN_EDIT_SOURCE_DIR}export.php"
 
 # # Check if source directory exists
@@ -51,7 +51,7 @@ echo "Created necessary directories under backup folders."
 # Main website files copying
 
 cp "$REPORTS_ADMIN_FUNC" "$REPORTS_ADMIN_FINAL_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/"
-cp "$REPORTS_ADMIN_PART" "$REPORTS_ADMIN_FINAL_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/" 
+# cp "$REPORTS_ADMIN_PART" "$REPORTS_ADMIN_FINAL_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/" 
 cp "$REPORTS_ADMIN_EXP" "$REPORTS_ADMIN_FINAL_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/edit/modules/" 
 
 
