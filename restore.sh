@@ -33,7 +33,7 @@ echo "Detected LS FINAL BACKUP folder: $REPORTS_ADMIN_FINAL_BACKUP_FOLDER"
 
 # File paths for restoration (Main website)
 REPORTS_ADMIN_FUNC="${REPORTS_MAIN_SRC_DIR}functions.php"
-REPORTS_ADMIN_PART="${REPORTS_MAIN_SRC_DIR}partner-reports.php"
+#REPORTS_ADMIN_PART="${REPORTS_MAIN_SRC_DIR}partner-reports.php"
 REPORTS_ADMIN_EXP="${MAIN_EDIT_SOURCE_DIR}export.php"
 
 # Function to copy files and check if it succeeded
@@ -51,7 +51,7 @@ cp() {
 # Restore Main website files
 echo "Restoring Main website files..."
 cp "$LS_FINAL_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/functions.php" "$REPORTS_ADMIN_FUNC"
-cp "$REPORTS_ADMIN_FINAL_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/partner-reports.php" "$REPORTS_ADMIN_PART"
+#cp "$REPORTS_ADMIN_FINAL_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/partner-reports.php" "$REPORTS_ADMIN_PART"
 cp "$REPORTS_ADMIN_FINAL_BACKUP_FOLDER/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/edit/modules/export.php" "$REPORTS_ADMIN_EXP"
 
 echo "Done restoring Main website files."
