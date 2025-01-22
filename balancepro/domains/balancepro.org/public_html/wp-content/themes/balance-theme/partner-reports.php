@@ -46,7 +46,7 @@ function partner_reports_page() {
         ?>
     </div>
 
-        <b style="font-size:16px;padding-left:16px;">Report Date:</b>
+        <b style="font-size:16px;padding-left:70px;">Report Date:</b>
         
         <select name="reportDate" id="reportDate1" style="font-size:15px; margin-top:-3px;">
             <option value="0"></option>
