@@ -29,7 +29,7 @@ function partner_reports_page() {
      <!-- <div class="module-wrapper wlw_admins-module-module-wrapper-0" data-visible-on="tab-11">-->
     <div class="dropdown-wrapper">
     <b style="font-size:16px;">Partner Website:</b>
-    <input type="text" id="searchDropdown" style="width:30%; font-size:15px;"  placeholder="Search websites..." onkeyup="filterDropdown()">
+    <input type="text" id="searchDropdown" style="width:30%; font-size:15px; autocomplete="off"  placeholder="Search websites..." onkeyup="filterDropdown()">
     <div class="dropdown-content" id="websiteDropdown" style="max-height: 200px; overflow-y: auto;">
         <?php
         if (!empty($wlw)) {
