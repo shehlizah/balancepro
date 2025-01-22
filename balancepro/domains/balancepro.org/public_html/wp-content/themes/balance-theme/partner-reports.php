@@ -6,7 +6,9 @@ function partner_reports_page() {
   <!-- <div class="module-wrapper wlw_admins-module-module-wrapper-0" data-visible-on="tab-11"> -->
   <div class="wrap">
 
-  <h1 class="wp-heading-inline">Partner Reports </h1><br><br>
+  <h1 class="wp-heading-inline style="text-align: center;
+    display: block;
+    font-size: 36px;">Partner Reports </h1><br><br>
     <?php
     global $wpdb, $post;
 
@@ -17,7 +19,7 @@ function partner_reports_page() {
     if ($wpdb->get_var("SHOW TABLES LIKE '{$white_label_websites_table_name}'") === $white_label_websites_table_name) {
         // Fetch websites if table exists
         //$websites = $wpdb->get_results("SELECT white_label_website_id, name title {$white_label_websites_table_name}");
-        $wlw = $wpdb->get_results("SELECT white_label_website_id, title FROM {$white_label_websites_table_name}");
+        $wlw = $wpdb->get_results("SELECT white_label_website_id, title FROM {$white_label_websites_table_name} WHERE status = 'publish'");
 
 
     }
@@ -44,9 +46,9 @@ function partner_reports_page() {
         ?>
     </div>
 
-        <b style="font-size:16px;padding-left:98px;">Report Date:</b>
+        <b style="font-size:16px;padding-left:16px;">Report Date:</b>
         
-        <select name="reportDate" id="reportDate1" style="font-size:15px; mrgin-top:-3px;">
+        <select name="reportDate" id="reportDate1" style="font-size:15px; margin-top:-3px;">
             <option value="0"></option>
             <option value="1">Last Week</option>
             <option value="2">Last Month</option>
