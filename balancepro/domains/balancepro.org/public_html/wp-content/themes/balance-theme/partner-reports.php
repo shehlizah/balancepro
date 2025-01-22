@@ -28,8 +28,8 @@ function partner_reports_page() {
     <!-- Date Picker, Report Format, and Generate Report Section -->
      <!-- <div class="module-wrapper wlw_admins-module-module-wrapper-0" data-visible-on="tab-11">-->
     <div class="dropdown-wrapper">
-    <b style="font-size:12px;">Partner Website:</b>
-    <input type="text" id="searchDropdown" style="width:30%;"  placeholder="Search websites..." onkeyup="filterDropdown()">
+    <b style="font-size:16px;">Partner Website:</b>
+    <input type="text" id="searchDropdown" style="width:30%; font-size:15px;"  placeholder="Search websites..." onkeyup="filterDropdown()">
     <div class="dropdown-content" id="websiteDropdown" style="max-height: 200px; overflow-y: auto;">
         <?php
         if (!empty($wlw)) {
@@ -44,9 +44,9 @@ function partner_reports_page() {
         ?>
     </div>
 
-        <b style="font-size:12px;">Report Date:</b>
+        <b style="font-size:16px;padding-left:98px;">Report Date:</b>
         
-        <select name="reportDate" id="reportDate1" style="font-size:12px;">
+        <select name="reportDate" id="reportDate1" style="font-size:15px; mrgin-top:-3px;">
             <option value="0"></option>
             <option value="1">Last Week</option>
             <option value="2">Last Month</option>
@@ -109,8 +109,9 @@ function partner_reports_page() {
     overflow-y: auto;
     position: absolute;
     top: 100%;
-    width: 38%;
+    width: 30%;
     z-index: 999;
+	left:11%;
 }
 
     #generateReports {
