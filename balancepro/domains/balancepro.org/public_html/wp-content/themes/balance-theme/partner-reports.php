@@ -6,7 +6,7 @@ function partner_reports_page() {
   <!-- <div class="module-wrapper wlw_admins-module-module-wrapper-0" data-visible-on="tab-11"> -->
   <div class="wrap">
 
-  <h1 class="wp-heading-inline style="text-align: center;
+  <h1 class="wp-heading-inline" style="text-align: center;
     display: block;
     font-size: 36px;">Partner Reports </h1><br><br>
     <?php
