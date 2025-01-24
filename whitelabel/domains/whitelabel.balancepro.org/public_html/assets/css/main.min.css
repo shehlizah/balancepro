@@ -8553,17 +8553,17 @@ li.pg-btn-search {
 a.pg-btn.prev-btn:hover{
 	background-color: transparent !important;
 }
+.prev-btn{
+	padding-top:4px;
+}
+.next-btn{
+	padding-top:4px;
+}
 ul.pagination {
     justify-content: center;
 }
 a.pg-btn.next-btn:hover{
 	background-color: transparent !important;
-}
-.next-btn{
-	padding-top:4px;
-}
-.prev-btn{
-	padding-top:4px;
 }
 .pagination {
     list-style: none !important;
