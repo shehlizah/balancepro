@@ -4,7 +4,7 @@ SOURCE_DIR_MAIN="https://github.com/shehlizah/balancepro.git"
 SEARCH_FINAL_BRANCH_NAME="Search-deployment-final"
 
 # Directory for cloning the repository
-SEARCH_FINAL_CLONE_FOLDER="$PWD/SEARCH_FINAL_repo_${SEARCH_FINAL_BRANCH_NAME}"
+SEARCH_FINAL_CLONE_FOLDER="$PWD/search_final_repo_${SEARCH_FINAL_BRANCH_NAME}"
 
 # Create the necessary directory for cloning
 mkdir -p "$SEARCH_FINAL_CLONE_FOLDER"
