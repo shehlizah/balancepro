@@ -12760,7 +12760,32 @@ hr.KJEFooterLine {
     border-top: 1px solid #000;
     width: 100%;
     height: 1px
+
+
 }
+
+.wp-list-table {
+    table-layout: auto; /* Default layout allows columns to resize */
+    width: 100%; /* Full width */
+    border-collapse: collapse; /* Prevent unnecessary spacing */
+  }
+
+  .wp-list-table th,
+  .wp-list-table td {
+    white-space: nowrap; /* Prevent text wrapping */
+    text-align: center; /* Center align the text */
+    padding: 8px; /* Add padding for better readability */
+  }
+
+  .wp-list-table th {
+    font-weight: bold; /* Bold headers */
+  }
+
+  .wp-list-table tbody td {
+    text-overflow: ellipsis; /* Ensure long text is truncated */
+    overflow: hidden; /* Hide overflow */
+    max-width: 150px; /* Limit the column width */
+  }
 /*
 #KJEGuiDataPoint:after,
 #KJEGuiDataPoint:before {
@@ -19962,7 +19987,7 @@ p.dot-holder {
     top: 50%;
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
-    width: 11px
+    width: 11px;
 } 
 
 
@@ -19970,8 +19995,8 @@ p.dot-holder {
 .resource-block .text-view:focus,
 .resource-block .text-view:hover {
     text-decoration: none;
-     color:#000000732;
-    opacity: .8
+     color: #000000732;
+    opacity: .8;
 
 }
 
@@ -23150,8 +23175,8 @@ a:focus {
     .banner-text {
         font-size: 21px;
         line-height: 1.435;
-        margin-top: -37px
-         background-color:#446c6838;
+        margin-top: -37px;
+background-color: #446c6838;
 
     }
 }
