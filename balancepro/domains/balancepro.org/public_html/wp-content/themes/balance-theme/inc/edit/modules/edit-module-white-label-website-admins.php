@@ -141,15 +141,15 @@ jQuery(document).ready(function () {
 		$output .='<table class="wp-list-table widefat fixed striped posts" style="margin-bottom: 30px;">
 		  <thead>
 			<tr>
-			  <th class="manage-column column-_title" style="width:35px;">Sr.No</th>      
-			  <th class="manage-column column-_title">Name</th>
-			  <th class="manage-column column-_title">User</th>
-			  <th class="manage-column column-_title">Quiz</th>
-			  <th class="manage-column column-_title">Date/Time</th>
-			  <th class="manage-column column-_title" style="width: 42px;">Per(%)</th>     
-			  <th class="manage-column column-_title" style="width: 40px;">Result</th>     
-			  <th class="manage-column column-_title" style="width: 60px;">Correct Answers</th>
-			  <th class="manage-column column-_title" style="width: 65px;">Certificate</th>
+			  <th class="manage-column column-_title" style="width:100px; white-space: nowrap;">Sr.No</th>      
+			  <th class="manage-column column-_title" style="white-space: nowrap;">Name</th>
+			  <th class="manage-column column-_title" style="white-space: nowrap;">User</th>
+			  <th class="manage-column column-_title" style="white-space: nowrap;">Quiz</th>
+			  <th class="manage-column column-_title" style="white-space: nowrap;">Date/Time</th>
+			  <th class="manage-column column-_title" style="width: 100px; white-space: nowrap;">Per(%)</th>     
+			  <th class="manage-column column-_title" style="width: 60px; white-space: nowrap;">Result</th>     
+			  <th class="manage-column column-_title" style="width: 150px; white-space: nowrap;">Correct Answers</th>
+			  <th class="manage-column column-_title" style="width: 100px; white-space: nowrap;">Certificate</th>
 			</tr>
 		  </thead>
 		  <tbody>';
