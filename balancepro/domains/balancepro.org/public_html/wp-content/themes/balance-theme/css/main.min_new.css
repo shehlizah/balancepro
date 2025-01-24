@@ -18634,7 +18634,6 @@ ol.questions {
         margin-top: 43px
     }
 }
-
 .paging-holder .pagination li.disabled{
 	
 	bottom:6px !important;
@@ -25840,4 +25839,3 @@ tbody tr:nth-child(even) {
 .icon-worksheet:before {
 content: “\e90d” !important;
 }
-
