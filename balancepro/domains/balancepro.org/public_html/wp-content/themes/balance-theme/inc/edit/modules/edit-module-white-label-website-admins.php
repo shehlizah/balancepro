@@ -55,7 +55,7 @@ function white_label_websites_admins_module_form( $key, $visible_on = 'all', $mo
 		$domain = $wpdb->get_var( "SELECT domain FROM $white_label_websites_table_name WHERE $post_table_id = '$post->ID';" );
 		$pdf_file_path = 'http://'.$domain.'/uploads/';
 
-	$queryVariable = "".str_replace(" ","+",$_SESSION["searchValue"])."%";
+	$queryVariable = "%".str_replace(" ","+",$_SESSION["searchValue"])."%";
 
 	if ($queryVariable == "" || $queryVariable == null || $queryVariable == "%%"){		
 		$sqlPastQuizesTotal = "SELECT COUNT(r.ID) AS cnt FROM wp_quiz_results r left join wp_quiz_certificates c on r.ID=c.quiz_result_id where r.wlwid='$white_label_website_id' AND r.timestamp BETWEEN NOW() - INTERVAL 90 DAY AND NOW()";
@@ -68,7 +68,7 @@ $sqlPastQuizesTotal = "SELECT COUNT(r.ID) AS cnt
                          AND r.wp_user_id IN (
                              SELECT ID 
                              FROM wp_users 
-                             WHERE display_name LIKE '$queryVariable'
+                             WHERE user_email LIKE '$queryVariable'
                          )";
 
 //              $user_id = $wpdb->get_var( "SELECT ID FROM `wp_users` WHERE `user_email` LIKE '$queryVariable'" );
@@ -93,7 +93,7 @@ $sqlPastQuizes = "SELECT r.*, c.crtf_name
                     AND r.wp_user_id IN (
                         SELECT ID 
                         FROM wp_users 
-                        WHERE display_name LIKE '$queryVariable'
+                        WHERE user_email LIKE '$queryVariable'
                     )";
 
 
@@ -102,9 +102,9 @@ $sqlPastQuizes = "SELECT r.*, c.crtf_name
 }
 
 		$resultsPastQuizes = $wpdb->get_results( $sqlPastQuizes, OBJECT );
-
+		
 		 //if(!empty($resultsPastQuizes)){
-		error_log("SQL Query: " . $sqlPastQuizes);
+//		error_log("SQL Query: " . $sqlPastQuizes);
 if (empty($resultsPastQuizes)) {
     error_log("No results found.");
 } else {
@@ -115,22 +115,9 @@ if (empty($resultsPastQuizes)) {
 		$wpPostId = $post->ID;
 		$output .='<div class="module-wrapper wlw_admins-module-module-wrapper-0" data-visible-on="tab-8">';
 		$output .='<div style="text-align:center;font-size:15px;margin-bottom: 10px;font-weight: bold;" >[Quiz results are available for 90 days]</div>';
-        $output .= '<input type="text" name="query" id="query" placeholder="Search input">';
-	$output .= '<button type="button" id="searchButton" style="margin-left: 10px;">Search</button>';
-        $output2 .='<script type="text/javascript">
-jQuery(document).ready( function () {
-//alert(sessionStorage.getItem("queryValue"));
-var querySessionText = sessionStorage.getItem("queryValue");
-jQuery("#query").val(querySessionText);
-});
-jQuery("#query").focusout(function(){
-var queryText = jQuery(this).val();
-
-sessionStorage.setItem("queryValue",queryText);
-//sessionStorage.setItem("queryValue", queryText);
-//var sessionVal = sessionStorage.getItem("queryValue");
-//jQuery(this).text(sessionVal);
-';
+        $output .= '<input type="text" name="query" id="query" placeholder="Search Email">';
+	$output .= '<button type="button" id="searchButton" style="margin-left: 10px;">Search</button>&nbsp&nbsp';
+$output .= '<span id="result-count" style="font-weight: bold;">' . $total_records . ' matching ' . ($total_records === 1 ? 'record' : 'records') . ' found!</span>';
 $output .= '<script type="text/javascript">
 jQuery(document).ready(function () {
     // Restore query value from session storage if it exists
@@ -183,8 +170,8 @@ jQuery(document).ready(function () {
 
 			$last_name = $wpdb->get_var( "SELECT lastname FROM `whitelabel_users` WHERE `email`='$user_email' AND `white_label_website_id`='$white_label_website_id'  " );
 			$display_name = $first_name." ".$last_name;
-			error_log("Display Name :" .$display_name);
-error_log("Email :" .$user_email);
+//			error_log("Display Name :" .$display_name);
+//error_log("Email :" .$user_email);
 			$score = round($result_value->score,2);
 			//if($score >= $passing_percent) {
 			if($result_value->crtf_name!='') {
