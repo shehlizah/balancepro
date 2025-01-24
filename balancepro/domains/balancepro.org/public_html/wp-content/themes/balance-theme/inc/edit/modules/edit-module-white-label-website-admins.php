@@ -562,6 +562,30 @@ var querySessionText = sessionStorage.getItem("reportFilter");
 });
 ';
 $output .= '</script>';
+	$output .= '<style>';
+	.wp-list-table {
+    table-layout: auto; /* Default layout allows columns to resize */
+    width: 100%; /* Full width */
+    border-collapse: collapse; /* Prevent unnecessary spacing */
+  }
+
+  .wp-list-table th,
+  .wp-list-table td {
+    white-space: nowrap; /* Prevent text wrapping */
+    text-align: center; /* Center align the text */
+    padding: 8px; /* Add padding for better readability */
+  }
+
+  .wp-list-table th {
+    font-weight: bold; /* Bold headers */
+  }
+
+  .wp-list-table tbody td {
+    text-overflow: ellipsis; /* Ensure long text is truncated */
+    overflow: hidden; /* Hide overflow */
+    max-width: 150px; /* Limit the column width */
+  }
+	$output .= '</style>';
 
                 $output .='<table class="wp-list-table widefat striped posts" id="reportTable" style="margin-bottom: 30px;">
                   <thead>
