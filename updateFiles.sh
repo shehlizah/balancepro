@@ -10,6 +10,7 @@ INC_SOURCE_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/includes/cor
 TMP_SOURCE_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/templates/"
 MAIN_RNDR_SOURCE_DIR="$HOME/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/"
 LS_MAIN_SRC_DIR="$HOME/domains/balancepro.org/public_html/includes/core/"
+CSS_DIR_WL="$HOME/domains/whitelabel.balancepro.org/public_html/assets/css/"
 
 # Backup Timestamp
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
@@ -23,6 +24,7 @@ LS="${TMP_SOURCE_DIR}ls.php"
 LS_SQP="${INC_SOURCE_DIR}search_query_pagination.php"
 LS_RS_SEARCH_PG_CONTENT="${INC_SOURCE_DIR}resource_search_pagination_content.php"
 LS_CORE="${INC_SOURCE_DIR}core.php"
+CSS_DIR="${CSS_DIR_WL}main.min.css"
 
 # BalancePro Main Paths
 LS_MAIN_SQ_PG="${LS_MAIN_SRC_DIR}search_query_pagination.php"
@@ -38,6 +40,7 @@ cp "$CUSTOM_SOURCE_DIR/balancepro/domains/balancepro.org/public_html/wp-content/
 echo "Copying WL files..."
 
 cp "$CUSTOM_SOURCE_DIR/whitelabel/domains/whitelabel.balancepro.org/public_html/index.php" "$IND_DIR"
+cp "$CUSTOM_SOURCE_DIR/whitelabel/domains/whitelabel.balancepro.org/public_html/assets/css/main.min.css" "$CSS_DIR"
 cp "$CUSTOM_SOURCE_DIR/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/config.php" "$CONF_DIR"
 cp "$CUSTOM_SOURCE_DIR/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/core/search_query_pagination.php" "$LS_SQP"
 cp "$CUSTOM_SOURCE_DIR/whitelabel/domains/whitelabel.balancepro.org/public_html/templates/lifestage.php" "$LIFESTAGE"
