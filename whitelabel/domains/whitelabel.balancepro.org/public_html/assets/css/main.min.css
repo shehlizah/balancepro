@@ -8550,10 +8550,10 @@ li.pg-btn-search {
     overflow: hidden
 }
 
-a.pg-btn.prev-btn:hover{
+a.pg-btn.prv-btn:hover{
 	background-color: transparent !important;
 }
-.prev-btn{
+.prv-btn{
 	padding-top:4px;
 }
 .next-btn{
