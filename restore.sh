@@ -4,6 +4,7 @@
 SOURCE_DIR_MAIN="https://github.com/shehlizah/balancepro.git"
 TMP_SOURCE_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/templates/"
 INC_SOURCE_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/includes/core/"
+CSS_DIR_WL="$HOME/domains/whitelabel.balancepro.org/public_html/assets/css/"
 MAIN_RNDR_SOURCE_DIR="$HOME/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/"
 LS_MAIN_SRC_DIR="$HOME/domains/balancepro.org/public_html/includes/core/"
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")  # Current timestamp for unique backups
@@ -41,6 +42,7 @@ LS="${TMP_SOURCE_DIR}ls.php"
 LS_SQP="${INC_SOURCE_DIR}search_query_pagination.php"
 LS_RS_SEARCH_PG_CONTENT="${INC_SOURCE_DIR}resource_search_pagination_content.php"
 LS_CORE="${INC_SOURCE_DIR}core.php"
+CSS_DIR="${CSS_DIR_WL}main.min.css"
 
 # File paths for restoration (Main website)
 #MAIN_CSS_DIR="$HOME/domains/balancepro.org/public_html/wp-content/themes/balance-theme/css/main.min_new.css"
@@ -48,6 +50,7 @@ LS_CORE="${INC_SOURCE_DIR}core.php"
 LS_MAIN_SQ_PG="${LS_MAIN_SRC_DIR}search_query_pagination.php"
 LS_MAIN_RMRS="${MAIN_RNDR_SOURCE_DIR}render-module-M14-15-resources-search.php"
 LS_MAIN_RSMDL="${MAIN_RNDR_SOURCE_DIR}render-search-main-design-lifestage.php"
+
 
 # Function to copy files and check if it succeeded
 cp() {
@@ -64,7 +67,7 @@ cp() {
 # Restore WhiteLabel files
 echo "Restoring WhiteLabel files..."
 #cp  "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/templates/" "$LS_RNDR_SEARCH"
-#cp "$LS_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/assets/css/main.min.css" "$CSS_DIR"
+cp "$LS_FINAL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/assets/css/main.min.css" "$CSS_DIR"
 cp "$LS_FINAL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/index.php" "$IND_DIR"
 cp "$LS_FINAL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/config.php" "$CONF_DIR"
 cp "$LS_FINAL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/templates/lifestage.php" "$LIFESTAGE"
