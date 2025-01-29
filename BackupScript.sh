@@ -14,6 +14,7 @@
 SOURCE_DIR_MAIN="https://github.com/shehlizah/balancepro.git"
 TMP_SOURCE_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/templates/"
 INC_SOURCE_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/includes/core/"    #other all 
+CSS_DIR_WL="$HOME/domains/whitelabel.balancepro.org/public_html/assets/css/"
 MAIN_RNDR_SOURCE_DIR="$HOME/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/renderers/modules/"
 LS_MAIN_SRC_DIR="$HOME/domains/balancepro.org/public_html/includes/core/"
 #BACKUP_DIR="/home/shahlizeh/finalChanges3Dec"   
@@ -34,6 +35,7 @@ LS="${TMP_SOURCE_DIR}ls.php"
 LS_SQP="${INC_SOURCE_DIR}search_query_pagination.php"
 LS_RS_SEARCH_PG_CONTENT="${INC_SOURCE_DIR}resource_search_pagination_content.php"
 LS_CORE="${INC_SOURCE_DIR}core.php"
+CSS_DIR="${CSS_DIR_WL}main.min.css"
 
 
 
@@ -57,6 +59,7 @@ mkdir -p "$LS_FINAL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/p
 mkdir -p "$LS_FINAL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/templates"
 mkdir -p "$LS_FINAL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes"
 mkdir -p "$LS_FINAL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/core"
+mkdir -p "$LS_FINAL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/assets/css"
 
 # You can add more directories as necessary based on your structure
 
@@ -96,6 +99,7 @@ cp "$LS" "$LS_FINAL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/p
 cp "$LS_SQP" "$LS_FINAL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/core/"
 cp "$LS_RS_SEARCH_PG_CONTENT" "$LS_FINAL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/core/"
 cp "$LS_CORE" "$LS_FINAL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/includes/core/"
+cp "$CSS_DIR" "$LS_FINAL_BACKUP_FOLDER/whitelabel/domains/whitelabel.balancepro.org/public_html/assets/css/"
 
 echo "Done copying inc files"
 
