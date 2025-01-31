@@ -15207,7 +15207,7 @@ h2 {
 #header,
 #header1 {
     font-family: dinot, Arial, sans-serif;
-    position: absolute;
+    position: fixed;
     z-index: 99;
     min-width: 320px
 }
