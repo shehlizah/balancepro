@@ -14787,7 +14787,7 @@ div.KJEIncrementControl:active {
 #header1.fixed-position {
     right: 0;
     left: 0;
-    top: 0
+    top: 0 !important;
 }
 
 [dir=rtl] .slick-next:before {
@@ -15207,7 +15207,7 @@ h2 {
 #header,
 #header1 {
     font-family: dinot, Arial, sans-serif;
-    position: fixed;
+    position: fixed !important;
     z-index: 99;
     min-width: 320px
 }
