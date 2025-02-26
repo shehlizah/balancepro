@@ -667,10 +667,16 @@ $output .= '      </div>';
   $output .= '<div class="postbox postbox-custom types-selector-wrapper wlw-programs-module-list-wrapper-0">';
   $output .= '        <br><p style="padding-left: 10px;">';
   $output .= '          <label><b>'. __( 'Enable chat', 'balance' ) .':</b></label>&nbsp;&nbsp;&nbsp;';
+
+  if($data['wlw_general_info_module'][ $key ]['disable_chat']){
 if($data['wlw_general_info_module'][ $key ]['disable_chat'] == "on" || $data['wlw_general_info_module'][ $key ]['disable_chat'] == "Yes") {
-$output .= '<input type="checkbox" class="toggleCheck" name="wlw_general_info_module['.$key.'][disable_chat]" checked="checked" style="padding-top:10px !important">';
+$output .= '<input type="checkbox" class="checkbox-null toggleCheck" name="wlw_general_info_module['.$key.'][disable_chat]" checked="checked" style="padding-top:10px !important">';
   } else {
-$output .= '<input type="checkbox" class="toggleCheck" name="wlw_general_info_module['.$key.'][disable_chat]" style="padding-top:10px !important">';
+$output .= '<input type="checkbox" class="checkbox-null toggleCheck" name="wlw_general_info_module['.$key.'][disable_chat]" style="padding-top:10px !important">';
+  }
+}
+  else{
+    $output .= '<input type="checkbox" class="checkbox-null toggleCheck" name="wlw_general_info_module['.$key.'][disable_chat]" checked="checked" style="padding-top:10px !important">';
   }
   //$output .=              radiobuttonlist_field( $data['wlw_general_info_module'][ $key ]['disable_chat'], 'wlw_general_info_module['.$key.'][disable_chat]', array( 'y' => __( 'Yes', 'balance' ), 'n' => __( 'No', 'balance' ) ), 'n', true);
   
@@ -724,6 +730,17 @@ $output .= '<input type="checkbox" class="toggleCheck" name="wlw_general_info_mo
   
 
     foreach ($days as $key => $day) {
+      if(!$data['timesettings'][$day . '_start_minutes'])
+      {
+        $data['timesettings'][$day . '_start_minutes']= substr($data['timesettings'][$day . '_start'],3, 2);
+        $data['timesettings'][$day . '_end_minutes']= substr($data['timesettings'][$day . '_end'],3, 2);
+        // $data['timesettings'][$day . '_start_minutes']= "00";
+
+        $data['timesettings'][$day . '_start']= substr($data['timesettings'][$day . '_start'], 0, 2);
+        
+        $data['timesettings'][$day . '_end']= substr($data['timesettings'][$day . '_end'],0, 2);
+       
+      }
         $day_full_name = $days_full[$key];
         $status_var = isset($data['timesettings'][$day . '_status']) && $data['timesettings'][$day . '_status'] == 'on' ? 'checked' : '';
 
@@ -735,7 +752,7 @@ $output .= '<input type="checkbox" class="toggleCheck" name="wlw_general_info_mo
         width: 55%; "><div>';
         $output .= '<b>' . $day_full_name . ':</b></div>';
         $output .= '<div>
-                <input type="checkbox" class="toggleCheck" name="timesettings[' . $day . '_status]" ' . $status_var . ' style="padding-top:10px !important" onchange="toggleTimeSettings(\'' . $day . '\', this.checked)">
+                <input type="checkbox" class="checkbox-null toggleCheck" name="timesettings[' . $day . '_status]" ' . $status_var . ' style="padding-top:10px !important" onchange="toggleTimeSettings(\'' . $day . '\', this.checked)">
              </div>';
         $output .= '<div>';
         // Start Time
@@ -754,8 +771,13 @@ $output .= '<input type="checkbox" class="toggleCheck" name="wlw_general_info_mo
       $output .= '</div>';
       $output .= '</div>';
 
+         // Pass PHP days array to JavaScript
+         $days_js = json_encode($days);
       $output.='
       <script>
+        var days = ' . $days_js . ';
+    var updateButton = document.querySelector("#publish");
+
       // Function to toggle time settings based on the checkbox state
     function toggleTimeSettings(day, isEnabled) {
         ["start", "start_minutes", "start_ap", "end", "end_minutes", "end_ap"].forEach(function(suffix) {
@@ -772,6 +794,15 @@ $output .= '<input type="checkbox" class="toggleCheck" name="wlw_general_info_mo
 
         // Set time dropdowns based on the checkbox state
         toggleTimeSettings(day, isChecked);
+        if (toggleCheckbox && toggleCheckbox.checked) {
+          ["start", "start_minutes", "start_ap", "end", "end_minutes", "end_ap"].forEach(function(suffix) {
+            document.querySelector("[name=\'timesettings[" + day + "_" + suffix + "]\']")
+                .addEventListener("change", function() {
+                    validateTime(day); // Validate time on dropdown change
+                    checkAllValidations(); // Re-check all validations to enable/disable the update button
+                });
+        });
+      }
     });
 
     // Also listen for any changes on the checkboxes to dynamically update dropdowns
@@ -779,25 +810,34 @@ $output .= '<input type="checkbox" class="toggleCheck" name="wlw_general_info_mo
         checkbox.addEventListener("change", function() {
             var day = this.name.split("[")[1].split("_")[0]; // Extract day from checkbox name
             toggleTimeSettings(day, this.checked); // Toggle settings based on checkbox state
+            if(updateButton.disabled==true)
+            {
+                updateButton.disabled=false;
+            }
+  // Add or remove the content-null class dynamically
+        if (this.checked) {
+            this.parentElement.classList.add("content-null");
+        } else {
+            this.parentElement.classList.remove("content-null");
+        }
+         
         });
     });
       </script>';
 
-         // Pass PHP days array to JavaScript
-         $days_js = json_encode($days);
       $output .= '
     <script>
     var days = ' . $days_js . ';
-    console.log(days);
     var updateButton = document.querySelector("#publish");
-
+   
     // Real-time validation for all days
     days.forEach(function(day) {
         ["start", "start_minutes", "start_ap", "end", "end_minutes", "end_ap"].forEach(function(suffix) {
             document.querySelector("[name=\'timesettings[" + day + "_" + suffix + "]\']")
                 .addEventListener("change", function() {
-                    validateTime(day);
+                   validateTime(day);
                     checkAllValidations(); // Re-check all validations to enable/disable the update button
+
                 });
         });
     });
@@ -820,7 +860,13 @@ $output .= '<input type="checkbox" class="toggleCheck" name="wlw_general_info_mo
 
         var startDropdowns = document.querySelectorAll("[name=\'timesettings[" + day + "_start]\'], [name=\'timesettings[" + day + "_start_minutes]\'], [name=\'timesettings[" + day + "_start_ap]\']");
         var endDropdowns = document.querySelectorAll("[name=\'timesettings[" + day + "_end]\'], [name=\'timesettings[" + day + "_end_minutes]\'], [name=\'timesettings[" + day + "_end_ap]\']");
+        var toggleCheckbox = document.querySelector("[name=\'timesettings[" + day + "_status]\']");
+        var isChecked = toggleCheckbox && toggleCheckbox.checked;
 
+        // If the toggle is off, consider the time as valid (no need to validate further)
+            if (!isChecked) {
+                return true;
+            }
         if (startTime >= endTime) {
             startDropdowns.forEach(function(dropdown) { dropdown.style.border = "1px solid red"; });
             endDropdowns.forEach(function(dropdown) { dropdown.style.border = "1px solid red"; });
@@ -829,7 +875,7 @@ $output .= '<input type="checkbox" class="toggleCheck" name="wlw_general_info_mo
             startDropdowns.forEach(function(dropdown) { dropdown.style.border = ""; });
             endDropdowns.forEach(function(dropdown) { dropdown.style.border = ""; });
             return true; // Valid time
-        }
+        }            
     }
 
     // Check all validations and enable/disable the Update button
@@ -892,48 +938,48 @@ $output .= '<input type="checkbox" class="toggleCheck" name="wlw_general_info_mo
       foreach ($holidays as $holiday => $date) {
         // Get the short day name for the holiday
         $shortDayName = strtolower(date('D', strtotime($date))); // 'D' gives short textual representation of the day (e.g., 'Mon')
-        
+        $date= date("m/d/Y", strtotime($date));
         // Create output with holiday name, date, and short day name
         $output .= '<div style="display: grid; grid-template-columns: auto auto; justify-content: space-between; width:35%;">';
         $output .= '<label><b>' . $holiday . ':</b></label>';
         $output .= '<input style="width:auto !important; color:#898989;" type="text" value="' . $date . '" readonly><br></div>';
       }
 
-// Merge federal holidays and custom holidays for easier processing
-foreach ($custom_holidays as $custom_holiday) {
-  $holidays[$custom_holiday['name']] = $custom_holiday['date'];
-}
+// // Merge federal holidays and custom holidays for easier processing
+// foreach ($custom_holidays as $custom_holiday) {
+//   $holidays[$custom_holiday['name']] = $custom_holiday['date'];
+// }
 
 // Days of the week and statuses (for each day)
 $days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 $days_full = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-foreach ($days as $key => $day) {
-  $day_full_name = $days_full[$key];
+// foreach ($days as $key => $day) {
+//   $day_full_name = $days_full[$key];
 
-  // Default status: set to the current status in $data (could be checked or unchecked)
-  $status_var = isset($data['timesettings'][$day . '_status']) && $data['timesettings'][$day . '_status'] == 'on' ? 'checked' : '';
+//   // Default status: set to the current status in $data (could be checked or unchecked)
+//   $status_var = isset($data['timesettings'][$day . '_status']) && $data['timesettings'][$day . '_status'] == 'on' ? 'checked' : '';
 
-  // Check if any holiday (federal or custom) matches today's date
-  foreach ($holidays as $holiday_name => $holiday_date) {
-      if ($today == $holiday_date) {
-          // If today is a holiday, and it falls on this weekday, set status to off
-          $holiday_day_of_week = strtolower(date('D', strtotime($holiday_date))); // Get the holiday's day of the week
+//   // Check if any holiday (federal or custom) matches today's date
+//   foreach ($holidays as $holiday_name => $holiday_date) {
+//       if ($today == $holiday_date) {
+//           // If today is a holiday, and it falls on this weekday, set status to off
+//           $holiday_day_of_week = strtolower(date('D', strtotime($holiday_date))); // Get the holiday's day of the week
 
-          if ($holiday_day_of_week == $day) {
-              $status_var = ''; // Uncheck the checkbox (status is off)
-              $data['timesettings'][$day . '_status'] = 'off'; // Set the status for this day to "off"
-              break; // Exit the loop since we found a holiday for today
-          }
-      }
-  }
+//           if ($holiday_day_of_week == $day) {
+//               $status_var = ''; // Uncheck the checkbox (status is off)
+//               $data['timesettings'][$day . '_status'] = ''; // Set the status for this day to "off"
+//               break; // Exit the loop since we found a holiday for today
+//           }
+//       }
+//   }
 
-  // Output the day settings with the hidden container
-  $output .= '<div style="padding: 10px; display:none; grid-template-columns: 0.3fr 0.3fr 2fr; width: 55%;">';
-  $output .= '<div><b>' . $day_full_name . ':</b></div>';
-  $output .= '<div><input type="checkbox" class="toggleCheck" name="timesettings[' . $day . '_status]" ' . $status_var . '></div>';
-  $output .= '</div>';
-}
+//   // Output the day settings with the hidden container
+//   $output .= '<div style="padding: 10px; display:none; grid-template-columns: 0.3fr 0.3fr 2fr; width: 55%;">';
+//   $output .= '<div><b>' . $day_full_name . ':</b></div>';
+//   $output .= '<div><input type="checkbox" class="toggleCheck" name="timesettings[' . $day . '_status]" ' . $status_var . '></div>';
+//   $output .= '</div>';
+// }
 
 
       $output .='<p class="holidayheading">Custom Holidays</p>';
@@ -1289,7 +1335,7 @@ $output .= '</div>';
 //     /* The Close Button */
 //     .close {
 //       color: #aaa;
-//       float: right;
+//       float: right;  
 //       font-size: 28px;
 //       font-weight: bold;
 //     }
