@@ -668,9 +668,9 @@ $output .= '      </div>';
   $output .= '        <br><p style="padding-left: 10px;">';
   $output .= '          <label><b>'. __( 'Enable chat', 'balance' ) .':</b></label>&nbsp;&nbsp;&nbsp;';
 if($data['wlw_general_info_module'][ $key ]['disable_chat'] == "on" || $data['wlw_general_info_module'][ $key ]['disable_chat'] == "Yes") {
-$output .= '<input type="checkbox" class="toggleCheck" name="wlw_general_info_module['.$key.'][disable_chat]" checked="checked" style="padding-top:10px !important">';
+$output .= '<input type="checkbox" class="checkbox-null toggleCheck" name="wlw_general_info_module['.$key.'][disable_chat]" checked="checked" style="padding-top:10px !important">';
   } else {
-$output .= '<input type="checkbox" class="toggleCheck" name="wlw_general_info_module['.$key.'][disable_chat]" style="padding-top:10px !important">';
+$output .= '<input type="checkbox" class="checkbox-null toggleCheck" name="wlw_general_info_module['.$key.'][disable_chat]" style="padding-top:10px !important">';
   }
   //$output .=              radiobuttonlist_field( $data['wlw_general_info_module'][ $key ]['disable_chat'], 'wlw_general_info_module['.$key.'][disable_chat]', array( 'y' => __( 'Yes', 'balance' ), 'n' => __( 'No', 'balance' ) ), 'n', true);
   
@@ -735,7 +735,7 @@ $output .= '<input type="checkbox" class="toggleCheck" name="wlw_general_info_mo
         width: 55%; "><div>';
         $output .= '<b>' . $day_full_name . ':</b></div>';
         $output .= '<div>
-                <input type="checkbox" class="toggleCheck" name="timesettings[' . $day . '_status]" ' . $status_var . ' style="padding-top:10px !important" onchange="toggleTimeSettings(\'' . $day . '\', this.checked)">
+                <input type="checkbox" class="checkbox-null toggleCheck" name="timesettings[' . $day . '_status]" ' . $status_var . ' style="padding-top:10px !important" onchange="toggleTimeSettings(\'' . $day . '\', this.checked)">
              </div>';
         $output .= '<div>';
         // Start Time
@@ -779,6 +779,19 @@ $output .= '<input type="checkbox" class="toggleCheck" name="wlw_general_info_mo
         checkbox.addEventListener("change", function() {
             var day = this.name.split("[")[1].split("_")[0]; // Extract day from checkbox name
             toggleTimeSettings(day, this.checked); // Toggle settings based on checkbox state
+
+    		 if(updateButton.disabled==true)
+            {
+                updateButton.disabled=false;
+            }
+
+            // Add or remove the content-null class dynamically
+        if (this.checked) {
+            this.parentElement.classList.add("content-null");
+        } else {
+            this.parentElement.classList.remove("content-null");
+        }
+	
         });
     });
       </script>';
