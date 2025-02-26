@@ -21,7 +21,7 @@ CHK_BX="${BALANCEPRO_CSS_SOURCE_DIR}admin.css"
 CHK_FL="${BALANCEPRO_FILE_SOURCE_DIR}edit-module-white-label-website-programs.php"
 
 
-echo "Copying WL files..."
+echo "Copying BALANCEPRO files..."
 
 
 cp "$CUSTOM_SOURCE_DIR/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/css/admin/admin.css" "$CHK_BX"
