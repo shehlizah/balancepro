@@ -5,6 +5,7 @@ SOURCE_DIR_MAIN="https://github.com/shehlizah/balancepro.git"
 
 BALANCEPRO_CSS_SOURCE_DIR="$HOME/domains/balancepro.org/public_html/wp-content/themes/balance-theme/css/admin/"
 BALANCEPRO_FILE_SOURCE_DIR="$HOME/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/edit/modules/"
+BALANCEPRO_CHAT_SOURCE_DIR="$HOME/domains/balancepro.org/public_html/wp-admin/"
 
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")  # Current timestamp for unique backups
 
@@ -17,7 +18,7 @@ if [[ "$USER_RESPONSE" != "yes" ]]; then
 fi
 
 # Automatically detect the latest timestamped backup folders in the current working directory
-RELATED_ARTICLES=$(ls -d $PWD/checkbox_css_backup_* 2>/dev/null | sort | tail -n 1)
+CHECKBOX_CSS=$(ls -d $PWD/checkbox_css_backup_* 2>/dev/null | sort | tail -n 1)
 
 
 # Check if the directories exist
@@ -31,16 +32,9 @@ echo "Detected CHECKBOX_CSS folder: $CHECKBOX_CSS"
 
 
 # File paths for restoration (WhiteLabel)
-
-#CSS_DIR="$HOME/domains/whitelabel.balancepro.org/public_html/assets/css/main.min.css"
-
 CHK_BX="${BALANCEPRO_CSS_SOURCE_DIR}admin.css"
 CHK_FL="${BALANCEPRO_FILE_SOURCE_DIR}edit-module-white-label-website-programs.php"
-
-
-
-
-
+CHK_CHAT="${BALANCEPRO_CHAT_SOURCE_DIR}chat.php"
 # Function to copy files and check if it succeeded
 cp() {
   src=$1
@@ -54,14 +48,15 @@ cp() {
 }
 
 # Restore WhiteLabel files
-echo "Restoring WhiteLabel files..."
+echo "Restoring  files..."
 
 
 cp  "$CHECKBOX_CSS/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/css/admin/" "$CHK_BX"
 cp  "$CHECKBOX_CSS/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/edit/modules/" "$CHK_FL"
+cp  "$CHECKBOX_CSS/balancepro/domains/balancepro.org/public_html/wp-admin/" "$CHK_CHAT"
 
 
-echo "Done restoring WhiteLabel files."
+echo "Done restoring files."
 
 
 # Final confirmation
