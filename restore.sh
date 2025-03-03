@@ -51,9 +51,9 @@ cp() {
 echo "Restoring  files..."
 
 
-cp  "$CHECKBOX_CSS/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/css/admin/" "$CHK_BX"
-cp  "$CHECKBOX_CSS/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/edit/modules/" "$CHK_FL"
-cp  "$CHECKBOX_CSS/balancepro/domains/balancepro.org/public_html/wp-admin/" "$CHK_CHAT"
+cp  "$CHECKBOX_CSS/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/css/admin/admin.css" "$CHK_BX"
+cp  "$CHECKBOX_CSS/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/edit/modules/edit-module-white-label-website-programs.php" "$CHK_FL"
+cp  "$CHECKBOX_CSS/balancepro/domains/balancepro.org/public_html/wp-admin/chat.php" "$CHK_CHAT"
 
 
 echo "Done restoring files."
