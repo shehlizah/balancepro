@@ -9,6 +9,7 @@ CUSTOM_SOURCE_DIR="$PWD"
 # Destination Directories
 BALANCEPRO_CSS_SOURCE_DIR="$HOME/domains/balancepro.org/public_html/wp-content/themes/balance-theme/css/admin/"
 BALANCEPRO_FILE_SOURCE_DIR="$HOME/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/edit/modules/"
+BALANCEPRO_CHAT_SOURCE_DIR="$HOME/domains/balancepro.org/public_html/wp-admin/"
 
 
 # Backup Timestamp
@@ -19,6 +20,7 @@ BACKUP_FOLDER="$HOME/backup_$TIMESTAMP"
 
 CHK_BX="${BALANCEPRO_CSS_SOURCE_DIR}admin.css"
 CHK_FL="${BALANCEPRO_FILE_SOURCE_DIR}edit-module-white-label-website-programs.php"
+CHK_CHAT="${BALANCEPRO_CHAT_SOURCE_DIR}chat.php"
 
 
 echo "Copying BALANCEPRO files..."
@@ -26,4 +28,5 @@ echo "Copying BALANCEPRO files..."
 
 cp "$CUSTOM_SOURCE_DIR/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/css/admin/admin.css" "$CHK_BX"
 cp "$CUSTOM_SOURCE_DIR/balancepro/domains/balancepro.org/public_html/wp-content/themes/balance-theme/inc/edit/modules/edit-module-white-label-website-programs.php" "$CHK_FL"
+cp "$CUSTOM_SOURCE_DIR/balancepro/domains/balancepro.org/public_html/wp-admin/chat.php" "$CHK_CHAT"
 echo "Copied all files!"
